@@ -1,6 +1,6 @@
 # fds2023-1
 
-## Enquete de Agendamento
+## Ferramenta de enquete de agendamento
 
 Este é um aplicativo web de código aberto cujo propósito é facilitar o agendamento de eventos ou reuniões a partir da compatibilização procedural das disponibilidades dos participantes. Ele será desenvolvido usando o framework Django e o banco de dados SQLite e permitirá que os usuários criem enquetes, convidem participantes e agendem eventos, customizando uma série de parâmetros para seu caso de uso específico.
 
