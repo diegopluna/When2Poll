@@ -1,6 +1,6 @@
 # fds2023-1
-## Grupo: Arthur Lins Wolmer, Diego Peter Luna, Mathews Ivo Tavares, Rafael Roque Vieira dos Santos
-## Board do Jira: https://fds2023.atlassian.net/jira/software/projects/FDS/boards/1
+### Grupo: Arthur Lins Wolmer, Diego Peter Luna, Mathews Ivo Tavares, Rafael Roque Vieira dos Santos
+### Board do Jira: https://fds2023.atlassian.net/jira/software/projects/FDS/boards/1
 
 ## When2Poll: ferramenta de enquete de agendamento
 
