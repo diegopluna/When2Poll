@@ -1,6 +1,6 @@
 # fds2023-1
 
-## Ferramenta de enquete de agendamento
+## When2Poll: ferramenta de enquete de agendamento
 
 Este é um aplicativo web de código aberto cujo propósito é facilitar o agendamento de eventos ou reuniões a partir da compatibilização procedural das disponibilidades dos participantes. Ele será desenvolvido usando o framework Django e o banco de dados SQLite e permitirá que os usuários criem enquetes, convidem participantes e agendem eventos, customizando uma série de parâmetros para seu caso de uso específico.
 
@@ -15,14 +15,8 @@ git clone https://github.com/diegopluna/fds2023-1.git
 Em seguida, navegue até o diretório do projeto e instale as dependências necessárias usando o pip:
 
 ```
-cd scheduling-poll-app/
+cd fds2023-1 /
 pip install -r requirements.txt
-```
-
-Por fim, execute o comando de migração para criar o banco de dados e as tabelas necessárias:
-
-```
-python manage.py migrate
 ```
 
 ### Uso
