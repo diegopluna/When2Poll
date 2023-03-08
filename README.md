@@ -19,12 +19,6 @@ cd fds2023-1 /
 pip install -r requirements.txt
 ```
 
-Por fim, execute o comando de migração para criar o banco de dados e as tabelas necessárias:
-
-```
-python manage.py migrate
-```
-
 ### Uso
 
 Para executar o aplicativo web, use o seguinte comando:
