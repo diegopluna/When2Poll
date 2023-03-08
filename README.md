@@ -25,7 +25,7 @@ Por fim, execute o comando de migração para criar o banco de dados e as tabela
 python manage.py migrate
 ```
 
-Uso
+### Uso
 
 Para executar o aplicativo web, use o seguinte comando:
 
