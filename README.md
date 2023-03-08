@@ -1,4 +1,6 @@
 # fds2023-1
+## Grupo: Arthur Lins Wolmer, Diego Peter Luna, Mathews Ivo Tavares, Rafael Roque Vieira dos Santos
+## Board do Jira: https://fds2023.atlassian.net/jira/software/projects/FDS/boards/1
 
 ## When2Poll: ferramenta de enquete de agendamento
 
@@ -37,6 +39,6 @@ O servidor de desenvolvimento estará disponível, por padrão, em http://localh
   - Controle sobre os horários de cada um dos dias
 - Sistema de autenticação e autorização de usuários
   - Enquetes públicas ou restritas a usuários específicos
-- Indicação dos horários disponveis por interface gráfica (compatível com browsers mobile)
+- Indicação dos horários disponveis por interface gráfica (compatível com browsers desktop e mobile)
   - Relatórios gráficos e textuais sobre a disponibilidade comum
 - Possibilidade de estipular apresentador e/ou participantes mais prioritários
