@@ -34,14 +34,13 @@ O servidor de desenvolvimento estará disponível, por padrão, em http://localh
 ### Recursos previstos
 
 - Capacidade de criar e gerenciar enquetes
-  - Segmentação customizada dos dias, duração pretendida da reunião e descrição
-- Seleção de dias da semana ou datas específicas
-  - Controle sobre os horários de cada um dos dias
+  - Nome, descrição e duração pretendida
+  - Seleção de datas específicas e controle sobre os horários de cada um dos dias
+  - Possibilidade de estipular apresentador e/ou participantes mais prioritários
+- Indicação de disponibilidade por interface gráfica (compatível com browsers desktop e mobile), inclusive com gradação de preferência
+  - Relatórios sobre a disponibilidade comum e seleção final a cargo do(s) administrador(es)
 - Sistema de autenticação e autorização de usuários
-  - Enquetes públicas ou restritas a usuários específicos
-- Indicação dos horários disponveis por interface gráfica (compatível com browsers desktop e mobile)
-  - Relatórios gráficos e textuais sobre a disponibilidade comum
-- Possibilidade de estipular apresentador e/ou participantes mais prioritários
+  - Enquetes restritas a usuários convidados
 
 ## Entrega 01
 
