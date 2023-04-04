@@ -46,7 +46,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     email = models.EmailField(unique=True, max_length=255)
     full_name = models.CharField(max_length=255, blank=True, null=True)
-    active = models.BooleanField(default=True) #can login
+    active = models.BooleanField(default=False) #can login
     staff = models.BooleanField(default=False) #staff user non superuser
     admin = models.BooleanField(default=False) #superuser
     timestamp = models.DateTimeField(auto_now_add=True)
