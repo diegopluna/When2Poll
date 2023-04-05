@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
 from django.contrib.sites.shortcuts import get_current_site
@@ -35,7 +36,8 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 class UsersAPIView(APIView):
     serializer_class = UserSerializer
-    @swagger_auto_schema()
+
+    @swagger_auto_schema(request_body=serializer_class, responses={201: UserSerializer})
     def post(self, request):
         user = request.data
         serializer = self.serializer_class(data = user)
@@ -53,6 +55,8 @@ class UsersAPIView(APIView):
             'email_body':email_body,
             'email_subject':'When2Poll - Verificação de email',
             'to_email': user.email
+
+
             }
 
         Util.send_email(data)
@@ -77,17 +81,19 @@ class VerifyEmail(APIView):
                 user.save()
             return Response({'email':'Successfully activated'},status=status.HTTP_200_OK)
         except jwt.ExpiredSignatureError as identifier:
-            return Response({'email':'Activation link expired'},status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error':'Activation link expired'},status=status.HTTP_400_BAD_REQUEST)
         except jwt.exceptions.DecodeError as identifier:
-            return Response({'email':'Invalid token'},status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error':'Invalid token'},status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
-def getRoutes(request):
-    routes = [
-        '/api/token/',
-        '/api/token/refresh/',
-        '/api/register/',
-        '/api/email-verify/'
-    ]
-
-    return Response(routes)
+class LogoutView(APIView):
+    permission_classes = (IsAuthenticated,)
+    token_param_config = openapi.Parameter('refresh_token',in_=openapi.IN_QUERY, description='Description',type=openapi.TYPE_STRING)
+    @swagger_auto_schema(manual_parameters=[token_param_config])
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
