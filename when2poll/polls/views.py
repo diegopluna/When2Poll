@@ -10,7 +10,6 @@ from polls.api.serializers import AvailabilityPollSerializer
 class AvailabilityPollView(APIView):
     permission_classes = (IsAuthenticated,)
 
-
     def post(self, request):
         serializer = AvailabilityPollSerializer(data=request.data)
         if serializer.is_valid():
