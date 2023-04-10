@@ -1,14 +1,16 @@
 #from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from polls.api.serializers import AvailabilityPollSerializer
-from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
-@csrf_exempt
 class AvailabilityPollView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+
     def post(self, request):
         serializer = AvailabilityPollSerializer(data=request.data)
         if serializer.is_valid():
