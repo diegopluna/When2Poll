@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'corsheaders', 
 
     #created apps
-    'accounts'
+    'accounts',
+    'polls'
 ]
 
 AUTH_USER_MODEL = 'accounts.User' #changes the built-in user model to ours
@@ -166,7 +167,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
