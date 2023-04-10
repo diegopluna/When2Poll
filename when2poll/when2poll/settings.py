@@ -41,7 +41,8 @@ INSTALLED_APPS = [
 
     'rest_framework', # django rest framework
     'rest_framework_simplejwt.token_blacklist', # simple jwt extensions
-    'corsheaders', 
+    'corsheaders',
+    'drf_yasg', 
 
     #created apps
     'accounts',

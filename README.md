@@ -24,6 +24,7 @@ pip install -r requirements.txt
 ```
 
 React:
+
 ```
 cd fds2023-1/frontreact
 npm install
@@ -43,6 +44,7 @@ python manage.py runserver
 O servidor de desenvolvimento estará disponível, por padrão, em http://localhost:8000/. Você pode acessar o aplicativo web visitando a URL em seu navegador.
 
 React:
+
 Para executar o servidor React, use o seguinte comando:
 
 ```

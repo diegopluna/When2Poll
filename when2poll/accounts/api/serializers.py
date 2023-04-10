@@ -1,14 +1,23 @@
-from django.contrib import auth
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
 from django.contrib.auth import get_user_model
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework import serializers
-from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(min_length = 8, write_only = True)
     class Meta:
         model = User
-        fields = ['email', 'full_name']
+        fields = ['full_name', 'email', 'password']
+    
+    def create(self, validated_data):
+        user = User.objects.create(full_name = validated_data['full_name'], email = validated_data['email'])
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
+class EmailVerificationSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(max_length=555)
+
+    class Meta:
+        user = User
+        fields = ['token']
