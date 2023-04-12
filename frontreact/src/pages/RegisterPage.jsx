@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import React from 'react'
 
 const RegisterPage = () => {
@@ -23,7 +24,7 @@ const RegisterPage = () => {
               <input className='form-control' type="password" id="passwordConfirm" placeholder="Confirmar senha" required/>
             </div>
             <button style={styles.button} type="submit" className="btn btn-success w-100">Criar conta</button>
-            <button type="button" class="btn btn-link justify">Login</button>
+            <Link to={"/"}>Login</Link>
         </form>
       </div>
     </div>

@@ -12,6 +12,27 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 
 import App from './App'
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LoginPage />
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />
+  },
+  {
+    path: "/app",
+    element: <Header />,
+    children: [
+      {
+        path: "/app/home",
+        element: <HomePage />
+      }
+    ]
+  }
+]);
+
 // const router = createBrowserRouter([
 //   {
 //     path: "/",
@@ -33,7 +54,6 @@ import App from './App'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RegisterPage />
-    {/* <RouterProvider router={router} /> */}
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )

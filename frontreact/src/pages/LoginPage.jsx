@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import React from 'react'
 
 const LoginPage = () => {
@@ -5,24 +6,19 @@ const LoginPage = () => {
     <div className='d-flex min-vh-100 min-vw-100 justify-content-center align-items-center' style={styles.body}>
       <div  style={styles.login} >
         <p className='h1 text-center' style={styles.title} >When2Poll</p>
-        <form className='needs-validation' style={styles.form} >
-            <div className='form-group was-validated' style={styles.formGroup}>
+        <form style={styles.form} >
+            <div className='form-group' style={styles.formGroup}>
               <input className='form-control' type="email" id="email" placeholder="Email" required/>
-              <div className='invalid-feedback'>
-                Insira seu email!
-              </div>
             </div>
-            <div className='form-group was-validated' style={styles.formGroup}>
+            <div className='form-group' style={styles.formGroup}>
               <input className='form-control' type="password" id="password" placeholder="Senha" required/>
-              <div className='invalid-feedback'>
-                Insira sua senha!
-              </div>
             </div>
             <div className='form-group form-check' style={styles.formGroup}>
             <input type="checkbox" class="form-check-input" id="rememberCheck"/>
             <label style={styles.remember} className="form-check-label" htmlFor="rememberCheck">Lembrar de mim</label>
             </div>
             <button style={styles.button} type="submit" className="btn btn-success w-100">Entrar</button>
+            <Link to={"/register"}>Criar conta</Link>
         </form>
       </div>
     </div>
