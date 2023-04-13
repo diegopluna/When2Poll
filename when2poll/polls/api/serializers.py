@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.serializers import SlugRelatedField
 from django.contrib.auth import get_user_model
 from polls.models import AvailabilityPoll, DateTimeRange
 from accounts.api.serializers import UserSerializer
@@ -17,7 +18,7 @@ class DateTimeRangeSerializer(serializers.ModelSerializer):
 
 class AvailabilityPollSerializer(serializers.ModelSerializer):
     datetime_ranges = DateTimeRangeSerializer(many=True)
-    participants = UserSerializer(many=True)
+    participants = serializers.SlugRelatedField(many=True, queryset = User.objects.all(), slug_field ='email')
 
     class Meta:
         model = AvailabilityPoll
@@ -29,11 +30,10 @@ class AvailabilityPollSerializer(serializers.ModelSerializer):
         poll = AvailabilityPoll.objects.create(**validated_data)
 
         for range in datetime_ranges_data:
-            poll.datetime_ranges.add(DateTimeRangeSerializer.create(self, validated_data=range))
+             poll.datetime_ranges.add(DateTimeRangeSerializer.create(self, validated_data=range))
 
         for participant in participants_data:
-            user = User.objects.get(email=participant['email'])
-            poll.users.add(user)
+            poll.participants.add(participant)
 
         return poll
 

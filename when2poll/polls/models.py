@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth import get_user_model
 # import json
 # from django.core.serializers.json import DjangoJSONEncoder
@@ -7,6 +8,7 @@ from django.utils import timezone
 # Create your models here.
 
 User = get_user_model()
+#User = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 class DateTimeRange(models.Model):
     start_time = models.DateTimeField()

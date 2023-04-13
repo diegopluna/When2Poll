@@ -3,10 +3,8 @@ from rest_framework import serializers
 
 User = get_user_model()
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['email', 'full_name']
+class UserSerializer(serializers.Serializer):
+    email = serializers.EmailField()
     
     # def create(self, validated_data):
     #     user = User.objects.create(full_name = validated_data['full_name'], email = validated_data['email'])
