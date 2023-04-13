@@ -4,12 +4,16 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from polls.api.serializers import AvailabilityPollSerializer
-
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 # Create your views here.
+
 
 class AvailabilityPollView(APIView):
     permission_classes = (IsAuthenticated, )
+    serializer_class = AvailabilityPollSerializer
 
+    @swagger_auto_schema(request_body=serializer_class, responses={201: serializer_class})
     def post(self, request):
         serializer = AvailabilityPollSerializer(data=request.data)
         if serializer.is_valid():

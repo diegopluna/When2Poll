@@ -2,7 +2,6 @@ from rest_framework import serializers
 from rest_framework.serializers import SlugRelatedField
 from django.contrib.auth import get_user_model
 from polls.models import AvailabilityPoll, DateTimeRange
-from accounts.api.serializers import UserSerializer
 
 User = get_user_model()
 
