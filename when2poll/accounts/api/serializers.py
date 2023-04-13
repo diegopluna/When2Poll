@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     #     user = User.objects.create(full_name = validated_data['full_name'], email = validated_data['email'])
     #     return user
 
-class UserLoginSerializer(serializers.ModelSerializer):
+class UserRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(min_length = 8, write_only = True)
     class Meta:
         model = User

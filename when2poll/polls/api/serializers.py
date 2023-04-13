@@ -1,9 +1,14 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from polls.models import AvailabilityPoll, DateTimeRange
-from accounts.api.serializers import UserSerializer
 
 User = get_user_model()
+
+
+class ParticipantsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['full_name']
 
 class DateTimeRangeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,7 +22,7 @@ class DateTimeRangeSerializer(serializers.ModelSerializer):
 
 class AvailabilityPollSerializer(serializers.ModelSerializer):
     datetime_ranges = DateTimeRangeSerializer(many=True)
-    participants = UserSerializer(many=True)
+    participants = ParticipantsSerializer(many=True)
 
     class Meta:
         model = AvailabilityPoll

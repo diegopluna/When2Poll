@@ -12,7 +12,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 import jwt
 from django.conf import settings
-from .serializers import UserLoginSerializer, EmailVerificationSerializer
+from .serializers import UserRegisterSerializer, EmailVerificationSerializer, UserSerializer
 from .utils import Util
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -35,9 +35,9 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
 class UsersAPIView(APIView):
-    serializer_class = UserLoginSerializer
+    serializer_class = UserRegisterSerializer
 
-    @swagger_auto_schema(request_body=serializer_class, responses={201: UserLoginSerializer})
+    @swagger_auto_schema(request_body=serializer_class, responses={201: UserSerializer})
     def post(self, request):
         user = request.data
         serializer = self.serializer_class(data = user)
