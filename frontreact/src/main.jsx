@@ -4,6 +4,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import NewPollPage from './pages/NewPollPage'
+import InvitesPage from './pages/InvitesPage'
+import GroupsPage from './pages/GroupsPage'
 import Header from './components/Header'
 import Protected from './utils/Protected'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -28,6 +31,18 @@ const router = createBrowserRouter([
       {
         path: "/app/home",
         element: <HomePage />
+      },
+      {
+        path: "/app/newpoll",
+        element: <NewPollPage />
+      },
+      {
+        path: "/app/invites",
+        element: <InvitesPage />
+      },
+      {
+        path: "/app/groups",
+        element: <GroupsPage />
       }
     ]
   }
