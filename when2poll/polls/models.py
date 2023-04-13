@@ -12,16 +12,6 @@ class DateTimeRange(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
 
-    # def get_ranges_in_utc(self):
-    #     ranges_in_utc = []
-    #     for start, end in self.ranges:
-    #         start_datetime = timezone.make_aware(start, timezone=self.timezone)
-    #         end_datetime = timezone.make_aware(end, timezone=self.timezone)
-    #         start_utc = start_datetime.astimezone(timezone.utc)
-    #         end_utc = end_datetime.astimezone(timezone.utc)
-    #         ranges_in_utc.append((start_utc, end_utc))
-    #     return ranges_in_utc
-
 class AvailabilityPoll(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -69,3 +59,17 @@ class AvailabilityPoll(models.Model):
     #         instance.participants.add(participant)
 
     #     return instance
+
+
+    #poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    # def get_ranges_in_utc(self):
+    #     ranges_in_utc = []
+    #     for start, end in self.ranges:
+    #         start_datetime = timezone.make_aware(start, timezone=self.timezone)
+    #         end_datetime = timezone.make_aware(end, timezone=self.timezone)
+    #         start_utc = start_datetime.astimezone(timezone.utc)
+    #         end_utc = end_datetime.astimezone(timezone.utc)
+    #         ranges_in_utc.append((start_utc, end_utc))
+    #     return ranges_in_utc
