@@ -8,6 +8,8 @@ import NewPollPage from './pages/NewPollPage';
 import InvitesPage from './pages/InvitesPage';
 import GroupsPage from './pages/GroupsPage';
 import './App.css';
+import PrivateRoute from './utils/PrivateRoute';
+import { UnAuthRoute } from './utils/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -16,29 +18,47 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage />
+        element:
+        <PrivateRoute> 
+          <HomePage />
+        </PrivateRoute>
       },
       {
         path: "/newpoll",
-        element: <NewPollPage />
+        element: 
+        <PrivateRoute>
+          <NewPollPage />
+        </PrivateRoute>
       },
       {
         path: "/invites",
-        element: <InvitesPage />
+        element: 
+        <PrivateRoute>
+          <InvitesPage />
+        </PrivateRoute>
       },
       {
         path: "/groups",
-        element: <GroupsPage />
+        element: 
+        <PrivateRoute>
+          <GroupsPage />
+        </PrivateRoute>
       }
     ]
   },
   {
     path: "/login",
-    element: <LoginPage />
+    element:
+    <UnAuthRoute>
+      <LoginPage />
+    </UnAuthRoute> 
   },
   {
     path: "/register",
-    element: <RegisterPage />
+    element: 
+    <UnAuthRoute>
+      <RegisterPage />
+    </UnAuthRoute>
   },
 ]);
 
