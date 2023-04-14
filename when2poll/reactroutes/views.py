@@ -7,3 +7,15 @@ class LoginPage(TemplateView):
 
 class RegisterPage(TemplateView):
     template_name = "index.html"
+
+class HomePage(TemplateView):
+    template_name = "index.html"
+
+class NewPollPage(TemplateView):
+    template_name = "index.html"
+
+class InvitesPage(TemplateView):
+    template_name = "index.html"
+
+class GroupsPage(TemplateView):
+    template_name = "index.html"

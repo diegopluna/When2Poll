@@ -11,6 +11,28 @@ import './App.css';
 
 const router = createBrowserRouter([
   {
+    path: "/",
+    element: <Header />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />
+      },
+      {
+        path: "/newpoll",
+        element: <NewPollPage />
+      },
+      {
+        path: "/invites",
+        element: <InvitesPage />
+      },
+      {
+        path: "/groups",
+        element: <GroupsPage />
+      }
+    ]
+  },
+  {
     path: "/login",
     element: <LoginPage />
   },
@@ -18,28 +40,6 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegisterPage />
   },
-  {
-    path: "/app",
-    element: <Header />,
-    children: [
-      {
-        path: "/app/home",
-        element: <HomePage />
-      },
-      {
-        path: "/app/newpoll",
-        element: <NewPollPage />
-      },
-      {
-        path: "/app/invites",
-        element: <InvitesPage />
-      },
-      {
-        path: "/app/groups",
-        element: <GroupsPage />
-      }
-    ]
-  }
 ]);
 
 function App() {

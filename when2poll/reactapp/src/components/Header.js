@@ -5,19 +5,19 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faHome, faPlus, faEnvelope, faUsers} from '@fortawesome/free-solid-svg-icons'
 
 const tabs = [{
-  route: "/app/home",
+  route: "/",
   icon: faHome,
   label: "Início"
 }, {
-  route: "/app/newpoll",
+  route: "/newpoll",
   icon: faPlus,
   label: "Nova Reunião"
 }, {
-  route: "/app/invites",
+  route: "/invites",
   icon: faEnvelope,
   label: "Convites"
 }, {
-  route: "/app/groups",
+  route: "/groups",
   icon: faUsers,
   label: "Grupos"
 }]
@@ -31,22 +31,22 @@ const Header = (props) => {
             <a className='navbar-brand'>When2Poll</a>
             <Nav className='ml-auto'>
               <Nav.Item>
-                <Nav.Link href="/app/home" className='nav-link'>
+                <Nav.Link href="/" className='nav-link'>
                   Início
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="/app/newpoll"  className='nav-link'>
+                <Nav.Link href="/newpoll"  className='nav-link'>
                   Nova Reunião
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href='/app/invites'  className='nav-link'>
+                <Nav.Link href='/invites'  className='nav-link'>
                   Convites
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href='/app/groups'  className='nav-link'>
+                <Nav.Link href='/groups'  className='nav-link'>
                   Grupos
                 </Nav.Link>
               </Nav.Item>
