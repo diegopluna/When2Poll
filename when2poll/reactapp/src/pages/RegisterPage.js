@@ -24,7 +24,7 @@ const RegisterPage = () => {
               <input className='form-control' type="password" id="passwordConfirm" placeholder="Confirmar senha" required/>
             </div>
             <button style={styles.button} type="submit" className="btn btn-success w-100">Criar conta</button>
-            <Link to={"/"}>Login</Link>
+            <Link to={"/login"}>Login</Link>
         </form>
       </div>
     </div>

@@ -11,7 +11,7 @@ import './App.css';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/login",
     element: <LoginPage />
   },
   {

@@ -47,7 +47,8 @@ INSTALLED_APPS = [
 
     #created apps
     'accounts',
-    'polls'
+    'polls',
+    'reactroutes'
 ]
 
 AUTH_USER_MODEL = 'accounts.User' #changes the built-in user model to ours
@@ -182,6 +183,10 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'reactapp/build/static')
 ]
+
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
