@@ -20,6 +20,8 @@ class AvailabilityPoll(models.Model):
     duration = models.TimeField()
     datetime_ranges = models.ManyToManyField(DateTimeRange, related_name='datetime_ranges')
     deadline = models.DateTimeField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1) #review the on_delete behaviour
+    admins = models.ManyToManyField(User, related_name='admins')
     participants = models.ManyToManyField(User, related_name='participants')
 
     def is_expired(self):

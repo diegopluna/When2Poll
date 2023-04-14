@@ -15,7 +15,10 @@ class AvailabilityPollView(APIView):
 
     @swagger_auto_schema(request_body=serializer_class, responses={201: serializer_class})
     def post(self, request):
-        serializer = AvailabilityPollSerializer(data=request.data)
+        data = request.data
+        data['owner'] = request.user.pk
+        data.setdefault('admins', []).append(request.user.pk)
+        serializer = AvailabilityPollSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
