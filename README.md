@@ -26,16 +26,14 @@ pip install -r requirements.txt
 React:
 
 ```
-cd fds2023-1/frontreact
+cd fds2023-1/when2poll/reactapp
 npm install
-
+npm run build
 ```
 
 ### Uso
 
-Django:
-
-Para executar o servidor, use o seguinte comando:
+Para executar o servidor, use o seguinte comando dentro da pasta when2poll:
 
 ```
 python manage.py runserver
@@ -43,15 +41,6 @@ python manage.py runserver
 
 O servidor de desenvolvimento estará disponível, por padrão, em http://localhost:8000/. Você pode acessar o aplicativo web visitando a URL em seu navegador.
 
-React:
-
-Para executar o servidor React, use o seguinte comando:
-
-```
-npm run dev
-```
-
-O servidor de desenvolvimento estará disponível, por padrão, em http://localhost:5173/. Você pode acessar o aplicativo visitando a URL em seu navegador.
 ### Recursos previstos
 
 - Capacidade de criar e gerenciar enquetes
