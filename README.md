@@ -1,5 +1,5 @@
 # fds2023-1
-### Grupo: Arthur Lins Wolmer, Diego Peter Luna, Mathews Ivo Tavares, Rafael Roque Vieira dos Santos
+### Grupo: Arthur Lins Wolmer, Diego Peter Luna, Mathews Ivo Tavares, Rafael Roque Vieira dos Santos, João Antônio Sampaio Ferreira, João Pedro Batista, João Pedro Araújo
 ### Board do Jira: https://fds2023.atlassian.net/jira/software/projects/FDS/boards/1
 
 ## When2Poll: ferramenta de enquete de agendamento
@@ -14,16 +14,26 @@ Primeiro clone o repositório para sua máquina local:
 git clone https://github.com/diegopluna/fds2023-1.git
 ```
 
-Em seguida, navegue até o diretório do projeto e instale as dependências necessárias usando o pip:
+Em seguida, navegue até o diretório do projeto e instale as dependências necessárias
+
+Django:
 
 ```
 cd fds2023-1 /
 pip install -r requirements.txt
 ```
 
+React:
+
+```
+cd fds2023-1/when2poll/reactapp
+npm install
+npm run build
+```
+
 ### Uso
 
-Para executar o aplicativo web, use o seguinte comando:
+Para executar o servidor, use o seguinte comando dentro da pasta when2poll:
 
 ```
 python manage.py runserver
