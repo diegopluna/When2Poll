@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav'
 import Dropdown from 'react-bootstrap/Dropdown';
 import NavItem from 'react-bootstrap/NavItem';
 import NavLink from 'react-bootstrap/NavLink';
+import Navbar from 'react-bootstrap/Navbar';
 import { Outlet } from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faHome, faPlus, faEnvelope, faUsers} from '@fortawesome/free-solid-svg-icons'
@@ -67,6 +68,25 @@ const Header = (props) => {
             </Nav>
           </div>
         </nav>
+
+        <nav className='navbar sticky-top navbar-light d-block d-lg-none bottom-tab-nav' role='navigation'>
+          <div className='container-fluid'>
+            <a className='navbar-brand'>When2Poll</a>
+            <Dropdown as={NavItem}>
+                <Dropdown.Toggle as={NavLink}>{user?.full_name}</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={logoutUser}>Sair</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            <Nav className='w-100'>
+            <div className='d-flex flex-row justify-content-around w-100'>
+              
+            </div>
+          </Nav>
+          </div>
+        </nav>
+
+
         <nav className='navbar fixed-bottom navbar-light d-block d-lg-none bottom-tab-nav' role='navigation'>
           <Nav className='w-100'>
             <div className='d-flex flex-row justify-content-around w-100'>
@@ -85,6 +105,8 @@ const Header = (props) => {
             </div>
           </Nav>
         </nav>
+
+
       </div>
       <Outlet />
     </>
