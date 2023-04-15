@@ -1,23 +1,27 @@
 import { Link } from 'react-router-dom'
-import React from 'react'
+import React, {useContext} from 'react'
+import AuthContext from '../context/AuthProvider'
+
 
 const LoginPage = () => {
+
+  let {loginUser} = useContext(AuthContext)
   return (
-    <div className='d-flex min-vh-100 min-vw-100 justify-content-center align-items-center' style={styles.body}>
+    <div className='d-flex min-vh-100 min-vw-100 justify-content-center align-items-center' style={styles.body} >
       <div  style={styles.login} >
         <p className='h1 text-center' style={styles.title} >When2Poll</p>
-        <form style={styles.form} >
+        <form style={styles.form} onSubmit={loginUser}>
             <div className='form-group' style={styles.formGroup}>
-              <input className='form-control' type="email" id="email" placeholder="Email" required/>
+              <input className='form-control' type="email" name="email" placeholder="Email" required/>
             </div>
             <div className='form-group' style={styles.formGroup}>
-              <input className='form-control' type="password" id="password" placeholder="Senha" required/>
+              <input className='form-control' type="password" name="password" placeholder="Senha" required/>
             </div>
             <div className='form-group form-check' style={styles.formGroup}>
-            <input type="checkbox" class="form-check-input" id="rememberCheck"/>
-            <label style={styles.remember} className="form-check-label" htmlFor="rememberCheck">Lembrar de mim</label>
+            <input type="checkbox" className="form-check-input" name="rememberCheck"/>
+            <label style={styles.remember} className="form-check-label">Lembrar de mim</label>
             </div>
-            <button style={styles.button} type="submit" className="btn btn-success w-100">Entrar</button>
+            <button style={styles.button} type="submit" className="btn btn-success w-100" >Entrar</button>
             <Link to={"/register"}>Criar conta</Link>
         </form>
       </div>
@@ -56,13 +60,4 @@ const styles = {
   }
 }
 
-// const bgStyle = {
-//   backgroundColor: '#222831'
-// }
-// const formStyle = {
-//   backgroundColor: '#393E46'
-// }
-// const title = {
-//   color: '#EEEEEE'
-// }
 export default LoginPage
