@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -69,58 +68,6 @@ const router = createBrowserRouter([
   }
 ])
 
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element:
-//       <Header />,
-//     children: [
-//       {
-//         path: "/",
-//         element:
-//         <PrivateRoute> 
-//           < HomePage />
-//         </PrivateRoute>
-//       },
-//       {
-//         path: "/newpoll",
-//         element: 
-//         <PrivateRoute> 
-//           < NewPollPage />
-//         </PrivateRoute>
-//       },
-//       {
-//         path: "/invites",
-//         element: 
-//         <PrivateRoute> 
-//           < InvitesPage />
-//         </PrivateRoute>
-//       },
-//       {
-//         path: "/groups",
-//         element: 
-//         <PrivateRoute> 
-//           < GroupsPage />
-//         </PrivateRoute>
-//       }
-//     ]
-//   },
-//   {
-//     path: "/login",
-//     element:
-//     <UnAuthRoute> 
-//       < LoginPage />
-//     </UnAuthRoute>
-// },
-//   {
-//     path: "/register",
-//     element: 
-//     <UnAuthRoute> 
-//       < RegisterPage />
-//     </UnAuthRoute>
-//   },
-// ]);
 
 function App() {
   return (
