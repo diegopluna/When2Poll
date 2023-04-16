@@ -10,25 +10,33 @@ from django.utils import timezone
 User = get_user_model()
 #User = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-class DateTimeRange(models.Model):
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-
 class AvailabilityPoll(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     duration = models.TimeField()
-    datetime_ranges = models.ManyToManyField(DateTimeRange, related_name='datetime_ranges')
+    #datetime_ranges = models.ManyToManyField(DateTimeRange, related_name='datetime_ranges')
     deadline = models.DateTimeField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1) #review the on_delete behaviour
     admins = models.ManyToManyField(User, related_name='admins')
     participants = models.ManyToManyField(User, related_name='participants')
+    defined = models.BooleanField(default=False)
+
+    @property
+    def datetime_ranges(self):
+        return self.datetimerange_set.all()
 
     def is_expired(self):
         return self.deadline <= timezone.now()
 
     def get_participant_count(self):
         return self.participants.count()
+
+
+class DateTimeRange(models.Model):
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
+    matrix = models.JSONField()
     
     # def serialize(self):
     #     data = {
