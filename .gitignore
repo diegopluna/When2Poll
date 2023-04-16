@@ -131,3 +131,5 @@ dmypy.json
 .elasticbeanstalk/
 
 .DS_Store
+
+static/
