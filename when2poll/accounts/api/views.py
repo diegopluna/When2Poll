@@ -43,23 +43,23 @@ class UsersAPIView(APIView):
         serializer = self.serializer_class(data = user)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        user_data = serializer.data
+        # user_data = serializer.data
 
-        user = User.objects.get(email=user_data['email'])
-        token = RefreshToken.for_user(user).access_token
-        current_site = get_current_site(request).domain
-        relativeLink = reverse('email-verify')
-        absurl = 'http://'+ current_site+relativeLink+"?token="+str(token)
-        email_body='Oi '+user.full_name+'. Use o link abaixo para confirmar sua conta:\n'+absurl
-        data = {
-            'email_body':email_body,
-            'email_subject':'When2Poll - Verificação de email',
-            'to_email': user.email
+        # user = User.objects.get(email=user_data['email'])
+        # token = RefreshToken.for_user(user).access_token
+        # current_site = get_current_site(request).domain
+        # relativeLink = reverse('email-verify')
+        # absurl = 'http://'+ current_site+relativeLink+"?token="+str(token)
+        # email_body='Oi '+user.full_name+'. Use o link abaixo para confirmar sua conta:\n'+absurl
+        # data = {
+        #     'email_body':email_body,
+        #     'email_subject':'When2Poll - Verificação de email',
+        #     'to_email': user.email
 
 
-            }
+        #     }
 
-        Util.send_email(data)
+        # Util.send_email(data)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
