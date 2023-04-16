@@ -7,11 +7,17 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Organization(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.CharField(max_length=500)
-    members = models.ManyToManyField(User, related_name='grupos')
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 class OrgInvitation(models.Model):
-    group = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    member = models.ForeignKey(User, on_delete=models.CASCADE)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    email = models.EmailField()
     accepted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.email
