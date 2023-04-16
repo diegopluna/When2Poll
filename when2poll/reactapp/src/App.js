@@ -31,9 +31,9 @@ const router = createBrowserRouter([
           {
             path: "/newpoll",
             element:
-            <PrivateRoute>
+            <UnAuthRoute>
               <NewPollPage />
-            </PrivateRoute>
+            </UnAuthRoute>
           },
           {
             path: "/invites",
