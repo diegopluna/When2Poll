@@ -63,7 +63,7 @@ const router = createBrowserRouter([
         <UnAuthRoute>
           <RegisterPage />
         </UnAuthRoute>
-      }
+      },
     ]
   }
 ])

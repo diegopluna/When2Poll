@@ -1,27 +1,30 @@
 import { Link } from 'react-router-dom'
-import React from 'react'
+import React, {useContext} from 'react'
+import AuthContext from '../context/AuthProvider'
 
 const RegisterPage = () => {
+
+  let {signUpUser} = useContext(AuthContext)
   return (
     <div className='d-flex min-vh-100 min-vw-100 justify-content-center align-items-center' style={styles.body}>
         
       <div  style={styles.login} >
         <p className='h1 text-center' style={styles.title} >Registro</p>
-        <form style={styles.form} >
+        <form style={styles.form} onSubmit={signUpUser}>
             <div className='form-group' style={styles.formGroup}>
-              <input className='form-control' type="text" id="firstName" placeholder="Nome" required/>
+              <input className='form-control' type="text" name="firstName" placeholder="Nome" required/>
             </div>
             <div className='form-group' style={styles.formGroup}>
-              <input className='form-control' type="text" id="lastName" placeholder="Sobrenome" required/>
+              <input className='form-control' type="text" name="lastName" placeholder="Sobrenome" required/>
             </div>
             <div className='form-group' style={styles.formGroup}>
-              <input className='form-control' type="email" id="email" placeholder="Email" required/>
+              <input className='form-control' type="email" name="email" placeholder="Email" required/>
             </div>
             <div className='form-group' style={styles.formGroup}>
-              <input className='form-control' type="password" id="password" placeholder="Senha" required/>
+              <input className='form-control' type="password" name="password" placeholder="Senha" required/>
             </div>
             <div className='form-group' style={styles.formGroup}>
-              <input className='form-control' type="password" id="passwordConfirm" placeholder="Confirmar senha" required/>
+              <input className='form-control' type="password" name="passwordConfirm" placeholder="Confirmar senha" required/>
             </div>
             <button style={styles.button} type="submit" className="btn btn-success w-100">Criar conta</button>
             <Link to={"/login"}>Login</Link>

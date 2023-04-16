@@ -24,8 +24,6 @@ export const AuthProvider = () => {
 
     let loginUser = async (e ) => {
 
-        
-
         e.preventDefault()
         const response = await axios.post(domain+'/api/token/',{
             email: e.target.email.value,
@@ -39,6 +37,27 @@ export const AuthProvider = () => {
         }else{
             alert('Usuário ou senha incorretos!')
         }
+    }
+
+    let signUpUser = async (e ) => {
+
+        e.preventDefault()
+        if (e.target.password.value === e.target.passwordConfirm.value) {
+            const response = await axios.post(domain+'/api/register/',{
+                full_name: e.target.firstName.value+' '+e.target.lastName.value,
+                email: e.target.email.value,
+                password: e.target.password.value
+            });
+            if (response.status === 201){
+                alert("Conta criada!")
+            } else {
+                alert("Esse email já está sendo utilizado")
+            }
+
+        }else{
+            alert("As senhas devem ser iguais")
+        }
+        
     }
 
     let logoutUser = async () => {
@@ -89,7 +108,8 @@ export const AuthProvider = () => {
         setAuthTokens:setAuthTokens,
         setUser:setUser,
         loginUser:loginUser,
-        logoutUser:logoutUser
+        logoutUser:logoutUser,
+        signUpUser:signUpUser
     }
 
     return (
