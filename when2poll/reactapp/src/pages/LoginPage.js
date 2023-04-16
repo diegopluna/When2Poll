@@ -1,21 +1,42 @@
 import { Link } from 'react-router-dom'
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
+import Alert from 'react-bootstrap/Alert';
 import AuthContext from '../context/AuthProvider'
 
 
 const LoginPage = () => {
 
   let {loginUser} = useContext(AuthContext)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [show, setShow] = useState(false);
+  const [alertText, setAlertText] = useState('')
+  const [alertType, setAlertType] = useState('success')
+
+
+  const handleSubmit = async (e ) => {
+    setShow(false)
+    const signUpReturn = await loginUser(e );
+    setAlertType(signUpReturn[1])
+    setAlertText(signUpReturn[0])
+    setShow(signUpReturn[2])
+    setEmail('')
+    setPassword('')
+  }
+
   return (
     <div className='d-flex min-vh-100 min-vw-100 justify-content-center align-items-center' style={styles.body} >
       <div  style={styles.login} >
         <p className='h1 text-center' style={styles.title} >When2Poll</p>
-        <form style={styles.form} onSubmit={loginUser}>
+        <Alert show={show} variant={alertType}>
+          <p >{alertText}</p>
+        </Alert> 
+        <form style={styles.form} onSubmit={handleSubmit}>
             <div className='form-group' style={styles.formGroup}>
-              <input className='form-control' type="email" name="email" placeholder="Email" required/>
+              <input value={email} className='form-control' type="email" name="email" placeholder="Email" onChange={event => setEmail(event.target.value)} required/>
             </div>
             <div className='form-group' style={styles.formGroup}>
-              <input className='form-control' type="password" name="password" placeholder="Senha" required/>
+              <input value={password} className='form-control' type="password" name="password" placeholder="Senha" onChange={event => setPassword(event.target.value)} required/>
             </div>
             <div className='form-group form-check' style={styles.formGroup}>
             <input type="checkbox" className="form-check-input" name="rememberCheck"/>

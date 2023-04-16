@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -10,6 +9,7 @@ import GroupsPage from './pages/GroupsPage';
 import PrivateRoute, { UnAuthRoute } from './utils/PrivateRoute';
 import { AuthProvider } from './context/AuthProvider';
 import './App.css';
+import NewGroupPage from './pages/NewGroupPage';
 
 
 const router = createBrowserRouter([
@@ -48,6 +48,13 @@ const router = createBrowserRouter([
             <PrivateRoute>
               <GroupsPage />
             </PrivateRoute>
+          },
+          {
+            path: "/newgroup",
+            element:
+            <PrivateRoute>
+              <NewGroupPage />
+            </PrivateRoute>
           }
         ]
       },
@@ -64,63 +71,11 @@ const router = createBrowserRouter([
         <UnAuthRoute>
           <RegisterPage />
         </UnAuthRoute>
-      }
+      },
     ]
   }
 ])
 
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element:
-//       <Header />,
-//     children: [
-//       {
-//         path: "/",
-//         element:
-//         <PrivateRoute> 
-//           < HomePage />
-//         </PrivateRoute>
-//       },
-//       {
-//         path: "/newpoll",
-//         element: 
-//         <PrivateRoute> 
-//           < NewPollPage />
-//         </PrivateRoute>
-//       },
-//       {
-//         path: "/invites",
-//         element: 
-//         <PrivateRoute> 
-//           < InvitesPage />
-//         </PrivateRoute>
-//       },
-//       {
-//         path: "/groups",
-//         element: 
-//         <PrivateRoute> 
-//           < GroupsPage />
-//         </PrivateRoute>
-//       }
-//     ]
-//   },
-//   {
-//     path: "/login",
-//     element:
-//     <UnAuthRoute> 
-//       < LoginPage />
-//     </UnAuthRoute>
-// },
-//   {
-//     path: "/register",
-//     element: 
-//     <UnAuthRoute> 
-//       < RegisterPage />
-//     </UnAuthRoute>
-//   },
-// ]);
 
 function App() {
   return (
