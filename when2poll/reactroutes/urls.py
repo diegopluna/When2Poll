@@ -8,4 +8,5 @@ urlpatterns = [
     path('newpoll/',NewPollPage.as_view()),
     path('invites/',InvitesPage.as_view()),
     path('groups/',GroupsPage.as_view()),
+    path('newgroup/',GroupsPage.as_view()),
 ]

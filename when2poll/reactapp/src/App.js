@@ -9,6 +9,7 @@ import GroupsPage from './pages/GroupsPage';
 import PrivateRoute, { UnAuthRoute } from './utils/PrivateRoute';
 import { AuthProvider } from './context/AuthProvider';
 import './App.css';
+import NewGroupPage from './pages/NewGroupPage';
 
 
 const router = createBrowserRouter([
@@ -46,6 +47,13 @@ const router = createBrowserRouter([
             element:
             <PrivateRoute>
               <GroupsPage />
+            </PrivateRoute>
+          },
+          {
+            path: "/newgroup",
+            element:
+            <PrivateRoute>
+              <NewGroupPage />
             </PrivateRoute>
           }
         ]

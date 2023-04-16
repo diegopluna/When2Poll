@@ -56,9 +56,10 @@ export const AuthProvider = () => {
                     return ["Conta criada", "success", true]
                 }
             } catch (error) {
-                if (error.response.status === 400) {
+                if (error.response.data.email[0] === "user with this email already exists.") {
                     return ["Email já está em uso!", "danger", true]
                 }
+                return ["Erro de conexão com o servidor", "danger", true]
             }
         }else{
             return ["As senhas devem ser iguais", "danger", true]
