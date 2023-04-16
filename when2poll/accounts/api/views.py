@@ -43,7 +43,7 @@ class UsersAPIView(APIView):
         serializer = self.serializer_class(data = user)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        user_data = serializer.data
+        # user_data = serializer.data
 
         # user = User.objects.get(email=user_data['email'])
         # token = RefreshToken.for_user(user).access_token

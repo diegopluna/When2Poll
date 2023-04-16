@@ -25,37 +25,43 @@ export const AuthProvider = () => {
     let loginUser = async (e ) => {
 
         e.preventDefault()
-        const response = await axios.post(domain+'/api/token/',{
-            email: e.target.email.value,
-            password: e.target.password.value
-        });
-        if (response.status === 200) {
-            setAuthTokens(response.data)
-            setUser(jwt_decode(response.data.access))
-            localStorage.setItem('authTokens', JSON.stringify(response.data))
-            navigate("/");
-        }else{
-            alert('Usuário ou senha incorretos!')
-        }
+        try {
+            const response = await axios.post(domain+'/api/token/',{
+                email: e.target.email.value,
+                password: e.target.password.value
+            });
+            if (response.status === 200) {
+                setAuthTokens(response.data)
+                setUser(jwt_decode(response.data.access))
+                localStorage.setItem('authTokens', JSON.stringify(response.data))
+                navigate("/");
+            }
+        } catch (error) {
+            return ["Usuário ou senha incorreta", "danger", true]
+        }   
     }
 
     let signUpUser = async (e ) => {
 
         e.preventDefault()
         if (e.target.password.value === e.target.passwordConfirm.value) {
-            const response = await axios.post(domain+'/api/register/',{
-                full_name: e.target.firstName.value+' '+e.target.lastName.value,
-                email: e.target.email.value,
-                password: e.target.password.value
-            });
-            if (response.status === 201){
-                alert("Conta criada!")
-            } else {
-                alert("Esse email já está sendo utilizado")
+            try {
+                const response = await axios.post(domain+'/api/register/',{
+                    full_name: e.target.firstName.value+' '+e.target.lastName.value,
+                    email: e.target.email.value,
+                    password: e.target.password.value
+                })
+                console.log(response.status)
+                if (response.status === 201){
+                    return ["Conta criada", "success", true]
+                }
+            } catch (error) {
+                if (error.response.status === 400) {
+                    return ["Email já está em uso!", "danger", true]
+                }
             }
-
         }else{
-            alert("As senhas devem ser iguais")
+            return ["As senhas devem ser iguais", "danger", true]
         }
         
     }
