@@ -7,6 +7,8 @@ import AuthContext from '../context/AuthProvider'
 const LoginPage = () => {
 
   let {loginUser} = useContext(AuthContext)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [show, setShow] = useState(false);
   const [alertText, setAlertText] = useState('')
   const [alertType, setAlertType] = useState('success')
@@ -18,6 +20,8 @@ const LoginPage = () => {
     setAlertType(signUpReturn[1])
     setAlertText(signUpReturn[0])
     setShow(signUpReturn[2])
+    setEmail('')
+    setPassword('')
   }
 
   return (
@@ -29,10 +33,10 @@ const LoginPage = () => {
         </Alert> 
         <form style={styles.form} onSubmit={handleSubmit}>
             <div className='form-group' style={styles.formGroup}>
-              <input className='form-control' type="email" name="email" placeholder="Email" required/>
+              <input value={email} className='form-control' type="email" name="email" placeholder="Email" onChange={event => setEmail(event.target.value)} required/>
             </div>
             <div className='form-group' style={styles.formGroup}>
-              <input className='form-control' type="password" name="password" placeholder="Senha" required/>
+              <input value={password} className='form-control' type="password" name="password" placeholder="Senha" onChange={event => setPassword(event.target.value)} required/>
             </div>
             <div className='form-group form-check' style={styles.formGroup}>
             <input type="checkbox" className="form-check-input" name="rememberCheck"/>
