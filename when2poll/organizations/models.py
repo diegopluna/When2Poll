@@ -6,13 +6,12 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class group_group(models.Model):
-    group_name = models.CharField(max_length=100)
-    description = models.CharField(max_lenght=500)
+class Organization(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=500)
     members = models.ManyToManyField(User, related_name='grupos')
 
-class invitation(models.Model):
-    group_01 = models.ForeignKey(group_group, on_delete=models.CASCADE)
+class OrgInvitation(models.Model):
+    group = models.ForeignKey(Organization, on_delete=models.CASCADE)
     member = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.TextField()
-    acptance = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False)

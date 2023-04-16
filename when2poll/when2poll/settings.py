@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     #created apps
     'accounts',
     'polls',
-    'reactroutes'
+    'reactroutes',
     'organizations'
 ]
 

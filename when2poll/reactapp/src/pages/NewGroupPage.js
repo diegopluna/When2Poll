@@ -36,7 +36,7 @@ const NewGroupPage = () => {
             </div>
         </nav>
 
-        <div className='d-flex min-vh-100 min-vw-100 justify-content-center align-items-center' style={styles.body} >
+        <div className='d-flex min-vw-100 justify-content-center align-items-center' >
             <div  style={styles.login} >
                 <p className='h1 text-center' style={styles.title} >Novo Grupo</p>
                 <form style={styles.form}>
@@ -44,9 +44,12 @@ const NewGroupPage = () => {
                     <input value={name} className='form-control' type="text" name="name" placeholder="Nome" onChange={event => setName(event.target.value)} required/>
                     </div>
                     <div className='form-group' style={styles.formGroup}>
-                    <textarea value={description} className='form-control' name="description" placeholder="Descrição" onChange={event => setDescription(event.target.value)} required/>
+                    <textarea style={styles.desc} value={description} className='form-control' name="description" placeholder="Descrição" onChange={event => setDescription(event.target.value)} required/>
                     </div>
-                    <button style={styles.button} type="submit" className="btn btn-success w-100" >Criar Grupo</button>
+                    <h4 className='text-center'>Convidar pessoas</h4>
+
+                    <button style={styles.button} type="submit" className="btn btn-success w-100" >Criar grupo</button>
+                    
                 </form>
             </div>
         </div>
@@ -62,13 +65,13 @@ const styles = {
       width: "360px",
       height: "min-content",
       padding: "20px",
-      borderRadius: "12px",
-      backgroundColor: '#393E46'
+    //   borderRadius: "12px",
+    //   backgroundColor: '#393E46'
     },
     title: {
       fontSize: "36px",
       marginBottom: "25px",
-      color:'#EEEEEE'
+    //   color:'#EEEEEE'
     },
     form: {
       fontSize: "20px"
@@ -81,6 +84,9 @@ const styles = {
     },
     remember: {
       color: '#EEEEEE'
+    },
+    desc : {
+        resize: 'none'
     }
   }
 
