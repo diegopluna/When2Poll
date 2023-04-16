@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'accounts',
     'polls',
     'reactroutes'
+    'organizations'
 ]
 
 AUTH_USER_MODEL = 'accounts.User' #changes the built-in user model to ours
