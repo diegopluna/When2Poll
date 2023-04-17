@@ -1,11 +1,27 @@
 import React, { useState } from 'react'
 import Nav from 'react-bootstrap/Nav'
+import useAxios from "../utils/useAxios";
+
 
 
 const NewGroupPage = () => {
 
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
+
+    const api = useAxios();
+
+    const handleSubmit = async (e ) => {
+      e.preventDefault()
+
+      const response = await api.post('/orgs/organizations/',{
+        name: e.target.name.value,
+        description: e.target.description.value
+      });
+      console.log(response)
+      setDescription('')
+      setName('')
+    }
 
     return (
     <div>
@@ -39,7 +55,7 @@ const NewGroupPage = () => {
         <div className='d-flex min-vw-100 justify-content-center align-items-center' >
             <div  style={styles.login} >
                 <p className='h1 text-center' style={styles.title} >Novo Grupo</p>
-                <form style={styles.form}>
+                <form style={styles.form} onSubmit={handleSubmit}>
                     <div className='form-group' style={styles.formGroup}>
                     <input value={name} className='form-control' type="text" name="name" placeholder="Nome" onChange={event => setName(event.target.value)} required/>
                     </div>

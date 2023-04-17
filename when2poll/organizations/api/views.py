@@ -13,8 +13,9 @@ class OrganizationList(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        data = request.data
+        data['owner'] = request.user.pk
         serializer = OrganizationSerializer(data=request.data)
-
         if serializer.is_valid():
             serializer.save(owner=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
