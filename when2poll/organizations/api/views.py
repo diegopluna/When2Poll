@@ -2,8 +2,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from django.contrib.auth import get_user_model
 from organizations.models import Organization, OrgInvitation
 from .serializers import OrganizationSerializer, OrgInvitationSerializer
+
+User = get_user_model()
 
 class OrganizationList(APIView):
     permission_classes = (IsAuthenticated, )
@@ -15,7 +18,7 @@ class OrganizationList(APIView):
     def post(self, request):
         data = request.data
         data['owner'] = request.user.pk
-        serializer = OrganizationSerializer(data=request.data)
+        serializer = OrganizationSerializer(data=data)
         if serializer.is_valid():
             serializer.save(owner=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -26,14 +29,17 @@ class OrganizationList(APIView):
 class InvitationCreate(APIView):
     permission_classes = (IsAuthenticated, )
     def post(self, request, pk):
-        organization = Organization.objects.get(pk=pk)
-        serializer = OrgInvitationSerializer(data=request.data)
+        data = request.data
+        if(Organization.objects.get(pk=pk)):
+            data['organization'] = pk
+            serializer = OrgInvitationSerializer(data=data)
 
-        if serializer.is_valid():
-            serializer.save(organization=organization)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class InvitationList(APIView):
