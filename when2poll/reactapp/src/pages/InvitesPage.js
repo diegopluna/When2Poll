@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Card from 'react-bootstrap/Card';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+
 import useAxios from '../utils/useAxios'
 
 
@@ -12,6 +15,11 @@ const InvitesPage = () => {
 
   async function acceptInvite(inviteId) {
     await api.get(`/orgs/invitation/${inviteId}/accept/`)
+    window.location.reload(true)
+  }
+
+  async function rejectInvite(inviteId) {
+    await api.get(`/orgs/invitation/${inviteId}/reject/`)
     window.location.reload(true)
   }
 
@@ -52,7 +60,10 @@ const InvitesPage = () => {
               {orgData?.name}
             </Card.Body>                      
             <Card.Footer className='text-center'>
-              <button className='text-center' variant="primary" onClick={() => acceptInvite(item.id)}>Aceitar Convite</button>
+              <DropdownButton id="dropdown-basic-button" title="Ação">
+                <Dropdown.Item onClick={() => acceptInvite(item.id)}>Aceitar</Dropdown.Item>
+                <Dropdown.Item onClick={() => rejectInvite(item.id)}>Recusar</Dropdown.Item>
+              </DropdownButton>
             </Card.Footer>
           </Card>
         </div>

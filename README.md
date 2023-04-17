@@ -82,3 +82,11 @@ Backlog do Jira
 ![image](https://user-images.githubusercontent.com/111078608/228092997-454f4c0f-0fc0-4279-9161-fb43ebd275b3.png)
 ![image](https://user-images.githubusercontent.com/111078608/228093029-f774b048-c511-49d0-8d65-4799246400f9.png)
 
+
+## Entrega 02
+
+
+
+### Relato programação em pares
+
+https://docs.google.com/document/d/1vgzDEOPSKoXRHU4viP0DTabFN5ODX0bRgQ28WmqPey4/edit?usp=sharing

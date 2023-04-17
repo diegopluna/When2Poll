@@ -31,7 +31,6 @@ const GroupPage = () => {
                     return api.get(`/orgs/organizations/${groupId}/members/`)
                 })
                 .then(response => {
-                    console.log(response)
                     setMembersData(response.data)
                     return response.data
                 })
@@ -39,7 +38,6 @@ const GroupPage = () => {
                     return api.get(`/orgs/organizations/${groupId}/invited/`)
                 })
                 .then(response => {
-                    console.log(response)
                     setInvited(response.data)
                     return response.data
                 })
