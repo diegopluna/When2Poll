@@ -26,6 +26,22 @@ class OrganizationList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+class GetUserOrganizationsView(APIView):
+    permission_classes = (IsAuthenticated, )
+    def get(self, request):
+        owned_organizations = Organization.objects.filter(owner=request.user.id)
+        member_organizations = OrgInvitation.objects.filter(user=request.user.id, accepted=True)
+        data = []
+        for owned_organization in owned_organizations:
+            data.append({"id":owned_organization.id,"name":owned_organization.name})
+        for member_organization in member_organizations:
+            org = member_organization.organization
+            data.append({"id":org.id,"name":org.name})
+
+        return Response(data)
+
+
 class InvitationCreate(APIView):
     permission_classes = (IsAuthenticated, )
     def post(self, request, pk):

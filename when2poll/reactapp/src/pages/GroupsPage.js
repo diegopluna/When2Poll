@@ -1,9 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Nav from 'react-bootstrap/Nav'
 import NavLink from 'react-bootstrap/NavLink';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import useAxios from '../utils/useAxios';
+
 
 
 const GroupsPage = () => {
+
+  const [data, setData] = useState([])
+
+  const api = useAxios()
+
+  
+
+  useEffect(async () => {
+
+
+    const getGroupsList = async () => {
+      const response = await api.get('/orgs/organizations/user/');
+      console.log(response)
+      setData(response.data)
+    }
+
+    getGroupsList()
+
+  },[])
+
   return (
     <div>
         <nav className='navbar navbar-expand-md navbar-light d-none d-lg-block' role='navigation'>
@@ -31,8 +55,20 @@ const GroupsPage = () => {
             </Nav>
           </div>
         </nav>
+
+        {data.map(item => (
+          <div className='d-flex min-vw-100 justify-content-center align-items-center mt-2' >
+            <Card style={{width: '80%'}}>
+              <Card.Body className='text-center'>
+                {item.name}
+              </Card.Body>
+              <Card.Footer className='text-center'>
+                <Button className='text-center' variant="primary">Ver detalhes</Button>
+              </Card.Footer>
+            </Card>
+          </div>
+        ))}
         
-        <p>Groups</p>
     </div>
   )
 }
