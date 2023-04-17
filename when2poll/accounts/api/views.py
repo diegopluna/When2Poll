@@ -97,3 +97,34 @@ class LogoutView(APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+
+class GetUserByEmailView(APIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, email, format=None):
+        if request.user.email == email:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        user = User.objects.get(email=email)
+        serialized_users = {'id': user.id, 'full_name': user.full_name, 'email': user.email}
+        return Response(serialized_users)
+    
+class GetUserByPK(APIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, pk): 
+        user = User.objects.get(id=pk)
+        serialized_user = {'id': user.id, 'full_name': user.full_name, 'email': user.email}
+        return Response(serialized_user)
+
+    
+class GetUsersView(APIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        users = User.objects.exclude(id=request.user.id)
+        serialized_users = [{'id': user.id, 'full_name': user.full_name, 'email': user.email} for user in users]
+        return Response(serialized_users)

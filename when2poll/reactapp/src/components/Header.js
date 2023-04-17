@@ -73,11 +73,11 @@ const Header = (props) => {
           <div className='container-fluid'>
             <a className='navbar-brand'>When2Poll</a>
             <Dropdown as={NavItem}>
-                <Dropdown.Toggle as={NavLink}>{user?.full_name}</Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={logoutUser}>Sair</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <Dropdown.Toggle as={NavLink}>{user?.full_name}</Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={logoutUser}>Sair</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <Nav className='w-100'>
             <div className='d-flex flex-row justify-content-around w-100'>
               
