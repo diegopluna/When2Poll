@@ -34,12 +34,19 @@ class GetUserOrganizationsView(APIView):
         member_organizations = OrgInvitation.objects.filter(user=request.user.id, accepted=True)
         data = []
         for owned_organization in owned_organizations:
-            data.append({"id":owned_organization.id,"name":owned_organization.name})
+            data.append({"id":owned_organization.id,"name":owned_organization.name,"owner": True})
         for member_organization in member_organizations:
             org = member_organization.organization
-            data.append({"id":org.id,"name":org.name})
+            data.append({"id":org.id,"name":org.name,"owner":False})
 
         return Response(data)
+
+class GetOrganizationView(APIView):
+    permission_classes = (IsAuthenticated, )
+    def get(self, request, pk):
+        organization = Organization.objects.get(pk=pk)
+        serializer = OrganizationSerializer(organization)
+        return Response(serializer.data)
 
 
 class InvitationCreate(APIView):

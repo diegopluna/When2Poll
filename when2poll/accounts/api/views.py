@@ -110,6 +110,16 @@ class GetUserByEmailView(APIView):
         serialized_users = {'id': user.id, 'full_name': user.full_name, 'email': user.email}
         return Response(serialized_users)
     
+class GetUserByPK(APIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, pk): 
+        user = User.objects.get(id=pk)
+        serialized_user = {'id': user.id, 'full_name': user.full_name, 'email': user.email}
+        return Response(serialized_user)
+
+    
 class GetUsersView(APIView):
 
     permission_classes = (IsAuthenticated,)
