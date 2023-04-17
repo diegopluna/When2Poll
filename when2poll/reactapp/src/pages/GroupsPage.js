@@ -14,7 +14,7 @@ const GroupsPage = () => {
 
   
 
-  useEffect(async () => {
+  useEffect( () => {
 
 
     const getGroupsList = async () => {
