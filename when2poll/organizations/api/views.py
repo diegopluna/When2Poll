@@ -72,3 +72,42 @@ class InvitationList(APIView):
         invitations = OrgInvitation.objects.filter(organization=organization)
         serializer = OrgInvitationSerializer(invitations, many=True)
         return Response(serializer.data)
+    
+class UserInvitationList(APIView):
+    permission_classes = (IsAuthenticated, )
+    def get(self, request):
+        invitations = OrgInvitation.objects.filter(user=request.user,accepted=False)
+        serializer = OrgInvitationSerializer(invitations, many=True)
+        return Response(serializer.data)
+
+class AcceptedInvitationList(APIView):
+    permission_classes = (IsAuthenticated, )
+    def get(self, request, pk):
+        organization = Organization.objects.get(pk=pk)
+        invitations = OrgInvitation.objects.filter(organization=organization, accepted = True)
+        data =[]
+        for invite in invitations:
+            user = User.objects.get(pk=invite.user.id)
+            data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email})   
+        return Response(data)
+
+class NotAcceptedInvitationList(APIView):
+    permission_classes = (IsAuthenticated, )
+    def get(self, request, pk):
+        organization = Organization.objects.get(pk=pk)
+        invitations = OrgInvitation.objects.filter(organization=organization, accepted = False)
+        data =[]
+        for invite in invitations:
+            user = User.objects.get(pk=invite.user.id)
+            data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email})   
+        return Response(data)
+    
+class AcceptInvitation(APIView):
+    permission_classes = (IsAuthenticated, )
+    def get(self, request, pk):
+        invitation = OrgInvitation.objects.get(id=pk)
+        if not invitation.accepted:
+            invitation.accepted = True
+            invitation.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)

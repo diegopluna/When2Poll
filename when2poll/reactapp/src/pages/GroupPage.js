@@ -7,6 +7,8 @@ const GroupPage = () => {
 
     const [data, setData] = useState(null)
     const [ownerData, setOwnerData] = useState(null)
+    const [members, setMembersData] = useState([])
+    const [invited, setInvited] = useState([])
     const {groupId} = useParams()
 
     const api = useAxios()
@@ -25,7 +27,22 @@ const GroupPage = () => {
                     setOwnerData(response.data)
                     return(response.data)
                 })
-
+                .then((data) => {
+                    return api.get(`/orgs/organizations/${groupId}/members/`)
+                })
+                .then(response => {
+                    console.log(response)
+                    setMembersData(response.data)
+                    return response.data
+                })
+                .then((data) => {
+                    return api.get(`/orgs/organizations/${groupId}/invited/`)
+                })
+                .then(response => {
+                    console.log(response)
+                    setInvited(response.data)
+                    return response.data
+                })
         }
 
         fetchPageData()
@@ -74,10 +91,24 @@ const GroupPage = () => {
                     </thead>
                     <tbody>
                         <tr>
-                        <th scope="col">{ownerData?.full_name}</th>
-                        <th scope="col">{ownerData?.email}</th>
-                        <th scope="col">Criador</th>
+                            <th scope="col">{ownerData?.full_name}</th>
+                            <th scope="col">{ownerData?.email}</th>
+                            <th scope="col">Criador</th>
                         </tr>
+                        {members.map(item => (
+                            <tr>
+                                <th scope="col">{item.full_name}</th>
+                                <th scope="col">{item.email}</th>
+                                <th scope="col">Membro</th>
+                            </tr>
+                        ))}
+                        {invited.map(item => (
+                            <tr>
+                                <th scope="col">{item.full_name}</th>
+                                <th scope="col">{item.email}</th>
+                                <th scope="col">Convidado</th>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
           </div>
