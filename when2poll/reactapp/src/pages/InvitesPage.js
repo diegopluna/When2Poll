@@ -10,7 +10,7 @@ const InvitesPage = () => {
   const api = useAxios()
 
   async function acceptInvite(inviteId) {
-    await api.get(`invitation/${inviteId}/accept/`)
+    await api.get(`/orgs/invitation/${inviteId}/accept/`)
   }
 
   async function getOrgData(groupId) {
