@@ -18,6 +18,7 @@ class OrgInvitation(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     accepted = models.BooleanField(default=False)
+    answered = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.email

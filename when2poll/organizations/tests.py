@@ -5,51 +5,52 @@ from .models import Organization, OrgInvitation
 User = get_user_model()
 
 class OrganizationModelTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.test_user = User.objects.create_user(full_name='test user', email='test@example.com', password='testpass')
-        cls.test_organization = Organization.objects.create(
+    def setUp(self):
+        self.user = User.objects.create_user(
+            full_name='test user',
+            email='testuser@example.com',
+            password='testpass'
+        )
+        self.organization = Organization.objects.create(
             name='Test Organization',
-            description='This is a test organization',
-            owner=cls.test_user
+            description='Test description',
+            owner=self.user
         )
 
     def test_organization_name(self):
-        organization = Organization.objects.get(id=self.test_organization.id)
-        expected_name = 'Test Organization'
-        self.assertEqual(organization.name, expected_name)
+        self.assertEqual(str(self.organization), 'Test Organization')
 
     def test_organization_owner(self):
-        organization = Organization.objects.get(id=self.test_organization.id)
-        expected_owner = self.test_user
-        self.assertEqual(organization.owner, expected_owner)
+        self.assertEqual(self.organization.owner, self.user)
+
 
 class OrgInvitationModelTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.test_user = User.objects.create_user(full_name='test user', email='test@example.com', password='testpass')
-        cls.test_organization = Organization.objects.create(
+    def setUp(self):
+        self.user = User.objects.create_user(
+            full_name='test user',
+            email='testuser@example.com',
+            password='testpass'
+        )
+        self.organization = Organization.objects.create(
             name='Test Organization',
-            description='This is a test organization',
-            owner=cls.test_user
+            description='Test description',
+            owner=self.user
         )
-        cls.test_invitation = OrgInvitation.objects.create(
-            organization=cls.test_organization,
-            user=cls.test_user,
-            accepted=False
+        self.org_invitation = OrgInvitation.objects.create(
+            organization=self.organization,
+            user=self.user,
+            accepted=False,
+            answered=False
         )
-
-    def test_org_invitation_organization(self):
-        invitation = OrgInvitation.objects.get(id=self.test_invitation.id)
-        expected_organization = self.test_organization
-        self.assertEqual(invitation.organization, expected_organization)
 
     def test_org_invitation_user(self):
-        invitation = OrgInvitation.objects.get(id=self.test_invitation.id)
-        expected_user = self.test_user
-        self.assertEqual(invitation.user, expected_user)
+        self.assertEqual(str(self.org_invitation), 'testuser@example.com')
+
+    def test_org_invitation_organization(self):
+        self.assertEqual(self.org_invitation.organization, self.organization)
 
     def test_org_invitation_accepted(self):
-        invitation = OrgInvitation.objects.get(id=self.test_invitation.id)
-        expected_accepted = False
-        self.assertEqual(invitation.accepted, expected_accepted)
+        self.assertFalse(self.org_invitation.accepted)
+
+    def test_org_invitation_answered(self):
+        self.assertFalse(self.org_invitation.answered)
