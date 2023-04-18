@@ -148,6 +148,12 @@ Instruções de uso:
 https://user-images.githubusercontent.com/111078608/232656893-72f30856-edf8-4d84-a888-e4ce675c1b73.mp4
 
 
+### Print Issues Github
+
+
+![Screenshot 2023-04-18 at 00 01 34](https://user-images.githubusercontent.com/111078608/232660115-13b6fe30-1a29-42ea-b9a9-90f689726e40.png)
+
+![Screenshot 2023-04-18 at 00 01 56](https://user-images.githubusercontent.com/111078608/232660068-b91af277-7cf3-428d-a216-aa92058b9c69.png)
 
 
 
