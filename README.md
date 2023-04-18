@@ -86,7 +86,19 @@ Backlog do Jira
 ## Entrega 02
 
 
+### Diagrama de atividades
+
+
+![Diagramando nosso caminho para o sucesso_ Um estudo de caso do uso de diagramas de atividades no desenvolvimento de software_](https://user-images.githubusercontent.com/111078608/232639792-83e89c1c-af27-41c6-a2d4-e7a62be98ac4.png)
+
 
 ### Relato programação em pares
 
 https://docs.google.com/document/d/1vgzDEOPSKoXRHU4viP0DTabFN5ODX0bRgQ28WmqPey4/edit?usp=sharing
+
+### Deploy de algumas histórias
+
+Adicionar link do projeto, screencast e instruções
+
+### Quadro do JIRA refletindo a entrega
+

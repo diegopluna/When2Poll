@@ -21,11 +21,21 @@ const RegisterPage = () => {
     setAlertType(signUpReturn[1])
     setAlertText(signUpReturn[0])
     setShow(signUpReturn[2])
-    setFirstName('')
-    setLastName('')
-    setEmail('')
-    setPassword('')
-    setPasswordConfirm('')
+    if (signUpReturn[3] === 1)
+    {
+      setFirstName('')
+      setLastName('')
+      setEmail('')
+      setPassword('')
+      setPasswordConfirm('')
+    } else if (signUpReturn[3] === 2) {
+      setEmail('')
+      setPassword('')
+      setPasswordConfirm('')
+    } else if (signUpReturn[3] === 3) {
+      setPassword('')
+      setPasswordConfirm('')
+    }
   }
 
   return (
@@ -51,6 +61,9 @@ const RegisterPage = () => {
             </div>
             <div className='form-group' style={styles.formGroup}>
               <input value={passwordConfirm} className='form-control' type="password" name="passwordConfirm" placeholder="Confirmar senha" onChange={event => setPasswordConfirm(event.target.value)} required/>
+              <div id="passwordHelpBlock" class="form-text">
+                A senha deve ter pelo menos 8 caracteres.
+              </div>
             </div>
             <button style={styles.button} type="submit" className="btn btn-success w-100">Criar conta</button>
             <Link to={"/login"}>Login</Link>
@@ -63,19 +76,19 @@ const RegisterPage = () => {
 
 const styles = {
   body: {
-    backgroundColor: '#222831'
+    backgroundColor: '#EEEEEE'
   },
   login: {
     width: "360px",
     height: "min-content",
     padding: "20px",
-    borderRadius: "12px",
-    backgroundColor: '#393E46'
+    // borderRadius: "12px",
+    // backgroundColor: '#393E46'
   },
   title: {
     fontSize: "36px",
     marginBottom: "25px",
-    color:'#EEEEEE'
+    // color:'#EEEEEE'
   },
   form: {
     fontSize: "20px"
@@ -87,7 +100,7 @@ const styles = {
     backgroundColor: "#00ADB5"
   },
   remember: {
-    color: '#EEEEEE'
+    // color: '#EEEEEE'
   }
 }
 
