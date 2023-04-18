@@ -52,16 +52,17 @@ export const AuthProvider = () => {
                 })
                 console.log(response.status)
                 if (response.status === 201){
-                    return ["Conta criada", "success", true]
+                    navigate("/login")
+                    return ["Conta criada", "success", true,1]
                 }
             } catch (error) {
                 if (error.response.data.email[0] === "user with this email already exists.") {
-                    return ["Email já está em uso!", "danger", true]
+                    return ["Email já está em uso!", "danger", true,2]
                 }
-                return ["Erro de conexão com o servidor", "danger", true]
+                return ["Erro de conexão com o servidor", "danger", true,3]
             }
         }else{
-            return ["As senhas devem ser iguais", "danger", true]
+            return ["As senhas devem ser iguais", "danger", true,3]
         }
         
     }

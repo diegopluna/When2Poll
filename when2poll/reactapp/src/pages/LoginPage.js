@@ -38,10 +38,10 @@ const LoginPage = () => {
             <div className='form-group' style={styles.formGroup}>
               <input value={password} className='form-control' type="password" name="password" placeholder="Senha" onChange={event => setPassword(event.target.value)} required/>
             </div>
-            <div className='form-group form-check' style={styles.formGroup}>
+            {/* <div className='form-group form-check' style={styles.formGroup}>
             <input type="checkbox" className="form-check-input" name="rememberCheck"/>
             <label style={styles.remember} className="form-check-label">Lembrar de mim</label>
-            </div>
+            </div> */}
             <button style={styles.button} type="submit" className="btn btn-success w-100" >Entrar</button>
             <Link to={"/register"}>Criar conta</Link>
         </form>
@@ -53,19 +53,19 @@ const LoginPage = () => {
 
 const styles = {
   body: {
-    backgroundColor: '#222831'
+    backgroundColor: '#EEEEEE'
   },
   login: {
     width: "360px",
     height: "min-content",
     padding: "20px",
-    borderRadius: "12px",
-    backgroundColor: '#393E46'
+    // borderRadius: "12px",
+    // backgroundColor: '#393E46'
   },
   title: {
     fontSize: "36px",
     marginBottom: "25px",
-    color:'#EEEEEE'
+    // color:'#EEEEEE'
   },
   form: {
     fontSize: "20px"
@@ -77,7 +77,7 @@ const styles = {
     backgroundColor: "#00ADB5"
   },
   remember: {
-    color: '#EEEEEE'
+    // color: '#EEEEEE'
   }
 }
 
