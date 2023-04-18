@@ -102,3 +102,6 @@ Adicionar link do projeto, screencast e instruções
 
 ### Quadro do JIRA refletindo a entrega
 
+![quadro FDS - Equipe ágil - Jira](https://user-images.githubusercontent.com/111078608/232652516-4a9f07b6-e2af-4836-a8d1-b142e876cf6a.png)
+
+![quadro FDS - Equipe ágil - Jira](https://user-images.githubusercontent.com/111078608/232652659-c0cac856-5e09-4b6d-afd6-95edc5f247b8.png)
