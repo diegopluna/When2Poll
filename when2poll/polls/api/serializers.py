@@ -1,16 +1,18 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from polls.models import AvailabilityPoll, DateTimeRange
+from datetime import timedelta
 
 User = get_user_model()
 
 class DateTimeRangeSerializer(serializers.ModelSerializer):
+    matrix = serializers.JSONField(required=False)
     class Meta:
         model = DateTimeRange
-        fields = '__all__'
-    
-    def create(self, validated_data):
-        range = DateTimeRange.objects.create(start_time=validated_data['start_time'], end_time=validated_data['end_time'])
+        fields = ('start_time', 'end_time', 'matrix')
+
+    def create(self, validated_data): 
+        range = DateTimeRange.objects.create(start_time=validated_data['start_time'], end_time=validated_data['end_time'], matrix=validated_data['matrix'])
         range.save()
         return range
 
@@ -29,8 +31,18 @@ class AvailabilityPollSerializer(serializers.ModelSerializer):
         admins_data = validated_data.pop('admins')
         poll = AvailabilityPoll.objects.create(**validated_data)
 
-        for range in datetime_ranges_data:
-            poll.datetime_ranges.add(DateTimeRangeSerializer.create(self, validated_data=range))
+        for range_data in datetime_ranges_data:
+            range_data['poll'] = poll
+            
+            cursor = range_data['start_time']
+            end_time = range_data['end_time']
+            matrix = []
+            while cursor < end_time:
+                matrix.append({"start_time": cursor.isoformat(), "availability": 0})
+                cursor += timedelta(minutes=15)
+            range_data['matrix'] = matrix
+
+            DateTimeRange.objects.create(**range_data)
 
         for admin in admins_data:
             poll.admins.add(admin)
@@ -39,7 +51,6 @@ class AvailabilityPollSerializer(serializers.ModelSerializer):
             poll.participants.add(participant)
 
         return poll
-
     # name = serializers.CharField(max_length=255)
     # description = serializers.TextField(blank=True)
     # duration = serializers.DurationField()
