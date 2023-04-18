@@ -9,8 +9,7 @@ import useAxios from '../utils/useAxios'
 const InvitesPage = () => {
 
   const [groupInvites, setGroupInvites] = useState([])
-  const [orgData, setOrgData] = useState(null)
-
+  const [orgData, setOrgData] = useState({})
   const api = useAxios()
 
   async function acceptInvite(inviteId) {
@@ -25,10 +24,9 @@ const InvitesPage = () => {
 
   async function getOrgData(groupId) {
     const response = await api.get(`/orgs/organizations/${groupId}/`)
-    setOrgData(response.data)
+    setOrgData((prevOrgData) => ({ ...prevOrgData, [groupId]: response.data }))
   }
 
-  
   useEffect(() => {
 
     const getGroupInvitesList = async () => {
@@ -40,10 +38,12 @@ const InvitesPage = () => {
   },[])
 
   useEffect(() => {
-    if (groupInvites.length > 0) {
-      getOrgData(groupInvites[0].organization)
-    }
-  }, [groupInvites])
+    groupInvites.forEach((invite) => {
+      if(!orgData[invite.organization]) {
+        getOrgData(invite.organization)
+      }
+    })
+  }, [groupInvites, orgData])
 
   return (
     <div>
@@ -57,7 +57,7 @@ const InvitesPage = () => {
         <div className='d-flex min-vw-90 justify-content-center align-items-center mt-2' key={item.id}>
           <Card style={{width: '80%'}}>
             <Card.Body className='text-center'>
-              {orgData?.name}
+              {orgData[item.organization]?.name}
             </Card.Body>                      
             <Card.Footer className='text-center'>
               <DropdownButton id="dropdown-basic-button" title="Ação">
