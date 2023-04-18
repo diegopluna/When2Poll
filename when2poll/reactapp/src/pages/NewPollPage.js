@@ -204,19 +204,19 @@ const NewPollPage = () => {
 
 const styles = {
   body: {
-    backgroundColor: '#222831'
+    backgroundColor: '#EEEEEE'
   },
   login: {
     width: "360px",
     height: "min-content",
     padding: "20px",
-    borderRadius: "12px",
-    backgroundColor: '#393E46'
+    // borderRadius: "12px",
+    // backgroundColor: '#393E46'
   },
   title: {
     fontSize: "36px",
     marginBottom: "25px",
-    color:'#EEEEEE'
+    // color:'#EEEEEE'
   },
   form: {
     fontSize: "20px",
@@ -228,7 +228,7 @@ const styles = {
     backgroundColor: "#00ADB5"
   },
   remember: {
-    color: '#EEEEEE'
+    // color: '#EEEEEE'
   }
 }
 
