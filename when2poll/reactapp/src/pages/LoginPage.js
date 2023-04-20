@@ -42,7 +42,7 @@ const LoginPage = () => {
             <input type="checkbox" className="form-check-input" name="rememberCheck"/>
             <label style={styles.remember} className="form-check-label">Lembrar de mim</label>
             </div> */}
-            <button style={styles.button} type="submit" className="btn btn-success w-100" >Entrar</button>
+            <button style={styles.button} type="submit" name='submit' className="btn btn-success w-100" >Entrar</button>
             <Link to={"/register"}>Criar conta</Link>
         </form>
       </div>
