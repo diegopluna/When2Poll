@@ -56,8 +56,6 @@ O servidor de desenvolvimento estará disponível, por padrão, em http://localh
 
 ### Screencast Figma
 
-https://user-images.githubusercontent.com/111078608/228082398-c4f2cfd0-324c-4a1c-b81a-2cc9206ef06d.mp4
-
 Link para o protótipo no figma: https://www.figma.com/proto/dOBYkqG9fAgQhbsRznP8sD/Mobile-Wireframe-UI-Kit-(Community)?page-id=427%3A5822&node-id=427-5848&viewport=-121%2C-206%2C0.29&scaling=scale-down&starting-point-node-id=427%3A5848
 
 ### Prints Jira
