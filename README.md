@@ -1,6 +1,6 @@
 # When2Poll
 
-## Grupo: Arthur Lins Wolmer, Diego Peter Luna, Mathews Ivo Tavares, Rafael Roque Vieira dos Santos, João Antônio Sampaio Ferreira, João Pedro Batista, João Pedro Araújo
+## Grupo: Arthur Lins Wolmer, Diego Peter Luna, Mathews Ivo Tavares, João Antônio Sampaio Ferreira, João Pedro Batista, João Pedro Araújo
 ### Board do Jira: https://fds2023.atlassian.net/jira/software/projects/FDS/boards/1
 
 ## Linguagens e Frameworks Utilizadoss
