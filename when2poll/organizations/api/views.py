@@ -84,7 +84,8 @@ class AcceptedInvitationList(APIView):
     def get(self, request, pk):
         organization = Organization.objects.get(pk=pk)
         invitations = OrgInvitation.objects.filter(organization=organization, accepted = True, answered = True)
-        data =[]
+        data = []
+        data.append({'id': organization.owner.id, 'full_name': organization.owner.full_name, 'email': organization.owner.email})
         for invite in invitations:
             user = User.objects.get(pk=invite.user.id)
             data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email})   

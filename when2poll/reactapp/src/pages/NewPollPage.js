@@ -84,14 +84,15 @@ const NewPollPage = () => {
   
 
   const getParticipantIds = async (selectedGroups) => {
-    let participantIds = [];
+    let participantsTemp = []
     for (const group of selectedGroups) {
       const response = await api.get(`/orgs/organizations/${group.id}/members/`);
       const participants = response.data;
-      participantIds = [...participantIds, ...participants.map(participant => participant.id)];
+      participantsTemp = [...participantsTemp, ...participants.map(participant => participant.id)];
     }
-    console.log(participantIds)
-    return [...new Set(participantIds)];
+    //participantsTemp = [...new Set(participantsTemp)];
+    console.log('participantsTemp:', participantsTemp);
+    return participantsTemp
   }
 
   const handleSubmit = async (e ) => {
@@ -112,7 +113,7 @@ const NewPollPage = () => {
       return result;
     });
 
-    const participantIds = getParticipantIds(selectedGroups);
+    let participantIds = await getParticipantIds(selectedGroups)
 
     if (deadline) {
       let deadlineAux = new Date(deadline).toISOString().slice(0,16) + 'Z';
@@ -139,8 +140,7 @@ const NewPollPage = () => {
     setLatest('')
     setDuration('')
     setDeadline('')
-    participantIds([])
-    setDateRanges('')
+    setDateRanges([[]])
     setSelectedGroups(null)
   }
 
@@ -153,7 +153,7 @@ const NewPollPage = () => {
               <input value={name} className='form-control' type="text" name="name" placeholder="Nome" onChange={event => setName(event.target.value)} required/>
             </div>
             <div className='form-group' style={styles.formGroup}>
-              <input value={description} className='form-control' type="text" name="description" placeholder="Descrição" onChange={event => setDescription(event.target.value)}/>
+              <textarea value={description} className='form-control' type="text" name="description" placeholder="Descrição" onChange={event => setDescription(event.target.value)}/>
             </div>
             <div className='form-group' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
               <div className='form-group' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
