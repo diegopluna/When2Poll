@@ -35,6 +35,7 @@ jobs:
     
     - name: Run Local Server
       run: |
+        cd when2poll
         python manage.py runserver &
         sleep 5
         python manage.py test
