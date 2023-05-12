@@ -42,7 +42,14 @@ class AvailabilityPoll(models.Model):
 
     def get_participant_count(self):
         return self.participants.count()
-
+    
+    #def invited_admin(self, participants):
+        #invite a participant to become an admin
+        #if self.owner == participants or participants in self.admins.all():
+            #user is already an admin or the owner of the poll
+        #    return
+        #self.admins.add(participants)
+        #add participants to admins field
 
 class DateTimeRange(models.Model):
     start_time = models.DateTimeField()
@@ -114,3 +121,4 @@ class Justification(models.Model):
     #         end_utc = end_datetime.astimezone(timezone.utc)
     #         ranges_in_utc.append((start_utc, end_utc))
     #     return ranges_in_utc
+
