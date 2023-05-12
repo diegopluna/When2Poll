@@ -16,7 +16,7 @@ class AvailabilityPoll(models.Model):
     duration = models.TimeField()
     #datetime_ranges = models.ManyToManyField(DateTimeRange, related_name='datetime_ranges')
     deadline = models.DateTimeField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1) #review the on_delete behaviour
+    owner = models.ForeignKey(User, on_delete=models.CASCADE) #review the on_delete behaviour
     admins = models.ManyToManyField(User, related_name='admins')
     participants = models.ManyToManyField(User, related_name='participants')
     defined = models.BooleanField(default=False)
@@ -24,6 +24,18 @@ class AvailabilityPoll(models.Model):
     @property
     def datetime_ranges(self):
         return self.datetimerange_set.all()
+    
+    @property
+    def invited(self):
+        return self.pollinvite_set.all()
+
+    @property
+    def participants(self):
+        return self.pollinvite_set.filter(accepted=True) #query for accepted invites
+    
+    @property
+    def justifications(self):
+        return self.justification_set.all()
 
     def is_expired(self):
         return self.deadline <= timezone.now()
@@ -37,6 +49,23 @@ class DateTimeRange(models.Model):
     end_time = models.DateTimeField()
     poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
     matrix = models.JSONField()
+
+class PollInvite(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE)
+    poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
+    answered = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False)
+
+class PollAnswer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    matrix = models.JSONField(blank=True)
+    avaliable = models.BooleanField(default=True)
+
+class Justification(models.Model):
+    justification = models.TextField(max_length=1000)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, )
+    poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
     
     # def serialize(self):
     #     data = {
