@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from polls.models import AvailabilityPoll, DateTimeRange
+from polls.models import AvailabilityPoll, DateTimeRange, PollInvite, PollAnswer, Justification
 from datetime import timedelta
 
 User = get_user_model()
@@ -51,6 +51,25 @@ class AvailabilityPollSerializer(serializers.ModelSerializer):
             poll.participants.add(participant)
 
         return poll
+    
+
+class PollInviteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PollInvite
+        fields = ('sender', 'receiver','poll', 'answered', 'accepted')
+
+
+class PollAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PollAnswer
+        fields = ['user', 'matrix', 'available']
+
+class JustificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Justification
+        fields = ['justification', 'user', 'poll']
+
+
     # name = serializers.CharField(max_length=255)
     # description = serializers.TextField(blank=True)
     # duration = serializers.DurationField()

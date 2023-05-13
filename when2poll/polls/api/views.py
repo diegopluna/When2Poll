@@ -2,15 +2,55 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
+from rest_framework import status, generics, permissions
+
 #from rest_framework.renderers import JSONRenderer
-from polls.api.serializers import AvailabilityPollSerializer
+from polls.api.serializers import AvailabilityPollSerializer, PollInviteSerializer, PollAnswerSerializer, JustificationSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from polls.models import AvailabilityPoll
+from polls.models import AvailabilityPoll, PollInvite, PollAnswer, Justification
 from django.db.models import Q
 from django.http import JsonResponse
 # Create your views here.
+
+class PollInviteList(generics.ListCreateAPIView):
+    queryset = PollInvite.objects.all()
+    serializer_class = PollInviteSerializer
+
+class PollInviteDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PollInvite.objects.all()
+    serializer_class = PollInviteSerializer
+
+class PollAnswerList(generics.ListCreateAPIView):
+    queryset = PollAnswer.objects.all()
+    serializer_class = PollAnswerSerializer
+
+
+class PollAnswerDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PollAnswer.objects.all()
+    serializer_class = PollAnswerSerializer
+
+class JustificationList(generics.ListCreateAPIView):
+    serializer_class = JustificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Justification.objects.filter(user=user)
+        poll_id = self.request.query_params.get('poll_id')
+        if poll_id:
+            queryset = queryset.filter(poll__id=poll_id)
+        return queryset
+
+class JustificationDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Justification.objects.all()
+    serializer_class = JustificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Justification.objects.filter(user=user)
+        return queryset
 
 
 class AvailabilityPollView(APIView):
@@ -53,3 +93,9 @@ class AvailiabilityAnswerView(APIView):
     serializer_class = AvailabilityPollSerializer
 
     @swagger_auto_schema(request_body=serializer_class, responses={201: serializer_class})
+
+
+
+
+
+    
