@@ -13,24 +13,24 @@ from django.db.models import Q
 from django.http import JsonResponse
 # Create your views here.
 
-class PollInviteList(generics.ListCreateAPIView):
+class PollInviteListView(generics.ListCreateAPIView):
     queryset = PollInvite.objects.all()
     serializer_class = PollInviteSerializer
 
-class PollInviteDetail(generics.RetrieveUpdateDestroyAPIView):
+class PollInviteDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = PollInvite.objects.all()
     serializer_class = PollInviteSerializer
 
-class PollAnswerList(generics.ListCreateAPIView):
+class PollAnswerListView(generics.ListCreateAPIView):
     queryset = PollAnswer.objects.all()
     serializer_class = PollAnswerSerializer
 
 
-class PollAnswerDetail(generics.RetrieveUpdateDestroyAPIView):
+class PollAnswerDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = PollAnswer.objects.all()
     serializer_class = PollAnswerSerializer
 
-class JustificationList(generics.ListCreateAPIView):
+class JustificationListView(generics.ListCreateAPIView):
     serializer_class = JustificationSerializer
     permission_classes = [permissions.IsAuthenticated]
     
@@ -42,7 +42,7 @@ class JustificationList(generics.ListCreateAPIView):
             queryset = queryset.filter(poll__id=poll_id)
         return queryset
 
-class JustificationDetail(generics.RetrieveUpdateDestroyAPIView):
+class JustificationDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Justification.objects.all()
     serializer_class = JustificationSerializer
     permission_classes = [permissions.IsAuthenticated]
