@@ -39,6 +39,8 @@ jobs:
       run: |
         cd when2poll/reactapp
         npm run build
+      env:
+        CI: ""
       
     - name: Install Python Dependencies
       run: |
