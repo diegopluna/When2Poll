@@ -56,18 +56,22 @@ class AvailabilityPollSerializer(serializers.ModelSerializer):
 class PollInviteSerializer(serializers.ModelSerializer):
     class Meta:
         model = PollInvite
-        fields = ('sender', 'receiver','poll', 'answered', 'accepted')
+        fields = '__all__'
 
+# class PollAdminInviteSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = PollAdminInvite
+#         fields = '__all__'
 
 class PollAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = PollAnswer
-        fields = ['user', 'matrix', 'available']
+        fields = ('user', 'matrix', 'available')
 
 class JustificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Justification
-        fields = ['justification', 'user', 'poll']
+        fields = ('justification', 'user', 'poll')
 
 
     # name = serializers.CharField(max_length=255)
