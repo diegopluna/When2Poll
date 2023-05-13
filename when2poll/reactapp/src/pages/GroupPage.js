@@ -17,32 +17,6 @@ const GroupPage = () => {
         async function fetchPageData() {
             const groupdata = await api.get(`/orgs/organizations/${groupId}/`) 
             setData(groupdata.data)
-            // await api.get(`/orgs/organizations/${groupId}/`)
-            //     .then(response => {
-            //         setData(response.data)
-            //         return response.data
-            //     })
-            //     .then(data => {
-            //        return api.get(`/api/users/${data.owner}/`)
-            //     })
-            //     .then(response=> {
-            //         setOwnerData(response.data)
-            //         return(response.data)
-            //     })
-            //     .then((data) => {
-            //         return api.get(`/orgs/organizations/${groupId}/acceptedinvitation/`)
-            //     })
-            //     .then(response => {
-            //         setMembersData(response.data)
-            //         return response.data
-            //     })
-            //     .then((data) => {
-            //         return api.get(`/orgs/organizations/${groupId}/invited/`)
-            //     })
-            //     .then(response => {
-            //         setInvited(response.data)
-            //         return response.data
-            //     })
             const response = await api.get(`/orgs/organizations/${groupId}/members/`)
             setMembersData(response.data)
         }
@@ -92,11 +66,6 @@ const GroupPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* <tr>
-                            <th scope="col">{ownerData?.full_name}</th>
-                            <th scope="col">{ownerData?.email}</th>
-                            <th scope="col">Criador</th>
-                        </tr> */}
                         {members.map(item => (
                             <tr>
                                 <th scope="col">{item.full_name}</th>
@@ -104,13 +73,6 @@ const GroupPage = () => {
                                 <th scope="col">{item.type}</th>
                             </tr>
                         ))}
-                        {/* {invited.map(item => (
-                            <tr>
-                                <th scope="col">{item.full_name}</th>
-                                <th scope="col">{item.email}</th>
-                                <th scope="col">Convidado</th>
-                            </tr>
-                        ))} */}
                     </tbody>
                 </table>
           </div>

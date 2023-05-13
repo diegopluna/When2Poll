@@ -54,7 +54,7 @@ const InvitesPage = () => {
       </nav>
 
       {groupInvites.map(item => (
-        <div className='d-flex min-vw-90 justify-content-center align-items-center mt-2' key={item.id}>
+        <div className='d-flex min-vw-90 justify-content-center align-items-center mt-2' key={item.id} >
           <Card style={{width: '80%'}}>
             <Card.Body className='text-center'>
               {orgData[item.organization]?.name}
@@ -70,6 +70,36 @@ const InvitesPage = () => {
       ))}
     </div>
   )
+}
+
+const styles = {
+  body: {
+    backgroundColor: '#EEEEEE'
+  },
+  login: {
+    width: "360px",
+    height: "min-content",
+    padding: "20px",
+    // borderRadius: "12px",
+    // backgroundColor: '#393E46'
+  },
+  title: {
+    fontSize: "36px",
+    marginBottom: "25px",
+    // color:'#EEEEEE'
+  },
+  form: {
+    fontSize: "20px",
+  },
+  formGroup: {
+    marginBottom: "12px",
+  },
+  button: {
+    backgroundColor: "#00ADB5"
+  },
+  remember: {
+    // color: '#EEEEEE'
+  }
 }
 
 export default InvitesPage

@@ -146,8 +146,8 @@ const NewPollPage = () => {
   }
 
   return (
-    <div className='d-flex min-vh-100 min-vw-100 justify-content-center align-items-center' style={styles.body}>
-        <div  style={styles.login} >
+    <div className='d-flex min-vh-100 min-vw-90 justify-content-center align-items-center'>
+    <div  style={styles.login} >
         <p className='h1 text-center' style={styles.title} >Novo evento</p>
         <form style={styles.form} onSubmit={handleSubmit}>
             <div className='form-group' style={styles.formGroup}>
