@@ -34,23 +34,31 @@ class AvailabilityPoll(models.Model):
         return self.pollinvite_set.filter(accepted=True) #query for accepted invites
     
     @property
-    def justifications(self):
-        return self.justification_set.all()
+    def answered_users(self):
+        return self.pollanswer_set.values_list('user', flat=True)
+
+    @property
+    def pending_answer(self):
+        return self.participants.exclude(self.answered_users)
+    
+    @property
+    def answers(self):
+        return self.pollanswer_set.all()
     
     @property
     def admins(self):
-        return self.polladmininvite_set.filter(accepted=True)
+        return self.pollinvite_set.filter(accepted=True, admin=True)
 
     def is_expired(self):
         return self.deadline <= timezone.now()
     
-    def invited_admin(self, participants):
-        #invite a participant to become an admin
-        if self.owner == participants or participants in self.admins.all():
-            #user is already an admin or the owner of the poll
-            return
-        self.admins.add(participants)
-       # add participants to admins field
+    # def invited_admin(self, participants):
+    #     #invite a participant to become an admin
+    #     if self.owner == participants or participants in self.admins.all():
+    #         #user is already an admin or the owner of the poll
+    #         return
+    #     self.admins.add(participants)
+    #    # add participants to admins field
 
 class DateTimeRange(models.Model):
     start_time = models.DateTimeField()
@@ -65,7 +73,6 @@ class PollInvite(models.Model):
     answered = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
     accepted = models.BooleanField(default=False)
-    admin = models.BooleanField(default=False)
 
 # class PollAdminInvite(models.Model):
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -75,13 +82,10 @@ class PollInvite(models.Model):
 
 class PollAnswer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    matrix = models.JSONField(blank=True)
-    avaliable = models.BooleanField(default=True)
-
-class Justification(models.Model):
-    justification = models.TextField(max_length=1000)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, )
     poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
+    avaliable = models.BooleanField(default=True)
+    matrix = models.JSONField(blank=True)
+    justification = models.TextField(max_length=1000, blank=True)
     
     # def serialize(self):
     #     data = {

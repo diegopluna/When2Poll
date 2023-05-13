@@ -7,10 +7,10 @@ from rest_framework import status, generics, permissions
 from django.contrib.auth import get_user_model
 
 #from rest_framework.renderers import JSONRenderer
-from polls.api.serializers import AvailabilityPollSerializer, PollInviteSerializer, PollAnswerSerializer, JustificationSerializer
+from polls.api.serializers import AvailabilityPollSerializer, PollInviteSerializer, PollAnswerSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from polls.models import AvailabilityPoll, PollInvite, PollAnswer, Justification
+from polls.models import AvailabilityPoll, PollInvite, PollAnswer
 from django.db.models import Q
 from django.http import JsonResponse
 # Create your views here.
@@ -35,27 +35,27 @@ class PollAnswerDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = PollAnswer.objects.all()
     serializer_class = PollAnswerSerializer
 
-class JustificationListView(generics.ListCreateAPIView):
-    serializer_class = JustificationSerializer
-    permission_classes = [permissions.IsAuthenticated]
+# class JustificationListView(generics.ListCreateAPIView):
+#     serializer_class = JustificationSerializer
+#     permission_classes = [permissions.IsAuthenticated]
     
-    def get_queryset(self):
-        user = self.request.user
-        queryset = Justification.objects.filter(user=user)
-        poll_id = self.request.query_params.get('poll_id')
-        if poll_id:
-            queryset = queryset.filter(poll__id=poll_id)
-        return queryset
+#     def get_queryset(self):
+#         user = self.request.user
+#         queryset = Justification.objects.filter(user=user)
+#         poll_id = self.request.query_params.get('poll_id')
+#         if poll_id:
+#             queryset = queryset.filter(poll__id=poll_id)
+#         return queryset
 
-class JustificationDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Justification.objects.all()
-    serializer_class = JustificationSerializer
-    permission_classes = [permissions.IsAuthenticated]
+# class JustificationDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Justification.objects.all()
+#     serializer_class = JustificationSerializer
+#     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        user = self.request.user
-        queryset = Justification.objects.filter(user=user)
-        return queryset
+#     def get_queryset(self):
+#         user = self.request.user
+#         queryset = Justification.objects.filter(user=user)
+#         return queryset
 
 
 class AvailabilityPollView(APIView):
@@ -66,7 +66,7 @@ class AvailabilityPollView(APIView):
     def post(self, request):
         data = request.data
         data['owner'] = request.user.pk
-        data.setdefault('admins', []).append(request.user.pk)
+        #data.setdefault('admins', []).append(request.user.pk)
         serializer = AvailabilityPollSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -98,8 +98,21 @@ class PollAnswerView(APIView):
     serializer_class = PollAnswerSerializer
 
     #@swagger_auto_schema(request_body=serializer_class, responses={201: serializer_class})
-    #def put(self, request):
-     #  poll_id = request.query_params.get('poll_id')
+    # def post(self, request):
+    #     poll_id = request.query_params.get('poll_id')
+
+    def post(self, request, poll_id):
+        poll = AvailabilityPoll.objects.get(id=poll_id)
+        if request.user not in poll.participants.all():
+            return Response({'detail': 'You are not a participant in this poll.'}, status=status.HTTP_403_FORBIDDEN)
+        data = request.data
+        data['user'] = request.user.pk
+        serializer = PollAnswerSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save(user=request.user, poll=poll)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
 class SetPollAdmin(APIView):
     permission_classes = (IsAuthenticated, )
