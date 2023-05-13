@@ -17,8 +17,8 @@ class AvailabilityPoll(models.Model):
     #datetime_ranges = models.ManyToManyField(DateTimeRange, related_name='datetime_ranges')
     deadline = models.DateTimeField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE) #review the on_delete behaviour
-    #admins = models.ManyToManyField(User, related_name='admins')
-    #participants = models.ManyToManyField(User, related_name='participants')
+    # admins = models.ManyToManyField(User, related_name='admins')
+    # participants = models.ManyToManyField(User, related_name='participants')
     defined = models.BooleanField(default=False)
 
     @property
@@ -63,6 +63,7 @@ class PollInvite(models.Model):
     receiver = models.ForeignKey(User, on_delete=models.CASCADE)
     poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
     answered = models.BooleanField(default=False)
+    admin = models.BooleanField(default=False)
     accepted = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
 

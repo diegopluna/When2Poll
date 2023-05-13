@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, generics, permissions
 
+from django.contrib.auth import get_user_model
+
 #from rest_framework.renderers import JSONRenderer
 from polls.api.serializers import AvailabilityPollSerializer, PollInviteSerializer, PollAnswerSerializer, JustificationSerializer
 from drf_yasg.utils import swagger_auto_schema
@@ -12,6 +14,9 @@ from polls.models import AvailabilityPoll, PollInvite, PollAnswer, Justification
 from django.db.models import Q
 from django.http import JsonResponse
 # Create your views here.
+
+User = get_user_model()
+
 
 class PollInviteListView(generics.ListCreateAPIView):
     queryset = PollInvite.objects.all()
@@ -95,4 +100,18 @@ class PollAnswerView(APIView):
     #@swagger_auto_schema(request_body=serializer_class, responses={201: serializer_class})
     #def put(self, request):
      #  poll_id = request.query_params.get('poll_id')
+
+class SetPollAdmin(APIView):
+    permission_classes = (IsAuthenticated, )
+    def put(self, request, pk):
+        datas = request.data
+        owner = User.objects.get(pk = request.user.pk)
+        if(AvailabilityPoll.objects.filter(pk = pk, owner = owner)):
+            Poll = AvailabilityPoll.objects.get(pk = pk, owner = owner)
+            for data in datas:
+                invite = PollInvite.objects.get(receiver = data['receiver_id'], accepted = True, answered = True, poll = Poll)
+                invite.admin = data['admin']
+                invite.save()
+            return Response(status=status.HTTP_200_OK)       
+        return Response(status=status.HTTP_404_NOT_FOUND)
 

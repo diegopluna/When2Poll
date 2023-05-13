@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AvailabilityPollView, PollAnswerView, JustificationListView, JustificationDetailView, PollAnswerListView, PollAnswerDetailView, PollInviteListView, PollInviteDetailView, JustificationListView, JustificationDetailView 
+from .views import AvailabilityPollView, PollAnswerView, JustificationListView, JustificationDetailView, PollAnswerListView, PollAnswerDetailView, PollInviteListView, PollInviteDetailView, JustificationListView, JustificationDetailView, SetPollAdmin 
 
 urlpatterns = [
     path('post/', AvailabilityPollView.as_view(),name="post-poll"),
@@ -14,5 +14,6 @@ urlpatterns = [
     path('poll-invites/<int:pk>/', PollInviteDetailView.as_view()),
     path('justifications/', JustificationListView.as_view()),
     path('justifications/<int:pk>/', JustificationDetailView.as_view()),
+    path('<int:pk>/setadmin/', SetPollAdmin.as_view())
 
 ]
