@@ -77,7 +77,8 @@ const NewPollPage = () => {
     const year = earliestDate.getFullYear();
     const month = ('0' + (earliestDate.getMonth() + 1)).slice(-2);
     const date = ('0' + earliestDate.getDate()).slice(-2);
-    const deadline = `${year}-${month}-${date}T${earliest}`;
+    // const deadline = `${year}-${month}-${date}T${earliest}`;
+    const deadline = `${date}/${month}/${year} - ${earliest}`
 
     setDeadline(deadline);
   }
@@ -157,7 +158,7 @@ const NewPollPage = () => {
             </div>
             <div className='form-group' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
               <div className='form-group' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                  <p className='h4 text-center' style={{color:'#EEEEEE'}}>Seleção de datas</p>
+                  <p className='h4 text-center' style={{color:'#000000'}}>Seleção de datas</p>
                   <Calendar
                     style={{ display:'column', alignItems: 'center', justifyContent: 'center' }}
                     value={dateRanges}

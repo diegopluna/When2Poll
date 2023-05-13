@@ -6,41 +6,45 @@ import useAxios from '../utils/useAxios'
 const GroupPage = () => {
 
     const [data, setData] = useState(null)
-    const [ownerData, setOwnerData] = useState(null)
+    // const [ownerData, setOwnerData] = useState(null)
     const [members, setMembersData] = useState([])
-    const [invited, setInvited] = useState([])
+    // const [invited, setInvited] = useState([])
     const {groupId} = useParams()
 
     const api = useAxios()
 
     useEffect(() => {
         async function fetchPageData() {
-            await api.get(`/orgs/organizations/${groupId}/`)
-                .then(response => {
-                    setData(response.data)
-                    return response.data
-                })
-                .then(data => {
-                   return api.get(`/api/users/${data.owner}/`)
-                })
-                .then(response=> {
-                    setOwnerData(response.data)
-                    return(response.data)
-                })
-                .then((data) => {
-                    return api.get(`/orgs/organizations/${groupId}/members/`)
-                })
-                .then(response => {
-                    setMembersData(response.data)
-                    return response.data
-                })
-                .then((data) => {
-                    return api.get(`/orgs/organizations/${groupId}/invited/`)
-                })
-                .then(response => {
-                    setInvited(response.data)
-                    return response.data
-                })
+            const groupdata = await api.get(`/orgs/organizations/${groupId}/`) 
+            setData(groupdata.data)
+            // await api.get(`/orgs/organizations/${groupId}/`)
+            //     .then(response => {
+            //         setData(response.data)
+            //         return response.data
+            //     })
+            //     .then(data => {
+            //        return api.get(`/api/users/${data.owner}/`)
+            //     })
+            //     .then(response=> {
+            //         setOwnerData(response.data)
+            //         return(response.data)
+            //     })
+            //     .then((data) => {
+            //         return api.get(`/orgs/organizations/${groupId}/acceptedinvitation/`)
+            //     })
+            //     .then(response => {
+            //         setMembersData(response.data)
+            //         return response.data
+            //     })
+            //     .then((data) => {
+            //         return api.get(`/orgs/organizations/${groupId}/invited/`)
+            //     })
+            //     .then(response => {
+            //         setInvited(response.data)
+            //         return response.data
+            //     })
+            const response = await api.get(`/orgs/organizations/${groupId}/members/`)
+            setMembersData(response.data)
         }
 
         fetchPageData()
@@ -88,25 +92,25 @@ const GroupPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        {/* <tr>
                             <th scope="col">{ownerData?.full_name}</th>
                             <th scope="col">{ownerData?.email}</th>
                             <th scope="col">Criador</th>
-                        </tr>
+                        </tr> */}
                         {members.map(item => (
                             <tr>
                                 <th scope="col">{item.full_name}</th>
                                 <th scope="col">{item.email}</th>
-                                <th scope="col">Membro</th>
+                                <th scope="col">{item.type}</th>
                             </tr>
                         ))}
-                        {invited.map(item => (
+                        {/* {invited.map(item => (
                             <tr>
                                 <th scope="col">{item.full_name}</th>
                                 <th scope="col">{item.email}</th>
                                 <th scope="col">Convidado</th>
                             </tr>
-                        ))}
+                        ))} */}
                     </tbody>
                 </table>
           </div>
