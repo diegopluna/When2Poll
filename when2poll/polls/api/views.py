@@ -83,19 +83,17 @@ class AvailabilityPollView(APIView):
             payload = serializer.data
             return JsonResponse(payload, safe=False)
     
-    @swagger_auto_schema(request_body=serializer_class, responses={201: serializer_class})
-    def put(self, request):
-        poll_id = request.query_params.get('poll_id')
+   # @swagger_auto_schema(request_body=serializer_class, responses={201: serializer_class})
+   # def put(self, request):
+    #    poll_id = request.query_params.get('poll_id')
         
-
 class AvailiabilityAnswerView(APIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = AvailabilityPollSerializer
 
-    @swagger_auto_schema(request_body=serializer_class, responses={201: serializer_class})
+    #@swagger_auto_schema(request_body=serializer_class, responses={201: serializer_class})
+    #def put(self, request):
+     #  poll_id = request.query_params.get('poll_id')
 
 
 
-
-
-    
