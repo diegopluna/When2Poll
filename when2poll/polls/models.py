@@ -31,7 +31,7 @@ class AvailabilityPoll(models.Model):
 
     @property
     def participants(self):
-        return self.pollinvite_set.filter(accepted=True) #query for accepted invites
+        return User.objects.filter(pollinvite__poll=self, pollinvite__accepted=True) #query for users with accepted invites
     
     @property
     def answered_users(self):
@@ -47,7 +47,7 @@ class AvailabilityPoll(models.Model):
     
     @property
     def admins(self):
-        return self.pollinvite_set.filter(accepted=True, admin=True)
+        return User.objects.filter(pollinvite__poll=self, pollinvite__accepted=True, pollinvite__admin=True)
 
     def is_expired(self):
         return self.deadline <= timezone.now()
@@ -83,8 +83,8 @@ class PollInvite(models.Model):
 class PollAnswer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
-    avaliable = models.BooleanField(default=True)
-    matrix = models.JSONField(blank=True)
+    available = models.BooleanField(default=True)
+    matrix = models.JSONField(blank=True, null=True)
     justification = models.TextField(max_length=1000, blank=True)
     
     # def serialize(self):

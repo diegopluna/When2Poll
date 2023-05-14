@@ -37,9 +37,15 @@ class PollAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = PollAnswer
         fields = '__all__'
+        extra_kwargs = {
+            'poll': {'required': False},
+            'matrix': {'required': False},
+            'justification': {'required': False}
+        }
 
-    def create(self, validated_data): 
-        if validated_data['available']:
+    def create(self, validated_data):
+        available = validated_data['available']
+        if available:
             if 'justification' in validated_data:
                 raise serializers.ValidationError({'justification': 'Must not be entered when user is available.'})
         else:
@@ -58,6 +64,12 @@ class AvailabilityPollSerializer(serializers.ModelSerializer):
         model = AvailabilityPoll
         fields = '__all__'
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['participants'] = [{'pk': user.pk, 'admin': user in instance.admins.all()} for user in instance.participants.all()]
+        representation['answers'] = PollAnswerSerializer(instance.answers.all(), many=True).data
+        return representation
+    
     def create(self, validated_data):
         datetime_ranges_data = validated_data.pop('datetime_ranges')
         invited_data = validated_data.pop('invited')

@@ -76,14 +76,16 @@ class AvailabilityPollView(APIView):
     @swagger_auto_schema(request_body=serializer_class, responses={201: serializer_class})
     def get(self, request):
         poll_id = request.query_params.get('poll_id')
+        user = request.user
         if poll_id is None:
-            userId = request.user.pk
-            polls = AvailabilityPoll.objects.filter(Q(owner=userId) | Q(admins__pk__in=userId) | Q(participants__pk__in=userId)).order_by("deadline")
+            polls = AvailabilityPoll.objects.filter( Q(pollinvite__receiver=user, pollinvite__accepted=True) | Q(pollinvite__receiver=user, pollinvite__admin=True)).distinct().order_by("deadline") #queries for every poll where the requesting user is a participant
             serializer = AvailabilityPollSerializer(polls, many=True)
             payload = serializer.data
             return JsonResponse(payload, safe=False)            
         else:
             poll = AvailabilityPoll.objects.get(pk=poll_id)
+            if not (poll.pollinvite_set.filter(receiver=user, accepted=True).exists() or poll.pollinvite_set.filter(receiver=user, admin=True).exists()):
+                return Response({'detail': "You are not authorized to access this poll."}, status=status.HTTP_403_FORBIDDEN)
             serializer = AvailabilityPollSerializer(poll)
             payload = serializer.data
             return JsonResponse(payload, safe=False)
@@ -101,12 +103,16 @@ class PollAnswerView(APIView):
     # def post(self, request):
     #     poll_id = request.query_params.get('poll_id')
 
-    def post(self, request, poll_id):
+    def post(self, request):
+        poll_id = request.query_params.get('poll_id')
+        if poll_id is None:
+            return Response({'detail': 'You must indicate which poll this answer refers to.'}, status=status.HTTP_400_BAD_REQUEST)
         poll = AvailabilityPoll.objects.get(id=poll_id)
-        if request.user not in poll.participants.all():
+        if request.user not in poll.participants:
             return Response({'detail': 'You are not a participant in this poll.'}, status=status.HTTP_403_FORBIDDEN)
         data = request.data
         data['user'] = request.user.pk
+        data['poll'] = poll_id
         serializer = PollAnswerSerializer(data=data)
         if serializer.is_valid():
             serializer.save(user=request.user, poll=poll)
