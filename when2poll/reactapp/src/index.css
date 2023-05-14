@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* File: font.css */
+@font-face {
+  font-family: 'SFProRoundedBold';
+  src: local('SFProRoundedBold'),
+       url('./fonts/SF-Pro-Rounded-Bold.otf') format('opentype')
+}
+
+@font-face {
+  font-family: 'SFProRoundedRegular';
+  src: local('SFProRoundedRegular'),
+       url('./fonts/SF-Pro-Rounded-Regular.otf') format('opentype'),
+}

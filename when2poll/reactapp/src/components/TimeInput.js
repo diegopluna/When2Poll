@@ -37,6 +37,7 @@ const TimeInput = ({ label, defaultHour, defaultMinute, onChange }) => {
         <div style={{ display: 'flex' }}>
           <div>
             <input
+              className='font-face-sfregular'
               type="number"
               min="0"
               max="23"
@@ -54,6 +55,7 @@ const TimeInput = ({ label, defaultHour, defaultMinute, onChange }) => {
           </div>
           <div>
             <input
+              className='font-face-sfregular'
               type="number"
               min="0"
               max="45"
@@ -102,7 +104,7 @@ const styles = {
       // justifyContent: 'center'
     },
     button: {
-      backgroundColor: "#00ADB5",
+      backgroundColor: "#ff735c",
       borderRadius: '5px', 
       margin: '2px'
     },

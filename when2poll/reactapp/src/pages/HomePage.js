@@ -1,19 +1,20 @@
 import React from 'react'
 import DatePicker, { DateObject, Calendar } from "react-multi-date-picker";
-
+import "react-multi-date-picker/styles/colors/red.css"
 
 const HomePage = () => {
   return (
 
-    <div className='d-flex min-vh-100 min-vw-90 justify-content-center align-items-center'>
+    <div className='d-flex min-vh-100 min-vw-90 justify-content-center align-items-center' style={styles.body}>
       <div  style={styles.login} >
-        <h1>Próximas Reuniões</h1>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <Calendar
+        <h1 className='font-face-sfbold'>Próximas Reuniões</h1>
+        <div className='font-face-sfregular' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <Calendar 
+            className='red'
             readOnly 
           />
         </div>
-        <table className='table mt-4'>
+        <table className='table mt-4 font-face-sfregular'>
           <thead>
               <tr>
                   <th scope="col">Reunião</th>
@@ -32,7 +33,7 @@ const HomePage = () => {
               ))}
           </tbody> */}
         </table>
-        <h3 className='text-center'>Reuniões não definidas</h3>
+        <h3 className='text-center font-face-sfbold'>Reuniões não definidas</h3>
       </div>
     </div>
   )

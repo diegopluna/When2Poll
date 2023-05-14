@@ -46,24 +46,29 @@ const InvitesPage = () => {
   }, [groupInvites, orgData])
 
   return (
-    <div>
+    <div className='vh-100' style={styles.body}>
       <nav className='navbar navbar-expand-md navbar-light d-none d-lg-block' role='navigation'>
         <div className='container-fluid'>
-          <a className='navbar-brand'>Convites</a>
+          <a style={styles.links} className='navbar-brand font-face-sfbold'>Convites</a>
         </div>
       </nav>
 
       {groupInvites.map(item => (
         <div className='d-flex min-vw-90 justify-content-center align-items-center mt-2' key={item.id} >
           <Card style={{width: '80%'}}>
-            <Card.Body className='text-center'>
+            <Card.Body className='text-center font-face-sfregular'>
               {orgData[item.organization]?.name}
             </Card.Body>                      
-            <Card.Footer className='text-center'>
-              <DropdownButton id="dropdown-basic-button" title="Ação">
-                <Dropdown.Item onClick={() => acceptInvite(item.id)}>Aceitar</Dropdown.Item>
-                <Dropdown.Item onClick={() => rejectInvite(item.id)}>Recusar</Dropdown.Item>
-              </DropdownButton>
+            <Card.Footer className='text-center button'>
+              <Dropdown >
+                <Dropdown.Toggle style={styles.button} variant='success' id = "dropdown-basic">
+                  Ação
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item className='font-face-sfregular' onClick={() => acceptInvite(item.id)}>Aceitar</Dropdown.Item>
+                  <Dropdown.Item className='font-face-sfregular' onClick={() => rejectInvite(item.id)}>Recusar</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </Card.Footer>
           </Card>
         </div>
@@ -95,11 +100,17 @@ const styles = {
     marginBottom: "12px",
   },
   button: {
-    backgroundColor: "#00ADB5"
+    backgroundColor: "#ff735c",
+    color: "#000000",
+    border: "1px solid #ff735c",
+    borderRadius: "7px"
   },
   remember: {
     // color: '#EEEEEE'
-  }
+  },
+  links: {
+    color: "#ff735c"
+  },
 }
 
 export default InvitesPage

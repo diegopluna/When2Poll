@@ -37,32 +37,32 @@ const Header = (props) => {
       <div>
         <nav className='navbar navbar-expand-md navbar-light d-none d-lg-block sticky-top' role='navigation'>
           <div className='container-fluid'>
-            <a className='navbar-brand'>When2Poll</a>
+            <a style={styles.links} className='navbar-brand font-face-sfbold'>When2Poll</a>
             <Nav className='ml-auto'>
               <Nav.Item>
-                <Nav.Link href="/" className='nav-link'>
+                <Nav.Link style={styles.links} href="/" className='nav-link font-face-sfbold'>
                   Início
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="/newpoll"  className='nav-link'>
+                <Nav.Link style={styles.links} href="/newpoll"  className='nav-link font-face-sfbold'>
                   Nova Reunião
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href='/invites'  className='nav-link'>
+                <Nav.Link style={styles.links} href='/invites'  className='nav-link font-face-sfbold'>
                   Convites
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href='/groups'  className='nav-link'>
+                <Nav.Link style={styles.links}  href='/groups'  className='nav-link font-face-sfbold'>
                   Grupos
                 </Nav.Link>
               </Nav.Item>
               <Dropdown as={NavItem}>
-                <Dropdown.Toggle as={NavLink}>{user?.full_name}</Dropdown.Toggle>
+                <Dropdown.Toggle style={styles.user} className='font-face-sfbold' as={NavLink}>{user?.full_name}</Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={logoutUser}>Sair</Dropdown.Item>
+                  <Dropdown.Item className='font-face-sfbold' onClick={logoutUser}>Sair</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Nav>
@@ -71,11 +71,11 @@ const Header = (props) => {
 
         <nav className='navbar sticky-top navbar-light d-block d-lg-none bottom-tab-nav' role='navigation'>
           <div className='container-fluid'>
-            <a className='navbar-brand'>When2Poll</a>
+            <a style={styles.links} className='navbar-brand font-face-sfbold'>When2Poll</a>
             <Dropdown as={NavItem}>
-              <Dropdown.Toggle as={NavLink}>{user?.full_name}</Dropdown.Toggle>
+              <Dropdown.Toggle style={styles.user} className='font-face-sfbold' as={NavLink}>{user?.full_name}</Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item onClick={logoutUser}>Sair</Dropdown.Item>
+                <Dropdown.Item className='font-face-sfbold' onClick={logoutUser}>Sair</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
             <Nav className='w-100'>
@@ -95,8 +95,8 @@ const Header = (props) => {
                   <Nav.Item key={`tab-${index}`}>
                     <Nav.Link href={tab.route} className='nav-link bottom-nav-link' activeClassname="active">
                       <div className='row d-flex flex-column justify-content-center align-items-center'>
-                        <FontAwesomeIcon size='lg' icon={tab.icon} />
-                        <div className='bottom-tab-label'>{tab.label }</div>
+                        <FontAwesomeIcon color='#ff735c' size='lg' icon={tab.icon} />
+                        <div style={styles.links} className='bottom-tab-label font-face-sfregular'>{tab.label }</div>
                       </div>
                     </Nav.Link>
                   </Nav.Item>
@@ -111,6 +111,15 @@ const Header = (props) => {
       <Outlet />
     </>
   );
+}
+
+const styles = {
+  links: {
+    color: "#ff735c"
+  },
+  user: {
+    color: "#ffb638"
+  }
 }
 
 export default Header

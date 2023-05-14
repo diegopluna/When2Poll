@@ -30,10 +30,10 @@ const GroupPage = () => {
 
         <nav className='navbar navbar-expand-md navbar-light d-none d-lg-block' role='navigation'>
           <div className='container-fluid'>
-          <a className='navbar-brand'>{data?.name}</a>
+          <a style={styles.links} className='navbar-brand font-face-sfbold'>{data?.name}</a>
             <Nav className='ml-auto'>
               <Nav.Item>
-                <Nav.Link href="/groups" className='nav-link'>
+                <Nav.Link style={styles.links} href="/groups" className='nav-link font-face-sfbold'>
                   Voltar
                 </Nav.Link>
               </Nav.Item>
@@ -45,7 +45,7 @@ const GroupPage = () => {
             <Nav className='w-100'>
               <div className='d-flex flex-row justify-content-around w-100'>
                 <Nav.Item>
-                  <Nav.Link href="/groups" className='nav-link'>
+                  <Nav.Link style={styles.links} href="/groups" className='nav-link font-face-sfbold'>
                     Voltar
                   </Nav.Link>
                 </Nav.Item>
@@ -55,9 +55,9 @@ const GroupPage = () => {
         </nav>
         <div className='d-flex min-vw-100 justify-content-center align-items-center' >
           <div  style={styles.login} >
-                <h1 className='display-1 text-center' style={styles.title} >{data?.name}</h1>
-                <p className='h3 text-center mt-2'>{data?.description}</p>
-                <table className='table mt-4'>
+                <h1 className='display-1 text-center font-face-sfbold' style={styles.title} >{data?.name}</h1>
+                <p className='h3 text-center mt-2 font-face-sfregular'>{data?.description}</p>
+                <table className='table mt-4 font-face-sfregular'>
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
@@ -111,7 +111,10 @@ const styles = {
     },
     desc : {
         resize: 'none'
-    }
+    },
+    links: {
+      color: "#ff735c"
+    },
   }
 
 export default GroupPage
