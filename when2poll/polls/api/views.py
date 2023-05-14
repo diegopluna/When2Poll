@@ -87,6 +87,8 @@ class PollAnswerView(APIView):
     #@swagger_auto_schema(request_body=serializer_class, responses={201: serializer_class})
     # def post(self, request):
     #     poll_id = request.query_params.get('poll_id')
+    def get(self, request):
+        pass
 
     def post(self, request):
         poll_id = request.query_params.get('poll_id')
@@ -95,6 +97,8 @@ class PollAnswerView(APIView):
         poll = AvailabilityPoll.objects.get(id=poll_id)
         if request.user not in poll.participants:
             return Response({'detail': 'You are not a participant in this poll.'}, status=status.HTTP_403_FORBIDDEN)
+        if PollAnswer.objects.filter(user=request.user, poll=poll).exists():
+            return Response({'detail': 'You have already submitted an answer for this poll.'}, status=status.HTTP_400_BAD_REQUEST)
         data = request.data
         data['user'] = request.user.pk
         data['poll'] = poll_id
@@ -104,6 +108,13 @@ class PollAnswerView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+
+class UserInvites(APIView):
+    permission_classes = (IsAuthenticated, )
+    def get (self, request):
+        invitations = PollInvite.objects.filter(receiver=request.user, accepted=False, answered = False)
+        serializer = PollInviteSerializer(invitations, many=True)
+        return Response(serializer.data)
 
 class SetPollAdmin(APIView):
     permission_classes = (IsAuthenticated, )

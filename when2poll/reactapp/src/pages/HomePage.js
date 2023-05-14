@@ -1,8 +1,22 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import DatePicker, { DateObject, Calendar } from "react-multi-date-picker";
 import "../calendar.css"
+import "react-multi-date-picker/styles/colors/red.css"
+import useAxios from "../utils/useAxios";
 
 const HomePage = () => {
+  const api = useAxios();
+
+  const [polls, setPolls] = useState([]);
+
+  useEffect(() => {
+    const fetchPollData = async () => {
+      const response = await api.get('/polls/get/');
+      setPolls(response.data);
+    };
+    fetchPollData();
+  }, []);
+
   return (
 
     <div className='d-flex min-vh-100 min-vw-90 justify-content-center align-items-center' style={styles.body}>
@@ -34,6 +48,14 @@ const HomePage = () => {
           </tbody> */}
         </table>
         <h3 className='text-center font-face-sfbold'>Reuniões não definidas</h3>
+        <ul>
+          {polls.map(poll => (
+            <li key={poll.name} onClick={() => window.location.href = `/poll/${poll.id}`}>
+              <h4>{poll.name}</h4>
+              <p>Deadline: {poll.deadline}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )

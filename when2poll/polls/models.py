@@ -38,6 +38,10 @@ class AvailabilityPoll(models.Model):
         return self.pollanswer_set.values_list('user', flat=True)
 
     @property
+    def pending_invite(self):
+        return User.objects.filter(pollinvite__poll=self, pollinvite__accepted=False, pollinvite__answered=False)
+
+    @property
     def pending_answer(self):
         return self.participants.exclude(self.answered_users)
     

@@ -3,6 +3,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
+import PollPage from './pages/PollPage';
 import NewPollPage from './pages/NewPollPage';
 import InvitesPage from './pages/InvitesPage';
 import GroupsPage from './pages/GroupsPage';
@@ -27,6 +28,13 @@ const router = createBrowserRouter([
             element:
             <PrivateRoute>
               <HomePage />
+            </PrivateRoute>
+          },
+          {
+            path: "poll/:pollId",
+            element:
+            <PrivateRoute>
+              <PollPage />
             </PrivateRoute>
           },
           {

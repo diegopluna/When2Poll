@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import AvailabilityPollView, PollAnswerView, SetPollAdmin
+from .views import AvailabilityPollView, PollAnswerView, SetPollAdmin, UserInvites
 
 urlpatterns = [
     path('post/', AvailabilityPollView.as_view(),name="post-poll"),
     path('get/', AvailabilityPollView.as_view(), name="get-polls"),
     path('put/', AvailabilityPollView.as_view(), name="put-poll"),
-    path('answer/', PollAnswerView.as_view(), name="answer-poll")
+    path('answer/', PollAnswerView.as_view(), name="answer-poll"),
+    path('invites/', UserInvites.as_view(), name="poll-invites")
     
     # ,
     # path('justifications/', JustificationListView.as_view()),

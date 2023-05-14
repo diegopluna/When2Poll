@@ -9,9 +9,21 @@ class DateTimeRangeSerializer(serializers.ModelSerializer):
     matrix = serializers.JSONField(required=False)
     class Meta:
         model = DateTimeRange
-        fields = ('start_time', 'end_time', 'matrix')
+        fields = '__all__'
+        extra_kwargs = {
+            'poll': {'required': False}
+        }
 
-    def create(self, validated_data): 
+    def validate(self, data):
+        start_time = data['start_time']
+        end_time = data['end_time']
+        if start_time.minute % 15 != 0 or end_time.minute % 15 != 0:
+            raise serializers.ValidationError("Start and end times must be multiples of 15 minutes")
+        if not (0 <= start_time.hour <= 23) or not (0 <= end_time.hour <= 23):
+            raise serializers.ValidationError("Start and end times must have an hour value between 0 and 23")
+        return data
+
+    def create(self, validated_data):
         range = DateTimeRange.objects.create(start_time=validated_data['start_time'], end_time=validated_data['end_time'], matrix=validated_data['matrix'])
         range.save()
         return range
@@ -66,7 +78,9 @@ class AvailabilityPollSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['participants'] = [{'pk': user.pk, 'admin': user in instance.admins.all()} for user in instance.participants.all()]
+        representation['participants'] = [{'pk': user.pk, 'name': user.full_name, 'admin': user in instance.admins.all()} for user in instance.participants.all()]
+        representation.pop('invited')
+        representation['invited_users'] = [{'pk': user.pk, 'name': user.full_name} for user in instance.pending_invite.all()]
         representation['answers'] = PollAnswerSerializer(instance.answers.all(), many=True).data
         return representation
     
