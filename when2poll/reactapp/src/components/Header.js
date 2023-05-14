@@ -35,7 +35,7 @@ const Header = (props) => {
   return (
     <>
       <div>
-        <nav className='navbar navbar-expand-md navbar-light d-none d-lg-block sticky-top' role='navigation'>
+        <nav  className='navbar navbar-expand-md navbar-light d-none d-lg-block sticky-top' role='navigation'>
           <div className='container-fluid'>
             <a style={styles.links} className='navbar-brand font-face-sfbold'>When2Poll</a>
             <Nav className='ml-auto'>
@@ -119,6 +119,9 @@ const styles = {
   },
   user: {
     color: "#ffb638"
+  },
+  body: {
+    backgroundColor: "#EEEEEE"
   }
 }
 

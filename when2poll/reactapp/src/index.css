@@ -24,3 +24,9 @@ code {
   src: local('SFProRoundedRegular'),
        url('./fonts/SF-Pro-Rounded-Regular.otf') format('opentype'),
 }
+
+@font-face {
+  font-family: 'SFProRoundedSemibold';
+  src: local('SFProRoundedSemibold'),
+       url('./fonts/SF-Pro-Rounded-Semibold.otf') format('opentype'),
+}

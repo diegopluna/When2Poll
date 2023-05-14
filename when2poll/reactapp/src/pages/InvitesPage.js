@@ -47,7 +47,7 @@ const InvitesPage = () => {
 
   return (
     <div className='vh-100' style={styles.body}>
-      <nav className='navbar navbar-expand-md navbar-light d-none d-lg-block' role='navigation'>
+      <nav  className='navbar navbar-expand-md navbar-light d-none d-lg-block' role='navigation'>
         <div className='container-fluid'>
           <a style={styles.links} className='navbar-brand font-face-sfbold'>Convites</a>
         </div>

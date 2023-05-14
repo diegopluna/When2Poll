@@ -5,7 +5,7 @@ import TimeInput from '../components/TimeInput';
 import useAxios from "../utils/useAxios";
 import AsyncSelect from 'react-select/async';
 import PrimaryButton from '../components/Button';
-import "react-multi-date-picker/styles/colors/red.css"
+import "../calendar.css"
 
 
 const NewPollPage = () => {
@@ -162,7 +162,7 @@ const NewPollPage = () => {
             </div>
             <div className='form-group' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
               <div className='form-group' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                  <p className='h4 text-center font-face-sfregular' style={{color:'#000000'}}>Seleção de datas</p>
+                  <p className='h4 text-center font-face-sfbold'>Seleção de datas</p>
                   <Calendar
                     className='red'
                     style={{ display:'column', alignItems: 'center', justifyContent: 'center' }}
@@ -172,9 +172,9 @@ const NewPollPage = () => {
                     multiple
                   />
                   <br/>
-                  <label className='font-face-sfregular' style={styles.remember}>Duração pretendida</label>
+                  <label className='font-face-sfsemibold' style={styles.remember}>Duração pretendida</label>
                   <DatePicker
-                    className='red font-face-sfregular'
+                    className='font-face-sfsemibold'
                     disableDayPicker
                     format='HH:mm'
                     plugins={[
@@ -182,9 +182,9 @@ const NewPollPage = () => {
                     ]} 
                   />
                   {/* <TimeInput className="font-face-sfregular" defaultHour={1} defaultMinute={0} onChange={handleDurationChange}/> */}
-                  <label className='font-face-sfregular' style={styles.remember}>Horário mais cedo (início)</label>
+                  <label className='font-face-sfsemibold' style={styles.remember}>Horário mais cedo (início)</label>
                   <DatePicker
-                    className='red font-face-sfregular'
+                    className='red font-face-sfsemibold'
                     disableDayPicker
                     format='HH:mm'
                     plugins={[
@@ -192,9 +192,9 @@ const NewPollPage = () => {
                     ]}
                   />
                   {/* <TimeInput className='font-face-sfregular' defaultHour={9} defaultMinute={0} onChange={handleEarliestChange}/> */}
-                  <label className='font-face-sfregular' style={styles.remember}>Horário mais tarde (fim)</label>
+                  <label className='font-face-sfsemibold' style={styles.remember}>Horário mais tarde (fim)</label>
                   <DatePicker
-                    className='red font-face-sfregular'
+                    className='font-face-sfsemibold'
                     disableDayPicker
                     format='HH:mm'
                     plugins={[
@@ -206,10 +206,10 @@ const NewPollPage = () => {
               </div>
             </div>
             <div>
-              <label className='font-face-sfregular'>Responder até: {deadline}</label>
+              <label className='font-face-sfsemibold'>Responder até: {deadline}</label>
             </div>
             <div className='form-group' style={styles.formGroup}>
-              <div className='dropdown-container font-face-sfregular'>
+              <div className='dropdown-container font-face-sfsemibold'>
                 <AsyncSelect
                   cacheOptions
                   defaultOptions

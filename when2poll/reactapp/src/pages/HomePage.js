@@ -1,6 +1,6 @@
 import React from 'react'
 import DatePicker, { DateObject, Calendar } from "react-multi-date-picker";
-import "react-multi-date-picker/styles/colors/red.css"
+import "../calendar.css"
 
 const HomePage = () => {
   return (
