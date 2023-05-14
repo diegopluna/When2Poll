@@ -2,7 +2,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import status, generics, permissions
+from rest_framework import status,  permissions
 
 from django.contrib.auth import get_user_model
 
@@ -18,22 +18,7 @@ from django.http import JsonResponse
 User = get_user_model()
 
 
-class PollInviteListView(generics.ListCreateAPIView):
-    queryset = PollInvite.objects.all()
-    serializer_class = PollInviteSerializer
 
-class PollInviteDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = PollInvite.objects.all()
-    serializer_class = PollInviteSerializer
-
-class PollAnswerListView(generics.ListCreateAPIView):
-    queryset = PollAnswer.objects.all()
-    serializer_class = PollAnswerSerializer
-
-
-class PollAnswerDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = PollAnswer.objects.all()
-    serializer_class = PollAnswerSerializer
 
 # class JustificationListView(generics.ListCreateAPIView):
 #     serializer_class = JustificationSerializer
