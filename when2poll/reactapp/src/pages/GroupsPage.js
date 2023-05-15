@@ -67,7 +67,7 @@ const GroupsPage = () => {
                     window.location.href=`/group/${item.id}/`
                   }} 
                   type='submit' 
-                  name='submit' 
+                  name={item.name} 
                   className='btn btn-sucess font-face-sfbold' 
                   style={styles.button}>
                     Ver detalhes
