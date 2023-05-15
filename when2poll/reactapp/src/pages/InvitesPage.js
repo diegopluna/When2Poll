@@ -61,7 +61,7 @@ const InvitesPage = () => {
             </Card.Body>                      
             <Card.Footer className='text-center button'>
               <Dropdown >
-                <Dropdown.Toggle style={styles.button} variant='success' id = "dropdown-basic">
+                <Dropdown.Toggle name={orgData[item.organization]?.name} style={styles.button} variant='success' id = "dropdown-basic">
                   Ação
                 </Dropdown.Toggle>
                 <Dropdown.Menu>

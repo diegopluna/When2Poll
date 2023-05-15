@@ -5,7 +5,6 @@ import TimeInput from '../components/TimeInput';
 import useAxios from "../utils/useAxios";
 import AsyncSelect from 'react-select/async';
 import PrimaryButton from '../components/Button';
-import "../calendar.css"
 
 
 const NewPollPage = () => {

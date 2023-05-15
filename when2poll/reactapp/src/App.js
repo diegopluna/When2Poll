@@ -10,6 +10,7 @@ import GroupsPage from './pages/GroupsPage';
 import PrivateRoute, { UnAuthRoute } from './utils/PrivateRoute';
 import { AuthProvider } from './context/AuthProvider';
 import './App.css';
+import "./calendar.css";
 import NewGroupPage from './pages/NewGroupPage';
 import GroupPage from './pages/GroupPage';
 

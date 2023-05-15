@@ -3,7 +3,6 @@ import DatePicker, { DateObject, Calendar } from "react-multi-date-picker";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
-import "../calendar.css"
 import useAxios from "../utils/useAxios";
 
 const HomePage = () => {
@@ -25,8 +24,8 @@ const HomePage = () => {
       <div  style={styles.login} >
         <h1 className='font-face-sfbold'>Próximas Reuniões</h1>
         <div className='font-face-sfregular' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <Calendar 
-            className='red'
+          <Calendar
+            className='red' 
             readOnly 
           />
         </div>
@@ -51,18 +50,19 @@ const HomePage = () => {
         </table>
         <h3 className='text-center font-face-sfbold'>Reuniões não definidas</h3>
         <ul>
-          {polls.map(poll => (
-            <Button onClick={() => window.location.href = `/poll/${poll.id}`} variant="primary" className="d-flex align-items-center">
-              <span className="mr-auto">{poll.name}</span>
-              <span>Deadline: {poll.deadline}</span>
-              <FontAwesomeIcon icon={faChevronRight} className="ml-2" />
-            </Button>
-            // <li key={poll.name} onClick={() => window.location.href = `/poll/${poll.id}`}>
-            //   <h4>{poll.name}</h4>
-            //   <p>Deadline: {poll.deadline}</p>
-            // </li>
-          ))}
+        {polls.map(poll => (
+          <Button onClick={() => window.location.href = `/poll/${poll.id}`} variant="primary" className="d-flex align-items-center">
+            <span className="mr-auto">{poll.name}</span>
+            
+            <FontAwesomeIcon icon={faChevronRight} className="ml-2" />
+          </Button>
+          // <li key={poll.name} onClick={() => window.location.href = `/poll/${poll.id}`}>
+          //   <h4>{poll.name}</h4>
+          //   <p>Deadline: {poll.deadline}</p>
+          // </li>
+        ))}
         </ul>
+        
       </div>
     </div>
   )
