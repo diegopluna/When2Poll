@@ -56,7 +56,7 @@ const InvitesPage = () => {
       {groupInvites.map(item => (
         <div className='d-flex min-vw-90 justify-content-center align-items-center mt-2' key={item.id} >
           <Card style={{width: '80%'}}>
-            <Card.Body className='text-center font-face-sfregular'>
+            <Card.Body className='text-center font-face-sfbold'>
               {orgData[item.organization]?.name}
             </Card.Body>                      
             <Card.Footer className='text-center button'>
