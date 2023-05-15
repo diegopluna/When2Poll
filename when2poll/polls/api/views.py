@@ -66,14 +66,14 @@ class AvailabilityPollView(APIView):
             polls = AvailabilityPoll.objects.filter( Q(pollinvite__receiver=user, pollinvite__accepted=True) | Q(pollinvite__receiver=user, pollinvite__admin=True)).distinct().order_by("deadline") #queries for every poll where the requesting user is a participant
             serializer = AvailabilityPollSerializer(polls, many=True)
             payload = serializer.data
-            return JsonResponse(payload, safe=False)            
+            return Response(payload, status=status.HTTP_200_OK)            
         else:
             poll = AvailabilityPoll.objects.get(pk=poll_id)
             if not (poll.pollinvite_set.filter(receiver=user, accepted=True).exists() or poll.pollinvite_set.filter(receiver=user, admin=True).exists()):
                 return Response({'detail': "You are not authorized to access this poll."}, status=status.HTTP_403_FORBIDDEN)
             serializer = AvailabilityPollSerializer(poll)
             payload = serializer.data
-            return JsonResponse(payload, safe=False)
+            return Response(payload, status=status.HTTP_200_OK)
     
     # @swagger_auto_schema(request_body=serializer_class, responses={201: serializer_class})
     # def put(self, request):

@@ -17,6 +17,7 @@ const NewPollPage = () => {
   const [duration, setDuration] = useState('')
   const [timeError, setTimeError] = useState('')
   const [deadline, setDeadline] = useState('')
+  const [displayDeadline, setDisplayDeadline] = useState('')
   const [selectedGroups, setSelectedGroups] = useState(null)
 
   const api = useAxios();
@@ -81,10 +82,11 @@ const NewPollPage = () => {
     const year = earliestDate.getFullYear();
     const month = ('0' + (earliestDate.getMonth() + 1)).slice(-2);
     const date = ('0' + earliestDate.getDate()).slice(-2);
-    // const deadline = `${year}-${month}-${date}T${earliest}`;
-    const deadline = `${date}/${month}/${year} - ${earliest}`
+    const deadline = `${year}-${month}-${date}T${earliest}`;
+    const displayDeadline = `${date}/${month}/${year} - ${earliest}`
 
     setDeadline(deadline);
+    setDisplayDeadline(displayDeadline);
   }
   
 
@@ -173,40 +175,40 @@ const NewPollPage = () => {
                   />
                   <br/>
                   <label className='font-face-sfsemibold' style={styles.remember}>Duração pretendida</label>
-                  <DatePicker
+                  {/* <DatePicker
                     className='font-face-sfsemibold'
                     disableDayPicker
                     format='HH:mm'
                     plugins={[
                       <TimePicker hideSeconds />
                     ]} 
-                  />
-                  {/* <TimeInput className="font-face-sfregular" defaultHour={1} defaultMinute={0} onChange={handleDurationChange}/> */}
+                  /> */}
+                  <TimeInput className="font-face-sfregular" defaultHour={1} defaultMinute={0} onChange={handleDurationChange}/>
                   <label className='font-face-sfsemibold' style={styles.remember}>Horário mais cedo (início)</label>
-                  <DatePicker
+                  {/* <DatePicker
                     className='red font-face-sfsemibold'
                     disableDayPicker
                     format='HH:mm'
                     plugins={[
                       <TimePicker hideSeconds />
                     ]}
-                  />
-                  {/* <TimeInput className='font-face-sfregular' defaultHour={9} defaultMinute={0} onChange={handleEarliestChange}/> */}
+                  /> */}
+                  <TimeInput className='font-face-sfregular' defaultHour={9} defaultMinute={0} onChange={handleEarliestChange}/>
                   <label className='font-face-sfsemibold' style={styles.remember}>Horário mais tarde (fim)</label>
-                  <DatePicker
+                  {/* <DatePicker
                     className='font-face-sfsemibold'
                     disableDayPicker
                     format='HH:mm'
                     plugins={[
                       <TimePicker hideSeconds />
                     ]}
-                  />
-                  {/* <TimeInput className='font-face-sfregular' defaultHour={17} defaultMinute={0} onChange={handleLatestChange}/> */}
+                  /> */}
+                  <TimeInput className='font-face-sfregular' defaultHour={17} defaultMinute={0} onChange={handleLatestChange}/>
                   <p style={{ color: 'red' }}>{timeError}</p>
               </div>
             </div>
             <div>
-              <label className='font-face-sfsemibold'>Responder até: {deadline}</label>
+              <label className='font-face-sfsemibold'>Responder até: {displayDeadline}</label>
             </div>
             <div className='form-group' style={styles.formGroup}>
               <div className='dropdown-container font-face-sfsemibold'>
@@ -224,7 +226,7 @@ const NewPollPage = () => {
               </div>
             </div>
           <div>
-            <PrimaryButton>Criar enquete</PrimaryButton>
+            <PrimaryButton >Criar enquete</PrimaryButton>
             {/* <button style={styles.button} type="submit" className="btn btn-success w-100" disabled={timeError !== '' || dateRanges === null}>Criar enquete</button> */}
           </div>
         </form>
