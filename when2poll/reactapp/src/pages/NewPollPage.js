@@ -94,10 +94,12 @@ const NewPollPage = () => {
     for (const group of selectedGroups) {
       const response = await api.get(`/orgs/organizations/${group.id}/members/`);
       const participants = response.data;
-      participantsTemp = [...participantsTemp, ...participants.map(participant => participant.id)];
+      // participantsTemp = [...participantsTemp, ...participants.map(participant => participant.id)];
+      participantsTemp = participants.map(participant => ({ receiver: participant.id }));
+      participantsTemp = [...participantsTemp, ...participants.map(participant => ({ receiver: participant.id }))];
     }
     //participantsTemp = [...new Set(participantsTemp)];
-    console.log('participantsTemp:', participantsTemp);
+
     return participantsTemp
   }
 
@@ -133,7 +135,7 @@ const NewPollPage = () => {
       description,
       duration,
       datetime_ranges: datetimeRangesData,
-      participants: participantIds,
+      invited: participantIds,
       deadline
     }
 
