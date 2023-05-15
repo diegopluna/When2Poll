@@ -92,10 +92,9 @@ const NewPollPage = () => {
   const getParticipantIds = async (selectedGroups) => {
     let participantsTemp = []
     for (const group of selectedGroups) {
-      const response = await api.get(`/orgs/organizations/${group.id}/members/`);
+      const response = await api.get(`/orgs/organizations/${group.id}/membersonly/`);
       const participants = response.data;
       // participantsTemp = [...participantsTemp, ...participants.map(participant => participant.id)];
-      participantsTemp = participants.map(participant => ({ receiver: participant.id }));
       participantsTemp = [...participantsTemp, ...participants.map(participant => ({ receiver: participant.id }))];
     }
     //participantsTemp = [...new Set(participantsTemp)];
