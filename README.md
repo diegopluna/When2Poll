@@ -94,7 +94,8 @@ Backlog do Jira
 
 ### Diagrama de atividades
 
-![Diagramando nosso caminho para o sucesso_ Um estudo de caso do uso de diagramas de atividades no desenvolvimento de software_](https://github.com/diegopluna/fds2023-1/assets/111139509/c16ad81f-c1c3-4f6a-88d7-ccc9fc41be1c)
+
+![Diagramando nosso caminho para o sucesso_ Um estudo de caso do uso de diagramas de atividades no desenvolvimento de software_  (1)](https://github.com/diegopluna/fds2023-1/assets/111139509/b076b309-2627-4e97-8739-4f390f600360)
 
 
 
