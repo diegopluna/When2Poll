@@ -13,6 +13,7 @@ import './App.css';
 import "./calendar.css";
 import NewGroupPage from './pages/NewGroupPage';
 import GroupPage from './pages/GroupPage';
+import AnswerPollPage from './pages/AnswerPollPage';
 
 
 const router = createBrowserRouter([
@@ -71,6 +72,13 @@ const router = createBrowserRouter([
             element:
             <PrivateRoute>
               <NewGroupPage />
+            </PrivateRoute>
+          },
+          {
+            path: "/invites/poll/:pollId",
+            element:
+            <PrivateRoute>
+              <AnswerPollPage />
             </PrivateRoute>
           }
         ]

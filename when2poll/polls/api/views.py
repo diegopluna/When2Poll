@@ -90,13 +90,13 @@ class PollAnswerView(APIView):
     def get(self, request):
         pass
 
-    def post(self, request):
-        poll_id = request.query_params.get('poll_id')
+    def post(self, request, pk):
+        poll_id = pk
         if poll_id is None:
             return Response({'detail': 'You must indicate which poll this answer refers to.'}, status=status.HTTP_400_BAD_REQUEST)
-        poll = AvailabilityPoll.objects.get(id=poll_id)
-        if request.user not in poll.participants:
-            return Response({'detail': 'You are not a participant in this poll.'}, status=status.HTTP_403_FORBIDDEN)
+        poll = AvailabilityPoll.objects.get(pk=poll_id)
+        # if request.user not in poll.participants:
+        #     return Response({'detail': 'You are not a participant in this poll.'}, status=status.HTTP_403_FORBIDDEN)
         if PollAnswer.objects.filter(user=request.user, poll=poll).exists():
             return Response({'detail': 'You have already submitted an answer for this poll.'}, status=status.HTTP_400_BAD_REQUEST)
         data = request.data
@@ -108,6 +108,20 @@ class PollAnswerView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+
+# class AnswerPollView(APIView):
+#     permission_classes = (IsAuthenticated, )
+
+#     def post(self, request, pk):
+#         poll = AvailabilityPoll.objects.get(pk=pk)
+#         invite = PollInvite.objects.get(receiver = request.user, poll = poll)
+#         if PollAnswer.objects.filter(user = request.user, poll = poll).exists():
+
+#         data = request.data
+#         data['user'] = request.user.pk
+#         data['poll'] = pk
+
+
 
 class UserInvites(APIView):
     permission_classes = (IsAuthenticated, )
@@ -130,3 +144,9 @@ class SetPollAdmin(APIView):
             return Response(status=status.HTTP_200_OK)       
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+class GetPollView(APIView):
+    permission_classes = (IsAuthenticated, )
+    def get(self, request, pk):
+        poll = AvailabilityPoll.objects.get(pk=pk)
+        serializer = AvailabilityPollSerializer(poll)
+        return Response(serializer.data)
