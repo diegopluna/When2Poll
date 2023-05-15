@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import MyTokenObtainPairView, UsersAPIView, VerifyEmail, LogoutView, GetUserByEmailView, GetUsersView, GetUserByPK
+from .views import MyTokenObtainPairView, UsersAPIView, VerifyEmail, LogoutView, GetUserByEmailView, GetUsersView, GetUserByPK, GetCurrentUser
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
@@ -15,5 +15,6 @@ urlpatterns = [
     path('email-verify/', VerifyEmail.as_view(), name = 'email-verify'),
     path('logout/', LogoutView.as_view(), name='logout'), 
     path('users/', GetUsersView.as_view(), name='get-users'),
-    path('users/<int:pk>/',GetUserByPK.as_view(), name='get-user-by-pk')
+    path('users/<int:pk>/',GetUserByPK.as_view(), name='get-user-by-pk'),
+    path('user/me/', GetCurrentUser.as_view(), name='get-current-user'),
 ]

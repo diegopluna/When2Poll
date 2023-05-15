@@ -14,7 +14,7 @@ class AvailabilityPoll(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     duration = models.TimeField()
-    #datetime_ranges = models.ManyToManyField(DateTimeRange, related_name='datetime_ranges')
+    # datetime_ranges = models.ManyToManyField(DateTimeRange, related_name='datetime_ranges')
     deadline = models.DateTimeField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE) #review the on_delete behaviour
     # admins = models.ManyToManyField(User, related_name='admins')

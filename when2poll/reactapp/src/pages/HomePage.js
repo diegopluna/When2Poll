@@ -25,6 +25,7 @@ const HomePage = () => {
         <h1 className='font-face-sfbold'>Próximas Reuniões</h1>
         <div className='font-face-sfregular' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <Calendar
+            id='homeCalendar'
             className='red' 
             readOnly 
           />
@@ -49,13 +50,14 @@ const HomePage = () => {
           </tbody> */}
         </table>
         <h3 className='text-center font-face-sfbold'>Reuniões não definidas</h3>
-        <ul>
-        {polls.map(poll => (
-          <Button style={styles.pollBtn} onClick={() => window.location.href = `/poll/${poll.id}`} variant="primary" className="d-flex align-items-center">
-            <span className="mr-auto">{poll.name}</span>
-            
-            <FontAwesomeIcon icon={faChevronRight} className="ml-2" />
-          </Button>
+        <ul className='justify-content-center'>
+          {polls.map(poll => (
+              <Button style={styles.pollBtn} onClick={() => window.location.href = `/poll/${poll.id}`} variant="primary" className="d-flex align-items-center">
+                <span className="mr-auto">{poll.name} </span>
+                
+                <FontAwesomeIcon icon={faChevronRight} className="ml-2" />
+              </Button>
+          
           // <li key={poll.name} onClick={() => window.location.href = `/poll/${poll.id}`}>
           //   <h4>{poll.name}</h4>
           //   <p>Deadline: {poll.deadline}</p>
@@ -99,7 +101,8 @@ const styles = {
     backgroundColor: "#FFFFFF",
     color: "#000000",
     border: "1px solid #FFFFFF",
-    borderRadius: "7px"
+    borderRadius: "7px",
+    marginBottom: "12px"
   }
 }
 

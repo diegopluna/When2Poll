@@ -33,7 +33,7 @@ class LoginFormTest(LiveServerTestCase):
         driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver',
                            options=options)
         driver.get('http://127.0.0.1:8000/login/')
-
+        driver.maximize_window()
         time.sleep(3)
 
         user_email = driver.find_element(By.NAME,'email')
@@ -43,7 +43,7 @@ class LoginFormTest(LiveServerTestCase):
 
         submit = driver.find_element(By.NAME,'submit')
 
-        user_email.send_keys('jpbs2@cesar.school')
+        user_email.send_keys('alunodocesar@cesar.school')
         user_password.send_keys('qwertyui')
 
         submit.send_keys(Keys.RETURN)
@@ -120,7 +120,60 @@ class LoginFormTest(LiveServerTestCase):
         back.click()
         time.sleep(3)
         
+        #aqui
+        
+        #Criar um evento
+        driver.get('http://127.0.0.1:8000/newpoll/')
+        time.sleep(1)
+        #scrole viado
+        driver.execute_script("window.scrollBy(0, 500)")
+        time.sleep(1)
+        
+        event_create_name = driver.find_element(By.NAME,'name')
+        event_create_name.send_keys('Nome do evento')
+        time.sleep(3)
+        
+        event_create_description = driver.find_element(By.XPATH, "//textarea[@class='form-control font-face-sfregular' and @type='text' and @name='description' and @placeholder='Descrição']")
+        event_create_description.send_keys('Descrição do evento')
+        time.sleep(3)
+        
+        select_day = driver.find_element(By.XPATH, "//span[contains(text(), '19') and contains(@class, 'sd')]")
+        select_day.click()
+
+        time.sleep(5)
+        
+        
+        #poll time
+        
+        #duration add 1 hour
+        driver.find_element(By.XPATH, "/html/body/div/div[2]/div/form/div[3]/div/div[2]/div/div[1]/button[1]").click()
+        time.sleep(1)
+        
+        #init time add 3 hours
+        for _ in range(3):
+            driver.find_element(By.XPATH, "/html/body/div/div[2]/div/form/div[3]/div/div[3]/div/div[1]/button[1]").click()
+            time.sleep(1)
+        
+        #end time  decrease 2 hours
+        for _ in range(2):
+            driver.find_element(By.XPATH, "/html/body/div/div[2]/div/form/div[3]/div/div[4]/div/div[1]/button[2]").click()
+            time.sleep(1)
+
+        #interact with group button
+        element = driver.find_element(By.ID, 'react-select-2-input')
+        element.click()
+        time.sleep(1)
+        element.send_keys(Keys.ENTER)
+        time.sleep(5)
+
+        submit = driver.find_element(By.NAME,'submit')
+        submit.click()
+
+        time.sleep(3)
+        
         #ENTRAR PERFIL E LOGOUT
+        driver.execute_script("window.scrollBy(500, 0)")
+        time.sleep(5)
         click_profile=driver.find_element(By.LINK_TEXT, 'Aluno do cesar')
         click_profile.click() 
         time.sleep(5)
@@ -137,7 +190,7 @@ class LoginFormTest(LiveServerTestCase):
 
         submit = driver.find_element(By.NAME,'submit')
 
-        Receiver_email.send_keys('jpbs1@cesar.school')
+        Receiver_email.send_keys('aluno1@cesar.school')
         Receiver_password.send_keys('qwertyui')
 
         submit.send_keys(Keys.RETURN)
@@ -172,8 +225,14 @@ class LoginFormTest(LiveServerTestCase):
         #Ver detalhes
         group_details=driver.find_element(By.NAME,'Nome do Grupo')
         group_details.click()
+        time.sleep(6)
         
-        time.sleep(3)
+        
+        
+        
+        
+        
+        
         driver.close()
 
 

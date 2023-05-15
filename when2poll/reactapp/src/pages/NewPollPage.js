@@ -94,10 +94,12 @@ const NewPollPage = () => {
     for (const group of selectedGroups) {
       const response = await api.get(`/orgs/organizations/${group.id}/members/`);
       const participants = response.data;
-      participantsTemp = [...participantsTemp, ...participants.map(participant => participant.id)];
+      // participantsTemp = [...participantsTemp, ...participants.map(participant => participant.id)];
+      participantsTemp = participants.map(participant => ({ receiver: participant.id }));
+      participantsTemp = [...participantsTemp, ...participants.map(participant => ({ receiver: participant.id }))];
     }
     //participantsTemp = [...new Set(participantsTemp)];
-    console.log('participantsTemp:', participantsTemp);
+
     return participantsTemp
   }
 
@@ -133,7 +135,7 @@ const NewPollPage = () => {
       description,
       duration,
       datetime_ranges: datetimeRangesData,
-      participants: participantIds,
+      invited: participantIds,
       deadline
     }
 
@@ -165,6 +167,7 @@ const NewPollPage = () => {
               <div className='form-group' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                   <p className='h4 text-center font-face-sfbold'>Seleção de datas</p>
                   <Calendar
+                    id='newPollCalendar'
                     className='red'
                     style={{ display:'column', alignItems: 'center', justifyContent: 'center' }}
                     value={dateRanges}
