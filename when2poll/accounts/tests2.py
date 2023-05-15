@@ -9,7 +9,7 @@ import time
 import random
 
 
-#teste selenium historia criar grupo e convidar um usuario aleatorio
+#teste selenium historia criar grupo e convidar um usuario aleatorio e ver dashboard de grupos
 
 
 # class HostTest(LiveServerTestCase):
