@@ -53,10 +53,40 @@ const PollPage = () => {
       </nav>
       <div className='d-flex min-vw-100 justify-content-center align-items-center'>
         <div  style={styles.login}>
-          <h1>{poll.name}</h1>
-          <h2>Deadline: {poll.deadline}</h2>
-          <h3>Participants:</h3>
-          <ul>
+          <h1 className='display-1 text-center font-face-sfbold' style={styles.title}>{poll.name}</h1>
+          <p className='h3 text-center mt-2 font-face-sfregular'>{poll?.description}</p>
+          <p className='h4 text-center mt-2 font-face-sfregular'>Deadline: {poll.deadline}</p>
+          <table className='table mt-4 font-face-sfregular'>
+            <thead>
+              <tr>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {poll.participants.map(participant => (
+                <tr key={participant.pk}>
+                  <th scope="col">{participant.name}</th>
+                  <th scope="col">{participant.email}</th>
+                  {participant.admin ?
+                  <th scope="col">Administrador</th>
+                  :
+                  <th scope="col">Membro</th>
+                  }
+                  {/* <th scope="col">{participant.admin ? "Administrador": "Membro"}</th> */}
+                </tr>
+              ))}
+              {poll.invited_users.map(user => (
+                <tr>
+                  <th scope="col">{user.name}</th>
+                  <th scope="col">{user.email}</th>
+                  <th scope="col">Convidado</th>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {/* <ul>
             {poll.participants.map(participant => (
               <li key={participant.pk}>
                 {participant.name} {participant.admin ? '(admin)' : ''}
@@ -70,8 +100,8 @@ const PollPage = () => {
                 {user.name}
               </li>
             ))}
-          </ul>
-          <h3>Datetime Ranges:</h3>
+          </ul> */}
+          {/* <h3>Datetime Ranges:</h3> */}
         </div>        
       </div>
       
