@@ -32,18 +32,15 @@ const AnswerPollPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        // const postData = {
-        //     user,
-        //     poll,
-        //     available: !isAbsent,
-        //     matrix,
-        //     justification: justification
-        // }
+        const postData = {
+            available: !isAbsent,
+            justification: justification
+        }
 
-        // const response = await api.post(`/polls/answer/${pollId}/`, postData)
-        // if (response.status === 200) {
-        //     navigate("/invites")
-        // }
+        const response = await api.post(`/polls/answer/${pollId}/`, postData)
+        if (response.status === 201) {
+            navigate("/invites")
+        }
 
     }
 

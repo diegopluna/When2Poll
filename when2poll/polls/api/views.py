@@ -108,20 +108,39 @@ class PollAnswerView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+class AnswerPollView(APIView):
+    permission_classes = (IsAuthenticated, )
 
-# class AnswerPollView(APIView):
+    def post(self, request, pk):
+        recdata = request.data
+        poll = AvailabilityPoll.objects.get(pk=pk)
+        invite = PollInvite.objects.get(receiver = request.user, poll = poll)
+        if PollAnswer.objects.filter(user = request.user, poll = poll).exists():
+            return Response({'detail': 'You have already submitted an answer for this poll.'}, status=status.HTTP_400_BAD_REQUEST)
+        data = {}
+        data['user'] = request.user.pk
+        data['poll'] = pk
+        data['justification'] = recdata['justification']
+        serializer = PollAnswerSerializer(data = data)
+        if serializer.is_valid():
+            serializer.save(user=request.user, poll=poll)
+            invite.accepted = recdata['available']
+            invite.answered = True
+            invite.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+# class RejectAnswerPollView(APIView):
 #     permission_classes = (IsAuthenticated, )
 
-#     def post(self, request, pk):
+#     def get(self, request, pk):
 #         poll = AvailabilityPoll.objects.get(pk=pk)
 #         invite = PollInvite.objects.get(receiver = request.user, poll = poll)
-#         if PollAnswer.objects.filter(user = request.user, poll = poll).exists():
-
-#         data = request.data
-#         data['user'] = request.user.pk
-#         data['poll'] = pk
-
-
+#         invite.accepted = False
+#         invite.answered = True
+#         invite.save()
+#         return Response(status=status.HTTP_200_OK)
 
 class UserInvites(APIView):
     permission_classes = (IsAuthenticated, )
