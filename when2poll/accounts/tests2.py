@@ -84,7 +84,7 @@ class LoginFormTest(LiveServerTestCase):
         
         time.sleep(3)    
         
-        create = driver.find_element(By.XPATH,"//button[@type='submit' and @class='btn btn-success w-100' and @style='background-color: rgb(0, 173, 181);' and text()='Criar grupo']")
+        create = driver.find_element(By.NAME, 'submit')
         create.click()
         time.sleep(3)
 
