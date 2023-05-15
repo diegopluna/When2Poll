@@ -25,6 +25,7 @@ const HomePage = () => {
         <h1 className='font-face-sfbold'>Próximas Reuniões</h1>
         <div className='font-face-sfregular' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <Calendar
+            id='homeCalendar'
             className='red' 
             readOnly 
           />

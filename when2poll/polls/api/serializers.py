@@ -79,7 +79,8 @@ class AvailabilityPollSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         owner = instance.owner
-        representation['participants'] = [{'pk': user.pk, 'name': user.full_name, 'email': user.email, 'admin': user in instance.admins.all()} for user in instance.participants.all()]
+        representation['owner'] = {'pk': owner.pk, 'name': owner.full_name, 'email': owner.email}
+        representation['participants'] = [{'pk': user.pk, 'name': user.full_name, 'email': user.email, 'admin': user in instance.admins.all()} for user in instance.participants.exclude(pk=owner.pk)]
         representation.pop('invited')
         representation['invited_users'] = [{'pk': user.pk, 'name': user.full_name, 'email': user.email} for user in instance.pending_invite.exclude(pk=owner.pk)]
         representation['answers'] = PollAnswerSerializer(instance.answers.all(), many=True).data

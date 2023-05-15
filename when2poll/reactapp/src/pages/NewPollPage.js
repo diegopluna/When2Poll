@@ -167,6 +167,7 @@ const NewPollPage = () => {
               <div className='form-group' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                   <p className='h4 text-center font-face-sfbold'>Seleção de datas</p>
                   <Calendar
+                    id='newPollCalendar'
                     className='red'
                     style={{ display:'column', alignItems: 'center', justifyContent: 'center' }}
                     value={dateRanges}

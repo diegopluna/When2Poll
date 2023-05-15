@@ -128,3 +128,12 @@ class GetUsersView(APIView):
         users = User.objects.exclude(id=request.user.id)
         serialized_users = [{'id': user.id, 'full_name': user.full_name, 'email': user.email} for user in users]
         return Response(serialized_users)
+        
+
+class GetCurrentUser(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(Self, request):
+        user = request.user
+        serialized_user = {'id': user.id, 'full_name': user.full_name, 'email': user.email}
+        return Response(serialized_user)

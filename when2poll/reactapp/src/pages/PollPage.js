@@ -65,6 +65,11 @@ const PollPage = () => {
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <th scope="col">{poll.owner.name}</th>
+                <th scope="col">{poll.owner.email}</th>
+                <th scope="col">Criador</th>
+              </tr>
               {poll.participants.map(participant => (
                 <tr key={participant.pk}>
                   <th scope="col">{participant.name}</th>
