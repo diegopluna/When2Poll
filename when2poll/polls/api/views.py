@@ -151,15 +151,14 @@ class UserInvites(APIView):
 
 class SetPollAdmin(APIView):
     permission_classes = (IsAuthenticated, )
-    def put(self, request, pk):
-        datas = request.data
+    def put(self, request, pollId, userId):
+        data = request.data
         owner = User.objects.get(pk = request.user.pk)
-        if(AvailabilityPoll.objects.filter(pk = pk, owner = owner)):
-            Poll = AvailabilityPoll.objects.get(pk = pk, owner = owner)
-            for data in datas:
-                invite = PollInvite.objects.get(receiver = data['receiver_id'], accepted = True, answered = True, poll = Poll)
-                invite.admin = data['admin']
-                invite.save()
+        if(AvailabilityPoll.objects.filter(pk = pollId, owner = owner)):
+            Poll = AvailabilityPoll.objects.get(pk = pollId, owner = owner)
+            invite = PollInvite.objects.get(receiver = userId, accepted = True, answered = True, poll = Poll)
+            invite.admin = data['admin']
+            invite.save()
             return Response(status=status.HTTP_200_OK)       
         return Response(status=status.HTTP_404_NOT_FOUND)
 

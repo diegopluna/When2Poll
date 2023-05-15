@@ -4,20 +4,35 @@ import DatePicker, { DateObject, Calendar } from "react-multi-date-picker";
 import "react-multi-date-picker/styles/colors/red.css"
 import useAxios from "../utils/useAxios";
 import { useParams } from 'react-router-dom'
+import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+
 
 const PollPage = () => {
   const [poll, setPoll] = useState(null);
-
+  const [userData, setUserData] = useState(null);
   const api = useAxios();
 
   const {pollId} = useParams()
+
+  async function setAdmin(admin,userId){
+    const data = {
+      admin: admin
+    }
+    const response = await api.put(`/polls/${pollId}/admin/set/${userId}/`, data)
+    window.location.reload(true)
+  }
 
   useEffect(() => {
     const fetchPollData = async () => {
       const response = await api.get(`/polls/get/?poll_id=${pollId}`);
       setPoll(response.data);
     };
+    const getCurrentUser = async () => {
+      const response = await api.get('/api/user/me/')
+      setUserData(response.data)
+    };
     fetchPollData();
+    getCurrentUser();
   }, []);
 
   if (!poll) {
@@ -56,41 +71,88 @@ const PollPage = () => {
           <h1 className='display-1 text-center font-face-sfbold' style={styles.title}>{poll.name}</h1>
           <p className='h3 text-center mt-2 font-face-sfregular'>{poll?.description}</p>
           <p className='h4 text-center mt-2 font-face-sfregular'>Deadline: {poll.deadline}</p>
-          <table className='table mt-4 font-face-sfregular'>
-            <thead>
-              <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="col">{poll.owner.name}</th>
-                <th scope="col">{poll.owner.email}</th>
-                <th scope="col">Criador</th>
-              </tr>
-              {poll.participants.map(participant => (
-                <tr key={participant.pk}>
-                  <th scope="col">{participant.name}</th>
-                  <th scope="col">{participant.email}</th>
-                  {participant.admin ?
-                  <th scope="col">Administrador</th>
-                  :
-                  <th scope="col">Membro</th>
-                  }
-                  {/* <th scope="col">{participant.admin ? "Administrador": "Membro"}</th> */}
-                </tr>
-              ))}
-              {poll.invited_users.map(user => (
-                <tr>
-                  <th scope="col">{user.name}</th>
-                  <th scope="col">{user.email}</th>
-                  <th scope="col">Convidado</th>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {userData.id===poll.owner.pk ?
+              <table className='table mt-4 font-face-sfregular'>
+                <thead>
+                  <tr>
+                      <th scope="col">Nome</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Administrador?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="col">{poll.owner.name}</th>
+                    <th scope="col">{poll.owner.email}</th>
+                    <th scope="col">Criador</th>
+                  </tr>
+                  {poll.participants.map(participant => (
+                    <tr key={participant.pk}>
+                      <th scope="col">{participant.name}</th>
+                      <th scope="col">{participant.email}</th>
+                      <th scope="col">
+                        <input
+                          type="checkbox"
+                          checked={participant.admin}
+                          onChange={() => setAdmin(!participant.admin,participant.pk)}                
+                        />
+                      </th>
+                      {/* {participant.admin ?
+                      <th scope="col">Administrador</th>
+                      :
+                      <th scope="col">Membro</th>
+                      } */}
+                      {/* <th scope="col">{participant.admin ? "Administrador": "Membro"}</th> */}
+                    </tr>
+                  ))}
+                  {poll.invited_users.map(user => (
+                    <tr>
+                      <th scope="col">{user.name}</th>
+                      <th scope="col">{user.email}</th>
+                      <th scope="col">Convidado</th>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              :
+              <table className='table mt-4 font-face-sfregular'>
+                <thead>
+                  <tr>
+                      <th scope="col">Nome</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="col">{poll.owner.name}</th>
+                    <th scope="col">{poll.owner.email}</th>
+                    <th scope="col">Criador</th>
+                  </tr>
+                  
+                  {poll.participants.map(participant => (
+                    <tr key={participant.pk}>
+                      <th scope="col">{participant.name}</th>
+                      <th scope="col">{participant.email}</th>
+                      {participant.admin ?
+                      <th scope="col">Administrador</th>
+                      :
+                      <th scope="col">Membro</th>
+                      }
+                      {/* <th scope="col">{participant.admin ? "Administrador": "Membro"}</th> */}
+                    </tr>
+                  ))}
+                  {poll.invited_users.map(user => (
+                    <tr>
+                      <th scope="col">{user.name}</th>
+                      <th scope="col">{user.email}</th>
+                      <th scope="col">Convidado</th>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+          }
+         
           {/* <ul>
             {poll.participants.map(participant => (
               <li key={participant.pk}>

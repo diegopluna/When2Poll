@@ -7,7 +7,8 @@ urlpatterns = [
     path('put/', AvailabilityPollView.as_view(), name="put-poll"),
     path('answer/<int:pk>/', AnswerPollView.as_view(), name="answer-poll"),
     path('invites/', UserInvites.as_view(), name="poll-invites"),
-    path('<int:pk>/', GetPollView.as_view(), name="get-poll")
+    path('<int:pk>/', GetPollView.as_view(), name="get-poll"),
+    path('<int:pollId>/admin/set/<int:userId>/', SetPollAdmin.as_view(), name="set-poll-admin")
     # ,
     # path('justifications/', JustificationListView.as_view()),
     # path('justifications/<int:pk>/', JustificationDetailView.as_view()),
