@@ -3,14 +3,17 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
+import PollPage from './pages/PollPage';
 import NewPollPage from './pages/NewPollPage';
 import InvitesPage from './pages/InvitesPage';
 import GroupsPage from './pages/GroupsPage';
 import PrivateRoute, { UnAuthRoute } from './utils/PrivateRoute';
 import { AuthProvider } from './context/AuthProvider';
 import './App.css';
+import "./calendar.css";
 import NewGroupPage from './pages/NewGroupPage';
 import GroupPage from './pages/GroupPage';
+import AnswerPollPage from './pages/AnswerPollPage';
 
 
 const router = createBrowserRouter([
@@ -27,6 +30,13 @@ const router = createBrowserRouter([
             element:
             <PrivateRoute>
               <HomePage />
+            </PrivateRoute>
+          },
+          {
+            path: "poll/:pollId",
+            element:
+            <PrivateRoute>
+              <PollPage />
             </PrivateRoute>
           },
           {
@@ -62,6 +72,13 @@ const router = createBrowserRouter([
             element:
             <PrivateRoute>
               <NewGroupPage />
+            </PrivateRoute>
+          },
+          {
+            path: "/invites/poll/:pollId",
+            element:
+            <PrivateRoute>
+              <AnswerPollPage />
             </PrivateRoute>
           }
         ]

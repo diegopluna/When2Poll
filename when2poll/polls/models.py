@@ -16,27 +16,80 @@ class AvailabilityPoll(models.Model):
     duration = models.TimeField()
     #datetime_ranges = models.ManyToManyField(DateTimeRange, related_name='datetime_ranges')
     deadline = models.DateTimeField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1) #review the on_delete behaviour
-    admins = models.ManyToManyField(User, related_name='admins')
-    participants = models.ManyToManyField(User, related_name='participants')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE) #review the on_delete behaviour
+    # admins = models.ManyToManyField(User, related_name='admins')
+    # participants = models.ManyToManyField(User, related_name='participants')
     defined = models.BooleanField(default=False)
 
     @property
     def datetime_ranges(self):
         return self.datetimerange_set.all()
+    
+    @property
+    def invited(self):
+        return self.pollinvite_set.all()
+
+    @property
+    def participants(self):
+        return User.objects.filter(pollinvite__poll=self, pollinvite__accepted=True) #query for users with accepted invites
+    
+    @property
+    def answered_users(self):
+        return self.pollanswer_set.values_list('user', flat=True)
+
+    @property
+    def pending_invite(self):
+        return User.objects.filter(pollinvite__poll=self, pollinvite__accepted=False, pollinvite__answered=False)
+
+    @property
+    def pending_answer(self):
+        return self.participants.exclude(self.answered_users)
+    
+    @property
+    def answers(self):
+        return self.pollanswer_set.all()
+    
+    @property
+    def admins(self):
+        return User.objects.filter(pollinvite__poll=self, pollinvite__accepted=True, pollinvite__admin=True)
 
     def is_expired(self):
         return self.deadline <= timezone.now()
-
-    def get_participant_count(self):
-        return self.participants.count()
-
+    
+    # def invited_admin(self, participants):
+    #     #invite a participant to become an admin
+    #     if self.owner == participants or participants in self.admins.all():
+    #         #user is already an admin or the owner of the poll
+    #         return
+    #     self.admins.add(participants)
+    #    # add participants to admins field
 
 class DateTimeRange(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
     matrix = models.JSONField()
+
+class PollInvite(models.Model):
+    #sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE)
+    poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
+    answered = models.BooleanField(default=False)
+    admin = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False)
+
+# class PollAdminInvite(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
+#     answered = models.BooleanField(default=False)
+#     accepted = models.BooleanField(default=False)
+
+class PollAnswer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
+    available = models.BooleanField(default=True)
+    matrix = models.JSONField(blank=True, null=True)
+    justification = models.TextField(max_length=1000, blank=True)
     
     # def serialize(self):
     #     data = {
@@ -85,3 +138,4 @@ class DateTimeRange(models.Model):
     #         end_utc = end_datetime.astimezone(timezone.utc)
     #         ranges_in_utc.append((start_utc, end_utc))
     #     return ranges_in_utc
+

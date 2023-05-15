@@ -3,37 +3,37 @@ import Nav from 'react-bootstrap/Nav'
 import { useParams } from 'react-router-dom'
 import useAxios from '../utils/useAxios'
 
-const GroupPage = () => {
+const PollInvitePage = () => {
 
-    const [data, setData] = useState(null)
-    // const [ownerData, setOwnerData] = useState(null)
-    const [members, setMembersData] = useState([])
-    // const [invited, setInvited] = useState([])
-    const {groupId} = useParams()
+    // const [data, setData] = useState(null)
+    // // const [ownerData, setOwnerData] = useState(null)
+    // const [members, setMembersData] = useState([])
+    // // const [invited, setInvited] = useState([])
+    // const {groupId} = useParams()
 
-    const api = useAxios()
+    // const api = useAxios()
 
-    useEffect(() => {
-        async function fetchPageData() {
-            const groupdata = await api.get(`/orgs/organizations/${groupId}/`) 
-            setData(groupdata.data)
-            const response = await api.get(`/orgs/organizations/${groupId}/members/`)
-            setMembersData(response.data)
-        }
+    // useEffect(() => {
+    //     async function fetchPageData() {
+    //         const groupdata = await api.get(`/orgs/organizations/${groupId}/`) 
+    //         setData(groupdata.data)
+    //         const response = await api.get(`/orgs/organizations/${groupId}/members/`)
+    //         setMembersData(response.data)
+    //     }
 
-        fetchPageData()
+    //     fetchPageData()
 
-    },[])
+    // },[])
 
   return (
     <div>
 
         <nav className='navbar navbar-expand-md navbar-light d-none d-lg-block' role='navigation'>
           <div className='container-fluid'>
-          <a style={styles.links} className='navbar-brand font-face-sfbold'>{data?.name}</a>
+          <a style={styles.links} className='navbar-brand font-face-sfbold'>Teste</a>
             <Nav className='ml-auto'>
               <Nav.Item>
-                <Nav.Link style={styles.links} href="/groups" className='nav-link font-face-sfbold'>
+                <Nav.Link style={styles.links} href="/invites" className='nav-link font-face-sfbold'>
                   Voltar
                 </Nav.Link>
               </Nav.Item>
@@ -45,7 +45,7 @@ const GroupPage = () => {
             <Nav className='w-100'>
               <div className='d-flex flex-row justify-content-around w-100'>
                 <Nav.Item>
-                  <Nav.Link style={styles.links} href="/groups" className='nav-link font-face-sfbold'>
+                  <Nav.Link style={styles.links} href="/invites" className='nav-link font-face-sfbold'>
                     Voltar
                   </Nav.Link>
                 </Nav.Item>
@@ -55,9 +55,9 @@ const GroupPage = () => {
         </nav>
         <div className='d-flex min-vw-100 justify-content-center align-items-center' >
           <div  style={styles.login} >
-                <h1 className='display-1 text-center font-face-sfbold' style={styles.title} >{data?.name}</h1>
-                <p className='h3 text-center mt-2 font-face-sfregular'>{data?.description}</p>
-                <table className='table mt-4 font-face-sfregular'>
+                <h1 className='display-1 text-center font-face-sfbold' style={styles.title} >Nome</h1>
+                <p className='h3 text-center mt-2 font-face-sfregular'>Desc</p>
+                {/* <table className='table mt-4 font-face-sfregular'>
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
@@ -74,7 +74,7 @@ const GroupPage = () => {
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </table> */}
           </div>
       </div>
     </div>
@@ -117,4 +117,4 @@ const styles = {
     },
   }
 
-export default GroupPage
+export default PollInvitePage

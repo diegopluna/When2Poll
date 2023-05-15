@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav'
 import useAxios from "../utils/useAxios";
 import Select from 'react-select'
 import AsyncSelect from 'react-select/async';
+import PrimaryButton from '../components/Button';
 
 
 
@@ -55,13 +56,13 @@ const NewGroupPage = () => {
   }
 
   return (
-  <div>
+  <div className='vh-100' style={styles.body}>
       <nav className='navbar navbar-expand-md navbar-light d-none d-lg-block' role='navigation'>
           <div className='container-fluid'>
-          <a className='navbar-brand'>Novo Grupo</a>
+          <a style={styles.links} className='navbar-brand font-face-sfbold'>Novo Grupo</a>
           <Nav className='ml-auto'>
               <Nav.Item>
-              <Nav.Link href="/groups" className='nav-link'>
+              <Nav.Link style={styles.links} href="/groups" className='nav-link font-face-sfbold'>
                   Voltar
               </Nav.Link>
               </Nav.Item>
@@ -74,7 +75,7 @@ const NewGroupPage = () => {
           <Nav className='w-100'>
               <div className='d-flex flex-row justify-content-around w-100'>
               <Nav.Item>
-                  <Nav.Link href="/groups" className='nav-link'>
+                  <Nav.Link style={styles.links} href="/groups" className='nav-link font-face-sfbold'>
                   Voltar
                   </Nav.Link>
               </Nav.Item>
@@ -83,19 +84,19 @@ const NewGroupPage = () => {
           </div>
       </nav>
 
-      <div className='d-flex min-vw-100 justify-content-center align-items-center' >
+      <div className='d-flex min-vw-90 justify-content-center align-items-center' >
           <div  style={styles.login} >
-              <p className='h1 text-center' style={styles.title} >Novo Grupo</p>
+              <p className='h1 text-center font-face-sfregular' style={styles.title} >Novo Grupo</p>
               <form style={styles.form} onSubmit={handleSubmit}>
                   <div className='form-group' style={styles.formGroup}>
-                    <input value={name} className='form-control' type="text" name="name" placeholder="Nome" onChange={event => setName(event.target.value)} required/>
+                    <input value={name} className='form-control font-face-sfregular' type="text" name="name" placeholder="Nome" onChange={event => setName(event.target.value)} required/>
                   </div>
                   <div className='form-group' style={styles.formGroup}>
-                    <textarea style={styles.desc} value={description} className='form-control' name="description" placeholder="Descrição" onChange={event => setDescription(event.target.value)} required/>
+                    <textarea style={styles.desc} value={description} className='form-control font-face-sfregular' name="description" placeholder="Descrição" onChange={event => setDescription(event.target.value)} required/>
                   </div>
-                    <h4 className='text-center'>Convidar pessoas</h4>
+                    <h4 className='text-center font-face-sfregular'>Convidar pessoas</h4>
                   <div className='form-group' style={styles.formGroup}>
-                    <div className='dropdown-container'>
+                    <div className='dropdown-container font-face-sfregular'>
                       <AsyncSelect
                         cacheOptions
                         defaultOptions
@@ -110,7 +111,7 @@ const NewGroupPage = () => {
                       />
                     </div>
                   </div>
-                  <button style={styles.button} type="submit" className="btn btn-success w-100" >Criar grupo</button>  
+                  <PrimaryButton>Criar grupo</PrimaryButton>  
               </form>
           </div>
       </div>
@@ -120,7 +121,7 @@ const NewGroupPage = () => {
 
 const styles = {
     body: {
-      backgroundColor: '#222831'
+      backgroundColor: '#EEEEEE'
     },
     login: {
       width: "360px",
@@ -148,7 +149,10 @@ const styles = {
     },
     desc : {
         resize: 'none'
-    }
+    },
+    links: {
+      color: "#ff735c"
+    },
   }
 
 export default NewGroupPage

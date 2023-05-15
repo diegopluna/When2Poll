@@ -79,27 +79,46 @@ class UserInvitationList(APIView):
         serializer = OrgInvitationSerializer(invitations, many=True)
         return Response(serializer.data)
 
-class AcceptedInvitationList(APIView):
+# class AcceptedInvitationList(APIView):
+#     permission_classes = (IsAuthenticated, )
+#     def get(self, request, pk):
+#         organization = Organization.objects.get(pk=pk)
+#         invitations = OrgInvitation.objects.filter(organization=organization, accepted = True, answered = True)
+#         data = []
+#         # data.append({'id': organization.owner.id, 'full_name': organization.owner.full_name, 'email': organization.owner.email})
+#         for invite in invitations:
+#             user = User.objects.get(pk=invite.user.id)
+#             data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email})   
+#         return Response(data)
+    
+class AllGroupMembers(APIView):
     permission_classes = (IsAuthenticated, )
     def get(self, request, pk):
         organization = Organization.objects.get(pk=pk)
-        invitations = OrgInvitation.objects.filter(organization=organization, accepted = True, answered = True)
-        data =[]
-        for invite in invitations:
+        accinvitations = OrgInvitation.objects.filter(organization=organization, accepted = True, answered = True)
+        unansinvitations = OrgInvitation.objects.filter(organization=organization, accepted = False, answered = False)
+        data = []
+        data.append({'id': organization.owner.id, 'full_name': organization.owner.full_name, 'email': organization.owner.email, "type": "Criador"})
+        for invite in accinvitations:
             user = User.objects.get(pk=invite.user.id)
-            data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email})   
+            data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email, "type": "Membro"})
+
+        for invite in unansinvitations:
+            user = User.objects.get(pk=invite.user.id)
+            data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email, "type": "Convidado"})
+
         return Response(data)
 
-class NotAnsweredInvitationList(APIView):
-    permission_classes = (IsAuthenticated, )
-    def get(self, request, pk):
-        organization = Organization.objects.get(pk=pk)
-        invitations = OrgInvitation.objects.filter(organization=organization, accepted = False,answered=False)
-        data =[]
-        for invite in invitations:
-            user = User.objects.get(pk=invite.user.id)
-            data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email})   
-        return Response(data)
+# class NotAnsweredInvitationList(APIView):
+#     permission_classes = (IsAuthenticated, )
+#     def get(self, request, pk):
+#         organization = Organization.objects.get(pk=pk)
+#         invitations = OrgInvitation.objects.filter(organization=organization, accepted = False,answered=False)
+#         data =[]
+#         for invite in invitations:
+#             user = User.objects.get(pk=invite.user.id)
+#             data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email})   
+#         return Response(data)
     
 class RejectedInvitationList(APIView):
     permission_classes = (IsAuthenticated, )

@@ -1,8 +1,11 @@
 import React, {useState} from 'react'
 import DatePicker, { DateObject, Calendar } from "react-multi-date-picker";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import TimeInput from '../components/TimeInput';
 import useAxios from "../utils/useAxios";
 import AsyncSelect from 'react-select/async';
+import PrimaryButton from '../components/Button';
+
 
 const NewPollPage = () => {
   const [name, setName] = useState('')
@@ -13,6 +16,7 @@ const NewPollPage = () => {
   const [duration, setDuration] = useState('')
   const [timeError, setTimeError] = useState('')
   const [deadline, setDeadline] = useState('')
+  const [displayDeadline, setDisplayDeadline] = useState('')
   const [selectedGroups, setSelectedGroups] = useState(null)
 
   const api = useAxios();
@@ -78,20 +82,23 @@ const NewPollPage = () => {
     const month = ('0' + (earliestDate.getMonth() + 1)).slice(-2);
     const date = ('0' + earliestDate.getDate()).slice(-2);
     const deadline = `${year}-${month}-${date}T${earliest}`;
+    const displayDeadline = `${date}/${month}/${year} - ${earliest}`
 
     setDeadline(deadline);
+    setDisplayDeadline(displayDeadline);
   }
   
 
   const getParticipantIds = async (selectedGroups) => {
-    let participantIds = [];
+    let participantsTemp = []
     for (const group of selectedGroups) {
       const response = await api.get(`/orgs/organizations/${group.id}/members/`);
       const participants = response.data;
-      participantIds = [...participantIds, ...participants.map(participant => participant.id)];
+      participantsTemp = [...participantsTemp, ...participants.map(participant => participant.id)];
     }
-    console.log(participantIds)
-    return [...new Set(participantIds)];
+    //participantsTemp = [...new Set(participantsTemp)];
+    console.log('participantsTemp:', participantsTemp);
+    return participantsTemp
   }
 
   const handleSubmit = async (e ) => {
@@ -112,7 +119,7 @@ const NewPollPage = () => {
       return result;
     });
 
-    const participantIds = getParticipantIds(selectedGroups);
+    let participantIds = await getParticipantIds(selectedGroups)
 
     if (deadline) {
       let deadlineAux = new Date(deadline).toISOString().slice(0,16) + 'Z';
@@ -139,26 +146,26 @@ const NewPollPage = () => {
     setLatest('')
     setDuration('')
     setDeadline('')
-    participantIds([])
-    setDateRanges('')
+    setDateRanges([[]])
     setSelectedGroups(null)
   }
 
   return (
-    <div className='d-flex min-vh-100 min-vw-100 justify-content-center align-items-center' style={styles.body}>
-        <div  style={styles.login} >
-        <p className='h1 text-center' style={styles.title} >Novo evento</p>
+    <div className='d-flex min-vh-100 min-vw-90 justify-content-center align-items-center' style={styles.body}>
+    <div  style={styles.login} >
+        <p className='h1 text-center font-face-sfbold' style={styles.title} >Novo evento</p>
         <form style={styles.form} onSubmit={handleSubmit}>
             <div className='form-group' style={styles.formGroup}>
-              <input value={name} className='form-control' type="text" name="name" placeholder="Nome" onChange={event => setName(event.target.value)} required/>
+              <input value={name} className='form-control font-face-sfregular' type="text" name="name" placeholder="Nome" onChange={event => setName(event.target.value)} required/>
             </div>
             <div className='form-group' style={styles.formGroup}>
-              <input value={description} className='form-control' type="text" name="description" placeholder="Descrição" onChange={event => setDescription(event.target.value)}/>
+              <textarea value={description} className='form-control font-face-sfregular' type="text" name="description" placeholder="Descrição" onChange={event => setDescription(event.target.value)}/>
             </div>
             <div className='form-group' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
               <div className='form-group' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                  <p className='h4 text-center' style={{color:'#EEEEEE'}}>Seleção de datas</p>
+                  <p className='h4 text-center font-face-sfbold'>Seleção de datas</p>
                   <Calendar
+                    className='red'
                     style={{ display:'column', alignItems: 'center', justifyContent: 'center' }}
                     value={dateRanges}
                     onChange={handleDateChange}
@@ -166,20 +173,44 @@ const NewPollPage = () => {
                     multiple
                   />
                   <br/>
-                  <label style={styles.remember}>Duração pretendida</label>
-                  <TimeInput defaultHour={1} defaultMinute={0} onChange={handleDurationChange}/>
-                  <label style={styles.remember}>Horário mais cedo (início)</label>
-                  <TimeInput defaultHour={9} defaultMinute={0} onChange={handleEarliestChange}/>
-                  <label style={styles.remember}>Horário mais tarde (fim)</label>
-                  <TimeInput defaultHour={17} defaultMinute={0} onChange={handleLatestChange}/>
+                  <label className='font-face-sfsemibold' style={styles.remember}>Duração pretendida</label>
+                  {/* <DatePicker
+                    className='font-face-sfsemibold'
+                    disableDayPicker
+                    format='HH:mm'
+                    plugins={[
+                      <TimePicker hideSeconds />
+                    ]} 
+                  /> */}
+                  <TimeInput className="font-face-sfregular" defaultHour={1} defaultMinute={0} onChange={handleDurationChange}/>
+                  <label className='font-face-sfsemibold' style={styles.remember}>Horário mais cedo (início)</label>
+                  {/* <DatePicker
+                    className='red font-face-sfsemibold'
+                    disableDayPicker
+                    format='HH:mm'
+                    plugins={[
+                      <TimePicker hideSeconds />
+                    ]}
+                  /> */}
+                  <TimeInput className='font-face-sfregular' defaultHour={9} defaultMinute={0} onChange={handleEarliestChange}/>
+                  <label className='font-face-sfsemibold' style={styles.remember}>Horário mais tarde (fim)</label>
+                  {/* <DatePicker
+                    className='font-face-sfsemibold'
+                    disableDayPicker
+                    format='HH:mm'
+                    plugins={[
+                      <TimePicker hideSeconds />
+                    ]}
+                  /> */}
+                  <TimeInput className='font-face-sfregular' defaultHour={17} defaultMinute={0} onChange={handleLatestChange}/>
                   <p style={{ color: 'red' }}>{timeError}</p>
               </div>
             </div>
             <div>
-              <label>Responder até: {deadline}</label>
+              <label className='font-face-sfsemibold'>Responder até: {displayDeadline}</label>
             </div>
             <div className='form-group' style={styles.formGroup}>
-              <div className='dropdown-container'>
+              <div className='dropdown-container font-face-sfsemibold'>
                 <AsyncSelect
                   cacheOptions
                   defaultOptions
@@ -194,7 +225,8 @@ const NewPollPage = () => {
               </div>
             </div>
           <div>
-            <button style={styles.button} type="submit" className="btn btn-success w-100" disabled={timeError !== '' || dateRanges === null}>Criar enquete</button>
+            <PrimaryButton >Criar enquete</PrimaryButton>
+            {/* <button style={styles.button} type="submit" className="btn btn-success w-100" disabled={timeError !== '' || dateRanges === null}>Criar enquete</button> */}
           </div>
         </form>
       </div>

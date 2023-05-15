@@ -15,3 +15,15 @@
 .bottom-tab-label {
   font-size: 12px;
 }
+
+.font-face-sfbold {
+  font-family: "SFProRoundedBold";
+}
+
+.font-face-sfregular {
+  font-family: "SFProRoundedRegular";
+}
+
+.font-face-sfsemibold {
+  font-family: "SFProRoundedSemibold";
+}

@@ -11,6 +11,9 @@ class RegisterPage(TemplateView):
 class HomePage(TemplateView):
     template_name = "index.html"
 
+class PollPage(TemplateView):
+    template_name = "index.html"
+
 class NewPollPage(TemplateView):
     template_name = "index.html"
 
