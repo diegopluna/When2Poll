@@ -85,6 +85,9 @@ class LoginFormTest(LiveServerTestCase):
         element.send_keys(Keys.ENTER)
         time.sleep(3)    
         
+        create = driver.find_element(By.NAME, 'submit')
+        create.click()
+        time.sleep(2)
         
         #GRUPO 2
         group_name = driver.find_element(By.NAME,'name')
