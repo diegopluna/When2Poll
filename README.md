@@ -198,40 +198,22 @@ Link do deploy: http://when2poll-env.eba-cpqbamxu.sa-east-1.elasticbeanstalk.com
   Ao fazer login o usuário irá se deparar com a tela inicial, que no momento está vazia, e a barra
   de navegação no topo da tela onde podemos navegar pelo site.
   
-  História 1: Criar Grupos
-   -Clicar em Grupos na barra de navegação
-   -Clicar em Novo Grupo na barra secundária
-   -Preencher os dados do Grupo e selecionar os usuários que deseja convidar
-   -Clicar em Criar Grupo
+  História 1 e 2: Indicar Indisponibilidade e justificar ausencia
+   -Clicar em Convites na barra de navegação
+   -Clicar em Responder no card do convite da reunião
+   -Marcar a caixa seletora de ausência
+   -Ao marcar a caixa, o campo de justificativa irá surgir e deve-se preenche-lo.
+   -Clicar em responder
    
-   Agora o grupo estará criado e ao apertar em Voltar na barra secundária ou em Grupos na barra de navegação,
-   o novo grupo estará lá e ao ver os detalhes do mesmo, o usuário consegue ver o criador do grupo, os membros do
-   grupo e quem foi convidado para o grupo
+   Agora o convite foi respondido, e está salvo no banco de dados a respotas do usuário com sua justificativa de ausência
    
-  História 2: Aceitar ou rejeitar convite de Grupo
-  -Navegar para a tela de Convites na barra de navegação
+  História 3 e 4: Visão Geral das reuniões e alterar status de administrador de usuários membros das reuniões
+  -Ir para a tela de início
   
-  Nesta tela o usuário pode ver seus convites de grupos(e, futuramente os convites de reuniões também) e responder
-  se deseja entrar no grupo ou não. Ao rejeitar, o convite desaparece. Ao aceitar, o grupo irá aparecer na aba de grupos do
-  usuário e ele conseguirá ver os detalhes deste grupo.
-  
-  História 3: Criar Reunião
-  -Navegar para Nova Reunião na barra de navegação
-  
-  Nesta tela o usuário deve preencher nome e a descrição da reunião.
-  Selecionar os dias em que é possível que a reunião ocorra(Um clique o calendário entra no modo de range, esperando que o usuário selecione
-  outro dia para pegar todos os dias neste intervalo, e um clique duplo no dia seleciona apenas o dia desejado)
-  
-  O usuário determina também a duração da reunião, e os horário mais cedo e mais tarde em que essa reunião possa ocorrer.
-  
-  O sistema calcula uma deadline de 24 horas ante do horário mais cedo do dia mais cedo.
-  
-  Nesta implementação o usuário pode apenas convidar grupos de usuários mas, no futuro pretende-se que também possa convidar usuários de forma
-  avulsa.
-  
-  Ao selecionar o grupo que deseja convidar, basta clicar em Criar enquete. (Como a dashboard ainda não foi implementada, só podemos ver esta
-  reunião na dashboard de admin do Django)
-  
+  Nesta tela o usuário pode ver o calendário com suas reuniões marcadas, e uma lista com reuniões que ainda não foram definidas.
+  Ao clicar em uma dessas reuniões em que o usuário seja o dono, ele pode marcar uma caixa seletora que aparece na tabela de membros para dar
+  poder administrativo das reuniões aos usuários.
+
 ```
 
 ###Screencast Figma
@@ -242,6 +224,11 @@ https://github.com/diegopluna/fds2023-1/assets/111078608/ddf9bb48-97b3-4d7c-9d2e
 ### Screencast Selenium
 
 https://github.com/diegopluna/fds2023-1/assets/111078608/6878dd2a-c04f-4891-bd28-61281b2d175d
+
+
+### Screencast Deploy 
+
+https://github.com/diegopluna/fds2023-1/assets/111078608/9389f805-2dff-4e36-a6f7-1423bc48f9ac
 
 
 ### Quadro JIRA
