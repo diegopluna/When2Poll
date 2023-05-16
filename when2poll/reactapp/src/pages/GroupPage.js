@@ -55,7 +55,7 @@ const GroupPage = () => {
         </nav>
         <div className='d-flex min-vw-100 justify-content-center align-items-center' >
           <div  style={styles.login} >
-                <h1 className='display-1 text-center font-face-sfbold' style={styles.title} >{data?.name}</h1>
+                <h1 name="title" className='display-1 text-center font-face-sfbold' style={styles.title} >{data?.name}</h1>
                 <p className='h3 text-center mt-2 font-face-sfregular'>{data?.description}</p>
                 <table className='table mt-4 font-face-sfregular'>
                     <thead>

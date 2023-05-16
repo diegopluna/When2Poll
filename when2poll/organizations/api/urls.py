@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import OrganizationList, InvitationCreate, InvitationList, GetUserOrganizationsView, GetOrganizationView, RejectedInvitationList ,UserInvitationList, AcceptInvitation, RejectInvitation, AllGroupMembers
+from .views import OrganizationList, InvitationCreate, InvitationList, GetUserOrganizationsView, GetOrganizationView, RejectedInvitationList ,UserInvitationList, AcceptInvitation, RejectInvitation, AllGroupMembers, GetGroupMembersForPollInvite
 
 urlpatterns = [
     path('organizations/', OrganizationList.as_view(), name='organization-list'),
@@ -13,5 +13,6 @@ urlpatterns = [
     path('organizations/user/', GetUserOrganizationsView.as_view()),
     path('user/invites/', UserInvitationList.as_view()),
     path('invitation/<int:pk>/accept/',AcceptInvitation.as_view()),
-    path('invitation/<int:pk>/reject/',RejectInvitation.as_view())
+    path('invitation/<int:pk>/reject/',RejectInvitation.as_view()),
+    path('organizations/<int:pk>/membersonly/', GetGroupMembersForPollInvite.as_view())
 ]

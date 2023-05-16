@@ -109,6 +109,24 @@ class AllGroupMembers(APIView):
 
         return Response(data)
 
+class GetGroupMembersForPollInvite(APIView):
+    permission_classes = (IsAuthenticated, )
+    def get(self, request, pk):
+        organization = Organization.objects.get(pk=pk)
+        invitations = OrgInvitation.objects.filter(organization=organization, accepted = True, answered = True)
+        data = []
+        if request.user.id == organization.owner.id:
+            for invite in invitations:
+                user = User.objects.get(pk=invite.user.id)
+                data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email})
+        else:
+            invitations.exclude(user = request.user.id)
+            data.append({'id': organization.owner.id, 'full_name': organization.owner.full_name, 'email': organization.owner.email})
+            for invite in invitations:
+                user = User.objects.get(pk=invite.user.id)
+                data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email})
+        return Response(data)
+    
 # class NotAnsweredInvitationList(APIView):
 #     permission_classes = (IsAuthenticated, )
 #     def get(self, request, pk):

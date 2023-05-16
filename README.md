@@ -94,8 +94,9 @@ Backlog do Jira
 
 ### Diagrama de atividades
 
+![232639792-83e89c1c-af27-41c6-a2d4-e7a62be98ac4](https://github.com/diegopluna/fds2023-1/assets/111139509/1b46a24f-d6ef-4be2-aa5b-94d41a27e4aa)
 
-![Diagramando nosso caminho para o sucesso_ Um estudo de caso do uso de diagramas de atividades no desenvolvimento de software_  (1)](https://github.com/diegopluna/fds2023-1/assets/111139509/b076b309-2627-4e97-8739-4f390f600360)
+
 
 
 
@@ -171,3 +172,22 @@ https://user-images.githubusercontent.com/111078608/232656893-72f30856-edf8-4d84
 ![quadro FDS - Equipe ágil - Jira](https://user-images.githubusercontent.com/111078608/232652516-4a9f07b6-e2af-4836-a8d1-b142e876cf6a.png)
 
 ![quadro FDS - Equipe ágil - Jira](https://user-images.githubusercontent.com/111078608/232652659-c0cac856-5e09-4b6d-afd6-95edc5f247b8.png)
+
+
+## Entrega 03
+
+
+### Diagrama de atividades
+
+![Diagramando nosso caminho para o sucesso_ Um estudo de caso do uso de diagramas de atividades no desenvolvimento de software_  (1)](https://github.com/diegopluna/fds2023-1/assets/111139509/b076b309-2627-4e97-8739-4f390f600360)
+
+### Relato programação em pares
+
+
+### Deploy de algumas histórias
+Link do deploy: http://when2poll-env.eba-cpqbamxu.sa-east-1.elasticbeanstalk.com/
+
+### Instruções de uso
+
+
+https://drive.google.com/file/d/1c4ZuAQWU639xayvKjl4VmUY5SRMBWBTc/view?usp=sharing
