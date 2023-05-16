@@ -195,7 +195,7 @@ Link do deploy: http://when2poll-env.eba-cpqbamxu.sa-east-1.elasticbeanstalk.com
   
   Preencher os dados do usário, ao criar a conta o website o redirecionará para a tela de login.
   
-  Ao fazer login o usuário irá se deparar com a tela inicial, que no momento está vazia, e a barra
+  Ao fazer login o usuário irá se deparar com a tela inicial e a barra
   de navegação no topo da tela onde podemos navegar pelo site.
   
   História 1 e 2: Indicar Indisponibilidade e justificar ausencia
