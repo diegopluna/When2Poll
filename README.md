@@ -190,6 +190,15 @@ Link do deploy: http://when2poll-env.eba-cpqbamxu.sa-east-1.elasticbeanstalk.com
 ### Instruções de uso
 -mp4 https://drive.google.com/file/d/1nWIOborhceAXV88u9NO98S__VfTvTl3k/view?usp=sharing
 
+### Screencast Selenium
 
+https://github.com/diegopluna/fds2023-1/assets/111078608/6878dd2a-c04f-4891-bd28-61281b2d175d
+
+### Quadro JIRA
+
+![SCREENSHOTKANBAM](https://github.com/diegopluna/fds2023-1/assets/111078608/ab94a8bb-fd89-499a-bcbc-2b15a898d296)
+
+
+https://drive.google.com/file/d/1c4ZuAQWU639xayvKjl4VmUY5SRMBWBTc/view?usp=sharing
 
 https://drive.google.com/file/d/1c4ZuAQWU639xayvKjl4VmUY5SRMBWBTc/view?usp=sharing
