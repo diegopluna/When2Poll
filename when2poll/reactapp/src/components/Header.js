@@ -60,7 +60,7 @@ const Header = (props) => {
                 </Nav.Link>
               </Nav.Item>
               <Dropdown as={NavItem}>
-                <Dropdown.Toggle style={styles.user} className='font-face-sfbold' as={NavLink}>{user?.full_name}</Dropdown.Toggle>
+                <Dropdown.Toggle name='user' style={styles.user} className='font-face-sfbold' as={NavLink}>{user?.full_name}</Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item className='font-face-sfbold' onClick={logoutUser}>Sair</Dropdown.Item>
                 </Dropdown.Menu>

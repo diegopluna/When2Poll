@@ -57,7 +57,7 @@ const GroupsPage = () => {
         {data.map(item => (
           <div className='d-flex min-vw-90 justify-content-center align-items-center mt-2' >
             <Card style={{width: '80%'}}>
-              <Card.Body className='text-center font-face-sfbold'>
+              <Card.Body  className='text-center font-face-sfbold'>
                 {item.name}
               </Card.Body>                      
               <Card.Footer className='text-center'>

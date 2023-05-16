@@ -68,7 +68,7 @@ const PollPage = () => {
       </nav>
       <div className='d-flex min-vw-100 justify-content-center align-items-center'>
         <div  style={styles.login}>
-          <h1 className='display-1 text-center font-face-sfbold' style={styles.title}>{poll.name}</h1>
+          <h1 name="title" className='display-1 text-center font-face-sfbold' style={styles.title}>{poll.name}</h1>
           <p className='h3 text-center mt-2 font-face-sfregular'>{poll?.description}</p>
           <p className='h4 text-center mt-2 font-face-sfregular'>Deadline: {poll.deadline}</p>
           {userData.id===poll.owner.pk ?
