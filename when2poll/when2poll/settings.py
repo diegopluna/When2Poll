@@ -117,7 +117,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'reactapp/build')
+            os.path.join(BASE_DIR, 'reactapp/dist')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -179,10 +179,10 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/assets/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'reactapp/build/static')
+    os.path.join(BASE_DIR, 'reactapp/dist/assets')
 ]
 
 MEDIA_URL = 'media/'

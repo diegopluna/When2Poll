@@ -34,10 +34,10 @@ class GetUserOrganizationsView(APIView):
         member_organizations = OrgInvitation.objects.filter(user=request.user.id, accepted=True, answered = True)
         data = []
         for owned_organization in owned_organizations:
-            data.append({"id":owned_organization.id,"name":owned_organization.name,"owner": True})
+            data.append({"id":owned_organization.id,"name":owned_organization.name,"description": owned_organization.description ,"owner": True})
         for member_organization in member_organizations:
             org = member_organization.organization
-            data.append({"id":org.id,"name":org.name,"owner":False})
+            data.append({"id":org.id,"name":org.name, "description": org.description,"owner":False})
 
         return Response(data)
 
