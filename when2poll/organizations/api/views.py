@@ -98,14 +98,14 @@ class AllGroupMembers(APIView):
         accinvitations = OrgInvitation.objects.filter(organization=organization, accepted = True, answered = True)
         unansinvitations = OrgInvitation.objects.filter(organization=organization, accepted = False, answered = False)
         data = []
-        data.append({'id': organization.owner.id, 'full_name': organization.owner.full_name, 'email': organization.owner.email, "type": "Criador"})
+        data.append({'id': organization.owner.id, 'full_name': organization.owner.full_name, 'email': organization.owner.email, "type": "Owner"})
         for invite in accinvitations:
             user = User.objects.get(pk=invite.user.id)
-            data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email, "type": "Membro"})
+            data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email, "type": "Member"})
 
         for invite in unansinvitations:
             user = User.objects.get(pk=invite.user.id)
-            data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email, "type": "Convidado"})
+            data.append({'id': user.id, 'full_name': user.full_name, 'email': user.email, "type": "Invited"})
 
         return Response(data)
 

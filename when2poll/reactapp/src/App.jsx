@@ -8,6 +8,8 @@ import PrivateRoute, {UnAuthRoute} from "./utils/PrivateRoute.jsx";
 import NewPollPage from "./pages/NewPollPage.jsx";
 import InvitesPage from "./pages/InvitesPage.jsx";
 import GroupsPage from "./pages/GroupsPage.jsx";
+import GroupPage from "./pages/GroupPage.jsx";
+import NewGroupPage from "./pages/NewGroupPage.jsx";
 
 const router = createBrowserRouter([
     {
@@ -58,6 +60,20 @@ const router = createBrowserRouter([
                         element:
                         <PrivateRoute>
                             <GroupsPage />
+                        </PrivateRoute>
+                    },
+                    {
+                        path: "/group/:groupId",
+                        element:
+                        <PrivateRoute>
+                            <GroupPage />
+                        </PrivateRoute>
+                    },
+                    {
+                        path: "/newgroup",
+                        element:
+                        <PrivateRoute>
+                            <NewGroupPage />
                         </PrivateRoute>
                     }
                 ]

@@ -16,5 +16,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'), 
     path('users/', GetUsersView.as_view(), name='get-users'),
     path('users/<int:pk>/',GetUserByPK.as_view(), name='get-user-by-pk'),
+    path('user/<str:email>/', GetUserByEmailView.as_view(), name='get-user-by-email'),
     path('user/me/', GetCurrentUser.as_view(), name='get-current-user'),
 ]

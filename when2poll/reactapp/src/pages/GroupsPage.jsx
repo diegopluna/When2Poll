@@ -12,6 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 import { styled } from '@mui/material/styles';
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useNavigate } from 'react-router-dom';
 
 
 import {createTheme, useTheme, ThemeProvider} from "@mui/material/styles";
@@ -53,6 +54,8 @@ const GroupsPage = () => {
 
     const theme = useTheme();
     const isMobileOrTablet = useMediaQuery(theme.breakpoints.down('md')); // Set breakpoint as per your needs
+
+    const navigate = useNavigate()
     
 
     useEffect( () => {
@@ -69,7 +72,15 @@ const GroupsPage = () => {
 
     return (
         <>
-            
+            {
+                isMobileOrTablet &&
+                <Container>
+                    <ThemeProvider theme={buttonTheme}>
+                        <Button onClick={()=>navigate("/newgroup/")} variant="text">New Group</Button>
+                    </ThemeProvider>
+                </Container>
+                
+            }
             <Container 
                 sx={{
                     marginTop: '56px',
@@ -92,7 +103,7 @@ const GroupsPage = () => {
                             </CardContent>
                             <CardActions>
                                 <ThemeProvider theme={buttonTheme}>
-                                    <Button size="small" color="primary">
+                                    <Button size="small" color="primary" onClick={() => navigate(`/group/${item.id}/`)}>
                                     Details
                                     </Button>
                                 </ThemeProvider>
@@ -106,6 +117,7 @@ const GroupsPage = () => {
                     <Fab
                         color="primary"
                         aria-label="add"
+                        onClick={()=>navigate("/newgroup/")}
                         sx={{
                         position: 'fixed',
                         bottom: 16,

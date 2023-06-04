@@ -21,6 +21,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import GroupsIcon from '@mui/icons-material/Groups';
 import AuthContext from "../context/AuthProvider.jsx";
 import Logout from '@mui/icons-material/Logout';
+import Divider from '@mui/material/Divider';
 import { Outlet, useNavigate, Link } from 'react-router-dom'
 import React, {useState, useContext} from "react";
 
@@ -104,25 +105,25 @@ const Header = () => {
                                         </Button>
                                         <Button
                                             key="New Poll"
-                                            sx={{ my: 2, color: location.pathname === '/newpoll' ? '#ffb638' : '#666666', display: 'block' }}
+                                            sx={{ my: 2, color: location.pathname === '/newpoll/' ? '#ffb638' : '#666666', display: 'block' }}
                                             component={Link}
-                                            to="/newpoll"
+                                            to="/newpoll/"
                                         >
                                             New Poll
                                         </Button>
                                         <Button
                                             key="Invites"
-                                            sx={{ my: 2, color: location.pathname === '/invites' ? '#ffb638' : '#666666', display: 'block' }}
+                                            sx={{ my: 2, color: location.pathname === '/invites/' ? '#ffb638' : '#666666', display: 'block' }}
                                             component={Link}
-                                            to="/invites"
+                                            to="/invites/"
                                         >
                                             Invites
                                         </Button>
                                         <Button
                                             key="Groups"
-                                            sx={{ my: 2, color: location.pathname === '/groups' ? '#ffb638' : '#666666', display: 'block' }}
+                                            sx={{ my: 2, color: location.pathname === '/groups/' ? '#ffb638' : '#666666', display: 'block' }}
                                             component={Link}
-                                            to="/groups"
+                                            to="/groups/"
                                         >
                                             Groups
                                         </Button>
@@ -150,8 +151,23 @@ const Header = () => {
                                             }}
                                             open={Boolean(anchorElUser)}
                                             onClose={handleCloseUserMenu}
-                                        >
-                                            
+                                        > 
+                                            <Box sx={{
+                                                py: 1.5,
+                                                px: 2
+                                                }}
+                                            >
+                                                <Typography variant="overline">
+                                                    Account
+                                                </Typography>
+                                                <Typography
+                                                    color="text.secondary"
+                                                    variant="body2"
+                                                >
+                                                    {user?.full_name}
+                                                </Typography>
+                                            </Box>
+                                            <Divider />
                                             <MenuItem key="logout" onClick={logoutUser}>
                                                 <ListItemIcon>
                                                     <Logout fontSize='small' />
@@ -216,6 +232,22 @@ const Header = () => {
                                                     open={Boolean(anchorElUser)}
                                                     onClose={handleCloseUserMenu}
                                                 >
+                                                    <Box sx={{
+                                                        py: 1.5,
+                                                        px: 2
+                                                        }}
+                                                    >
+                                                        <Typography variant="overline">
+                                                            Account
+                                                        </Typography>
+                                                        <Typography
+                                                            color="text.secondary"
+                                                            variant="body2"
+                                                        >
+                                                            {user?.full_name}
+                                                        </Typography>
+                                                    </Box>
+                                                    <Divider />
                                                     <MenuItem key="logout" onClick={logoutUser}>
                                                         <ListItemIcon>
                                                             <Logout fontSize='small' />
