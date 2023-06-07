@@ -55,7 +55,7 @@ const appBarTheme = createTheme({
 
 const Header = () => {
 
-    let {user, logoutUser} = useContext(AuthContext)
+    let {user, logoutUser, setShowSnack} = useContext(AuthContext)
 
     const [anchorElUser, setAnchorElUser] = useState(null);
 

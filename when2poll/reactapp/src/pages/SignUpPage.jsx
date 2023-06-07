@@ -14,6 +14,8 @@ import background from "../assets/background.jpg";
 import {useContext, useState} from "react";
 import AuthContext from "../context/AuthProvider.jsx";
 import Alert from "@mui/material/Alert";
+import Snackbar from '@mui/material/Snackbar';
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
     return (
@@ -43,22 +45,21 @@ const defaultTheme = createTheme({
 
 export default function SignUpPage() {
 
-    let {signUpUser} = useContext(AuthContext)
+    let {signUpUser, showSnack, snackSeverity, snackText, setShowSnack, setSnackSeverity, setSnackText} = useContext(AuthContext)
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
-    const [show, setShow] = useState(false);
-    const [alertText, setAlertText] = useState('')
-    const [alertType, setAlertType] = useState('success')
+
+    const navigate = useNavigate()
 
     const handleSubmit =async (event) => {
-        setShow(false)
+        setShowSnack(false)
         const signUpReturn = await signUpUser(event );
-        setAlertType(signUpReturn[1])
-        setAlertText(signUpReturn[0])
-        setShow(signUpReturn[2])
+        setSnackSeverity(signUpReturn[1])
+        setSnackText(signUpReturn[0])
+        setShowSnack(signUpReturn[2])
         if (signUpReturn[3] === 1)
         {
             setFirstName('')
@@ -66,6 +67,7 @@ export default function SignUpPage() {
             setEmail('')
             setPassword('')
             setPasswordConfirm('')
+            navigate('/signin/')
         } else if (signUpReturn[3] === 2) {
             setEmail('')
             setPassword('')
@@ -75,6 +77,14 @@ export default function SignUpPage() {
             setPasswordConfirm('')
         }
     };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setShowSnack(false);
+      };
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -110,7 +120,10 @@ export default function SignUpPage() {
                         <Typography component="h1" variant="h5">
                             Sign up
                         </Typography>
-                        {show && <Alert severity={alertType}>{alertText}</Alert>}
+                        {/* {show && <Alert severity={alertType}>{alertText}</Alert>} */}
+                        <Snackbar open={showSnack} autoHideDuration={6000} onClose={handleClose}>
+                            <Alert onClose={handleClose} severity={snackSeverity}>{snackText}</Alert>
+                        </Snackbar>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3}}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6}>

@@ -9,6 +9,7 @@ import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
+import Snackbar from '@mui/material/Snackbar';
 import Button from "@mui/material/Button"
 import { createTheme, ThemeProvider} from "@mui/material/styles";
 import background from '../assets/background.jpg';
@@ -45,18 +46,26 @@ const defaultTheme = createTheme({
 
 export default function SignInPage() {
 
-    let {loginUser} = useContext(AuthContext)
+    let {loginUser, showSnack, snackSeverity, snackText, setShowSnack, setSnackSeverity, setSnackText} = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [show, setShow] = useState(false);
 
     const handleSubmit = async (event) => {
-        setShow(false)
+        setShowSnack(false)
         const signInReturn = await loginUser(event );
-        setShow(signInReturn);
+        setShowSnack(signInReturn);
+        setSnackSeverity('error')
+        setSnackText('Wrong username or password')
         setEmail('')
         setPassword('')
     };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setShowSnack(false);
+      };
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -92,7 +101,10 @@ export default function SignInPage() {
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        {show && <Alert severity="error">Wrong username or password</Alert>}
+                        {/* {show && <Alert severity="error">Wrong username or password</Alert>} */}
+                        <Snackbar open={showSnack} autoHideDuration={6000} onClose={handleClose}>
+                            <Alert onClose={handleClose} severity={snackSeverity}>{snackText}</Alert>
+                        </Snackbar>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1}}>
                             <TextField
                                 margin="normal"

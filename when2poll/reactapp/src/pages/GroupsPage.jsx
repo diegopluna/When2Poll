@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import useAxios from '../utils/useAxios';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -13,6 +13,9 @@ import Fab from '@mui/material/Fab';
 import { styled } from '@mui/material/styles';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useNavigate } from 'react-router-dom';
+import Alert from "@mui/material/Alert";
+import Snackbar from '@mui/material/Snackbar';
+import AuthContext from '../context/AuthProvider';
 
 
 import {createTheme, useTheme, ThemeProvider} from "@mui/material/styles";
@@ -47,7 +50,7 @@ const appBarTheme = createTheme({
 });
 
 const GroupsPage = () => {
-
+    let {showSnack, snackSeverity, snackText, setShowSnack} = useContext(AuthContext)
     const [data, setData] = useState([])
 
     const api = useAxios()
@@ -56,6 +59,14 @@ const GroupsPage = () => {
     const isMobileOrTablet = useMediaQuery(theme.breakpoints.down('md')); // Set breakpoint as per your needs
 
     const navigate = useNavigate()
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setShowSnack(false);
+      };
     
 
     useEffect( () => {
@@ -89,6 +100,9 @@ const GroupsPage = () => {
                     // minHeight: 'calc(100vh - 56px)', // Set a minimum height to ensure content visibility
                 }}
             >
+                <Snackbar open={showSnack} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity={snackSeverity}>{snackText}</Alert>
+                </Snackbar>
                 <Stack spacing={2}>
                     {data.map(item => (
                         <Item>
@@ -103,7 +117,10 @@ const GroupsPage = () => {
                             </CardContent>
                             <CardActions>
                                 <ThemeProvider theme={buttonTheme}>
-                                    <Button size="small" color="primary" onClick={() => navigate(`/group/${item.id}/`)}>
+                                    <Button size="small" color="primary" onClick={() => {
+                                        setShowSnack(false)
+                                        navigate(`/group/${item.id}/`)
+                                        }}>
                                     Details
                                     </Button>
                                 </ThemeProvider>

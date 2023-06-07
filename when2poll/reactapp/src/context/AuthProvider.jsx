@@ -15,7 +15,9 @@ export const AuthProvider = () => {
     let [authTokens, setAuthTokens] = useState(()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
     let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null);
     let [loading, setLoading] = useState(true)
-
+    let [showSnack, setShowSnack] = useState(false)
+    let [snackSeverity, setSnackSeverity] = useState('')
+    let [snackText, setSnackText] = useState('')
     let navigate = useNavigate();
 
 
@@ -52,7 +54,6 @@ export const AuthProvider = () => {
                 })
                 console.log(response.status)
                 if (response.status === 201){
-                    navigate("/signin")
                     return ["Account created", "success", true,1]
                 }
             } catch (error) {
@@ -68,9 +69,6 @@ export const AuthProvider = () => {
     }
 
     let logoutUser = async () => {
-        // const response = await axios.post(domain+'/api/logout',{
-        //     refresh_token: tokens.refresh
-        // });
         // await api.post("/api/logout/",{
         //     refresh_token: authTokens.refresh
         // });
@@ -116,7 +114,13 @@ export const AuthProvider = () => {
         setUser:setUser,
         loginUser:loginUser,
         logoutUser:logoutUser,
-        signUpUser:signUpUser
+        signUpUser:signUpUser,
+        showSnack: showSnack,
+        snackSeverity: snackSeverity,
+        snackText: snackText,
+        setShowSnack: setShowSnack,
+        setSnackSeverity: setSnackSeverity,
+        setSnackText: setSnackText
     }
 
     return (

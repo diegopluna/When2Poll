@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Container from '@mui/material/Container';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Typography from '@mui/material/Typography';
@@ -12,6 +12,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import {createTheme, useTheme, ThemeProvider} from "@mui/material/styles";
 import { useNavigate } from 'react-router-dom';
 import useAxios from "../utils/useAxios";
+import AuthContext from '../context/AuthProvider';
 
 
 const buttonTheme = createTheme({
@@ -39,10 +40,14 @@ const defaultTheme = createTheme({
 
 const NewGroupPage = () => {
     
+    let {setShowSnack, setSnackSeverity, setSnackText} = useContext(AuthContext)
+
     const [selectedUsers, setSelectedUsers] = useState([]);
     console.log(selectedUsers)
     const [users, setUsers] = useState([]);
     const [inputValue, setInputValue] = useState('');
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
 
     const navigate = useNavigate();
 
@@ -65,22 +70,35 @@ const NewGroupPage = () => {
         }
     };
 
+    const handleSubmit = async (e ) => {
+
+        e.preventDefault();
+
+        const response = await api.post('/orgs/organizations/',{
+            name: e.target.title.value,
+            description: e.target.description.value
+          });
+        const data = response.data
+
+        for (let index = 0; index < selectedUsers.length; index++) {
+            const user = selectedUsers[index];
+            const inviteResponse = await api.post('/orgs/organizations/'+data.id+'/invite/',{
+                user: user.id
+            });        
+        }
+        setDescription('')
+        setTitle('')
+        setSelectedUsers([])
+        setInputValue('')
+        setShowSnack(true)
+        setSnackSeverity('success')
+        setSnackText('Group created')
+        navigate('/groups/');
+    }
+
     useEffect(() => {    
         fetchData(inputValue);
     }, [inputValue]);
-
-    const names = [
-        "Humaira Sims",
-        "Santiago Solis",
-        "Dawid Floyd",
-        "Mateo Barlow",
-        "Samia Navarro",
-        "Kaden Fields",
-        "Genevieve Watkins",
-        "Mariah Hickman",
-        "Rocco Richardson",
-        "Harris Glenn"
-      ];
 
     return (
     <>
@@ -105,23 +123,28 @@ const NewGroupPage = () => {
             </Typography>
             <ThemeProvider theme={defaultTheme}>
                 <CssBaseline />
-                <Box component="form" noValidate sx={{ mt: 1}} >
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1}} >
                     <TextField
                         margin="normal"
                         required
                         fullWidth
                         id="groupTitle"
                         label="Group title"
-                        name="groupTitle"
+                        name="title"
                         autoComplete="organization"
                         autoFocus
+                        value={title}
+                        onChange={e=>setTitle(e.target.value)}
                     />
                     <TextField
                         id="groupDescription"
                         label="Group description"
+                        name='description'
                         fullWidth
                         multiline
                         rows={4}
+                        value={description}
+                        onChange={e=>setDescription(e.target.value)}
                     />
                     <Typography variant='h4' sx={{textAlign: 'center'}} gutterBottom>
                         Invite 
@@ -144,7 +167,15 @@ const NewGroupPage = () => {
                             label="Search for users"
                             />            
                         )}
-                    />                                      
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2}}
+                    >
+                        Create group
+                    </Button>                                      
                 </Box>
             </ThemeProvider>
             { !isMobileOrTablet &&
