@@ -38,7 +38,9 @@ const defaultTheme = createTheme({
 });
 
 const NewGroupPage = () => {
-
+    
+    const [selectedUsers, setSelectedUsers] = useState([]);
+    console.log(selectedUsers)
     const [users, setUsers] = useState([]);
     const [inputValue, setInputValue] = useState('');
 
@@ -49,17 +51,22 @@ const NewGroupPage = () => {
 
     const api = useAxios();
 
-    const fetchData = async () => {
+    const fetchData = async (value) => {
         try {
-          const response = await api.get(`/api/user/${inputValue}`);
-          setUsers(response.data);
+            if(value != ''){
+                const response = await api.get(`/api/user/${value}`);
+                console.log(response);
+                setUsers([response.data]);
+            } else {
+                setUsers([]);
+            }   
         } catch (error) {
-          console.error('Error fetching user data:', error);
+            console.error('Error fetching user data:', error);
         }
     };
 
-    useEffect(() => {
-        fetchData();
+    useEffect(() => {    
+        fetchData(inputValue);
     }, [inputValue]);
 
     const names = [
@@ -121,6 +128,8 @@ const NewGroupPage = () => {
                     </Typography>
                     <Autocomplete
                         fullWidth
+                        value={selectedUsers}
+                        onChange={(e, value)=>setSelectedUsers(value)}
                         multiple
                         id='inviteUsers'
                         options={users}
@@ -133,9 +142,9 @@ const NewGroupPage = () => {
                             {...params}
                             variant="outlined"
                             label="Search for users"
-                            />
+                            />            
                         )}
-                    />
+                    />                                      
                 </Box>
             </ThemeProvider>
             { !isMobileOrTablet &&

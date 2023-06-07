@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const NewPollPage = () => {
+    const [value, setValue] = useState([]);
+
     return (
-        <h1>New Poll</h1>
+        <h1>NewPoll</h1>
+        
     )
 }
 
