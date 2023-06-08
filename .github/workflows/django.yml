@@ -44,6 +44,7 @@ jobs:
       
     - name: Install Python Dependencies
       run: |
+        cd when2poll
         set -ex
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         sudo apt install ./google-chrome-stable_current_amd64.deb
@@ -52,6 +53,7 @@ jobs:
         pip install msedge-selenium-tools      
     - uses: nanasess/setup-chromedriver@v2
     - run: |
+        cd when2poll
         chromedriver --url-base=/wd/hub &     
     
     - name: Run Local Server
