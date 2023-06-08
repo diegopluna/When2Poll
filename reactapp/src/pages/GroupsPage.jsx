@@ -115,7 +115,7 @@ const GroupsPage = () => {
                     {data.map(item => (
                         <Item elevation={8}>                           
                             <CardContent>  
-                                <Typography variant="h5" component="h2">
+                                <Typography id='groupName' variant="h5" component="h2">
                                 {item.name}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary" component="p">
@@ -140,6 +140,7 @@ const GroupsPage = () => {
                     <Fab
                         color="primary"
                         aria-label="add"
+                        id='addButton'
                         onClick={()=>navigate("/newgroup/")}
                         sx={{
                         position: 'fixed',

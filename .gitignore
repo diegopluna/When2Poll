@@ -20,3 +20,4 @@ venv.bak/
 chromedriver.exe
 static/
 Dockerfile
+db.sqlite3

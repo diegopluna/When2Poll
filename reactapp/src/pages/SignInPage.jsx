@@ -135,6 +135,7 @@ export default function SignInPage() {
                             {/*    label="Remember me"*/}
                             {/*/>*/}
                             <Button
+                                id="submit"
                                 type="submit"
                                 fullWidth
                                 variant="contained"

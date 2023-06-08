@@ -170,7 +170,8 @@ const NewGroupPage = () => {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2}}
+                        id='submit'
+                        sx={{ mt: 10, mb: 2}}
                     >
                         Create group
                     </Button>                                      
