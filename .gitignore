@@ -19,3 +19,4 @@ venv.bak/
 .DS_Store
 chromedriver.exe
 static/
+Dockerfile
