@@ -36,6 +36,7 @@ React:
 cd fds2023-1/reactapp
 npm install
 npm run build
+python manage.py collectstatic
 ```
 
 ### Uso
