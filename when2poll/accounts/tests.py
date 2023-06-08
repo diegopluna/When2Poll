@@ -1,49 +1,20 @@
-from django.test import TestCase
-from django.contrib.auth import get_user_model
+from django.test import LiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+# Documentação selenium para Python: https://selenium-python.readthedocs.io/
+# Exemplos: https://ordinarycoders.com/blog/article/testing-django-selenium
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-gpu")
+browser = webdriver.Chrome(options=chrome_options)
 
 
-User = get_user_model()
+# Create your tests here.
 
-
-
-# class UserModelTest(TestCase):
-#     def setUp(self):
-#         self.user = get_user_model().objects.create_user(
-#             email='test@example.com',
-#             full_name='Test User',
-#             password='password123'
-#         )
-
-#     def test_create_user(self):
-#         self.assertTrue(isinstance(self.user, get_user_model()))
-#         self.assertEqual(self.user.email, 'test@example.com')
-#         self.assertEqual(self.user.full_name, 'Test User')
-#         self.assertTrue(self.user.is_active)
-#         self.assertFalse(self.user.is_staff)
-#         self.assertFalse(self.user.is_admin)
-
-#     def test_create_staffuser(self):
-#         staff_user = get_user_model().objects.create_staffuser(
-#             email='staff@example.com',
-#             full_name='Staff User',
-#             password='password123'
-#         )
-#         self.assertTrue(isinstance(staff_user, get_user_model()))
-#         self.assertEqual(staff_user.email, 'staff@example.com')
-#         self.assertEqual(staff_user.full_name, 'Staff User')
-#         self.assertTrue(staff_user.is_active)
-#         self.assertTrue(staff_user.is_staff)
-#         self.assertFalse(staff_user.is_admin)
-
-#     def test_create_superuser(self):
-#         super_user = get_user_model().objects.create_superuser(
-#             email='admin@example.com',
-#             full_name='Admin User',
-#             password='password123'
-#         )
-#         self.assertTrue(isinstance(super_user, get_user_model()))
-#         self.assertEqual(super_user.email, 'admin@example.com')
-#         self.assertEqual(super_user.full_name, 'Admin User')
-#         self.assertTrue(super_user.is_active)
-#         self.assertTrue(super_user.is_staff)
-#         self.assertTrue(super_user.is_admin)
+class TestHome(LiveServerTestCase):
+    def test_title(self):
+        browser.get('http://127.0.0.1:8000/')
+        assert "When2Poll" in browser.title
