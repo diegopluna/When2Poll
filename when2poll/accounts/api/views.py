@@ -106,9 +106,12 @@ class GetUserByEmailView(APIView):
     def get(self, request, email, format=None):
         if request.user.email == email:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        user = User.objects.get(email=email)
-        serialized_users = {'id': user.id, 'full_name': user.full_name, 'email': user.email}
-        return Response(serialized_users)
+        try:
+            user = User.objects.get(email=email)
+            serialized_users = {'id': user.id, 'full_name': user.full_name, 'email': user.email}
+            return Response(serialized_users)
+        except: 
+            return Response(status=status.HTTP_404_NOT_FOUND)
     
 class GetUserByPK(APIView):
 

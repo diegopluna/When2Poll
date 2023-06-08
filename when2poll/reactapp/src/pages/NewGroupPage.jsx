@@ -43,7 +43,6 @@ const NewGroupPage = () => {
     let {setShowSnack, setSnackSeverity, setSnackText} = useContext(AuthContext)
 
     const [selectedUsers, setSelectedUsers] = useState([]);
-    console.log(selectedUsers)
     const [users, setUsers] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [title, setTitle] = useState('');
@@ -59,14 +58,13 @@ const NewGroupPage = () => {
     const fetchData = async (value) => {
         try {
             if(value != ''){
-                const response = await api.get(`/api/user/${value}`);
-                console.log(response);
+                const response = await api.get(`/api/user/${value}`);                
                 setUsers([response.data]);
             } else {
                 setUsers([]);
             }   
         } catch (error) {
-            console.error('Error fetching user data:', error);
+            return
         }
     };
 

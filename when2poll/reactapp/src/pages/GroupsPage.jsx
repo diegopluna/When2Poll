@@ -49,6 +49,14 @@ const appBarTheme = createTheme({
     }
 });
 
+const themeRoot = createTheme({
+    palette: {
+      background: {
+        default: "#eeeeee"
+      }
+    },
+  });
+
 const GroupsPage = () => {
     let {showSnack, snackSeverity, snackText, setShowSnack} = useContext(AuthContext)
     const [data, setData] = useState([])
@@ -82,7 +90,7 @@ const GroupsPage = () => {
       },[])
 
     return (
-        <>
+        <ThemeProvider theme={themeRoot}>
             {
                 isMobileOrTablet &&
                 <Container>
@@ -105,16 +113,15 @@ const GroupsPage = () => {
                 </Snackbar>
                 <Stack spacing={2}>
                     {data.map(item => (
-                        <Item>
-                        <Card>
-                            <CardContent>
+                        <Item elevation={8}>                           
+                            <CardContent>  
                                 <Typography variant="h5" component="h2">
                                 {item.name}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary" component="p">
                                 {item.description}
                                 </Typography>
-                            </CardContent>
+                            </CardContent>  
                             <CardActions>
                                 <ThemeProvider theme={buttonTheme}>
                                     <Button size="small" color="primary" onClick={() => {
@@ -124,9 +131,8 @@ const GroupsPage = () => {
                                     Details
                                     </Button>
                                 </ThemeProvider>
-                            </CardActions>
-                        </Card>
-                    </Item>
+                            </CardActions>                                
+                        </Item>
                     ))}
                 </Stack>
                 { !isMobileOrTablet &&
@@ -147,7 +153,7 @@ const GroupsPage = () => {
                 </ThemeProvider>
                 }
             </Container>
-        </>
+        </ThemeProvider>
         
     )
 }

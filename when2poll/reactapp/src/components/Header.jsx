@@ -58,7 +58,6 @@ const Header = () => {
     let {user, logoutUser, setShowSnack} = useContext(AuthContext)
 
     const [anchorElUser, setAnchorElUser] = useState(null);
-
     const navigate = useNavigate();
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -67,8 +66,7 @@ const Header = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-
-    const [value, setValue] = useState('/');
+    const [value, setValue] = useState(location.pathname);
     const theme = useTheme();
     const isMobileOrTablet = useMediaQuery(theme.breakpoints.down('md')); // Set breakpoint as per your needs
     return (
@@ -271,11 +269,11 @@ const Header = () => {
                                         setValue(newValue);
                                         navigate(newValue)
                                     }}
-                                >
+                                    >
                                     <BottomNavigationAction label="Home" value="/" icon={<HomeIcon />} />
-                                    <BottomNavigationAction label="New Poll" value="/newpoll" icon={<AddIcon  />} />
-                                    <BottomNavigationAction label="Invites" value="/invites" icon={<EmailIcon />} />
-                                    <BottomNavigationAction label="Groups" value="/groups" icon={<GroupsIcon />} />
+                                    <BottomNavigationAction label="New Poll" value="/newpoll/" icon={<AddIcon  />} />
+                                    <BottomNavigationAction label="Invites" value="/invites/" icon={<EmailIcon />} />
+                                    <BottomNavigationAction label="Groups" value="/groups/"  icon={<GroupsIcon />} />
                                 </BottomNavigation>
                             </Paper>
                         </ThemeProvider>
