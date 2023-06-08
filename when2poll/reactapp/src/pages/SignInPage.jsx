@@ -149,7 +149,7 @@ export default function SignInPage() {
                                 {/*    </Link>*/}
                                 {/*</Grid>*/}
                                 <Grid item>
-                                    <Link href="/signup" variant="body2">
+                                    <Link id='signup' href="/signup" variant="body2">
                                         {"Don't have an account? Sign up"}
                                     </Link>
                                 </Grid>

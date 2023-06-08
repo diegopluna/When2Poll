@@ -25,46 +25,46 @@ import time
 class SystemTest(LiveServerTestCase):
     
 
-    # def test010_create_users(self):
-    #     options = ChromeOptions()
-    #     driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver', options=options)
-    #     driver.get('http://127.0.0.1:8000/login/')
-    #     driver.maximize_window()
+    def test010_create_users(self):
+        options = ChromeOptions()
+        driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver', options=options)
+        driver.get('http://127.0.0.1:8000/signin/')
+        driver.maximize_window()
 
-    #     time.sleep(3)
+        time.sleep(3)
         
-    #     for i in range(1,4):
-    #         time.sleep(3)
+        for i in range(1,4):
+            time.sleep(3)
 
-    #         register = driver.find_element(By.LINK_TEXT,'Criar conta')
+            register = driver.find_element(By.ID,'signup')
 
-    #         time.sleep(3)
+            time.sleep(3)
 
-    #         register.click()
+            register.click()
 
-    #         time.sleep(3)
+            time.sleep(3)
 
-    #         first_name = driver.find_element(By.NAME,'firstName')
-    #         last_name = driver.find_element(By.NAME,'lastName')
-    #         email = driver.find_element(By.NAME,'email')
-    #         password = driver.find_element(By.NAME,'password')
-    #         password_confirm = driver.find_element(By.NAME,'passwordConfirm')
+            first_name = driver.find_element(By.ID,'firstName')
+            last_name = driver.find_element(By.ID,'lastName')
+            email = driver.find_element(By.ID,'email')
+            password = driver.find_element(By.ID,'password')
+            password_confirm = driver.find_element(By.ID,'passwordConfirm')
 
-    #         time.sleep(3)
+            time.sleep(3)
 
-    #         first_name.send_keys('João')
-    #         last_name.send_keys(f'Silva{i}')
-    #         email.send_keys(f'joaosilva{i}@test.com')
-    #         password.send_keys('Teste12345')
-    #         password_confirm.send_keys('Teste12345')
+            first_name.send_keys('João')
+            last_name.send_keys(f'Silva{i}')
+            email.send_keys(f'joaosilva{i}@test.com')
+            password.send_keys('Teste12345')
+            password_confirm.send_keys('Teste12345')
 
-    #         create = driver.find_element(By.NAME,'submit')
+            create = driver.find_element(By.ID,'submit')
 
-    #         time.sleep(2)
+            time.sleep(2)
 
-    #         create.send_keys(Keys.RETURN)
+            create.send_keys(Keys.RETURN)
 
-    #     driver.close()
+        driver.close()
 
     # def test020_creategroup(self):
 
@@ -222,187 +222,187 @@ class SystemTest(LiveServerTestCase):
 
     #     driver.close()
 
-    def test040_createpoll(self):
-        options = ChromeOptions()
-        driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver', options=options)
-        driver.get('http://127.0.0.1:8000/login/')
-        driver.maximize_window()
+    # def test040_createpoll(self):
+    #     options = ChromeOptions()
+    #     driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver', options=options)
+    #     driver.get('http://127.0.0.1:8000/signin/')
+    #     driver.maximize_window()
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        #LOGAR CONTA RECEIVER
-        Receiver_email = driver.find_element(By.NAME,'email')
-        Receiver_password = driver.find_element(By.NAME,'password')
+    #     #LOGAR CONTA RECEIVER
+    #     Receiver_email = driver.find_element(By.NAME,'email')
+    #     Receiver_password = driver.find_element(By.NAME,'password')
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        submit = driver.find_element(By.NAME,'submit')
+    #     submit = driver.find_element(By.NAME,'submit')
 
-        Receiver_email.send_keys('joaosilva1@test.com')
-        Receiver_password.send_keys('Teste12345')
+    #     Receiver_email.send_keys('joaosilva1@test.com')
+    #     Receiver_password.send_keys('Teste12345')
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        submit.send_keys(Keys.RETURN)
+    #     submit.send_keys(Keys.RETURN)
 
-        time.sleep(3)
-        newpoll=driver.find_element(By.LINK_TEXT, 'Nova Reunião')
-        newpoll.click()
-        time.sleep(3)
+    #     time.sleep(3)
+    #     newpoll=driver.find_element(By.LINK_TEXT, 'Nova Reunião')
+    #     newpoll.click()
+    #     time.sleep(3)
 
-        driver.execute_script("window.scrollBy(0, 500)")
-        time.sleep(3)
+    #     driver.execute_script("window.scrollBy(0, 500)")
+    #     time.sleep(3)
         
-        event_create_name = driver.find_element(By.NAME,'name')
-        event_create_name.send_keys('Evento 01')
-        time.sleep(3)
+    #     event_create_name = driver.find_element(By.NAME,'name')
+    #     event_create_name.send_keys('Evento 01')
+    #     time.sleep(3)
         
-        event_create_description = driver.find_element(By.XPATH, "//textarea[@class='form-control font-face-sfregular' and @type='text' and @name='description' and @placeholder='Descrição']")
-        event_create_description.send_keys('Descrição do evento 01')
-        time.sleep(3)
+    #     event_create_description = driver.find_element(By.XPATH, "//textarea[@class='form-control font-face-sfregular' and @type='text' and @name='description' and @placeholder='Descrição']")
+    #     event_create_description.send_keys('Descrição do evento 01')
+    #     time.sleep(3)
         
-        select_day = driver.find_element(By.XPATH, "//span[contains(text(), '19') and contains(@class, 'sd')]")
-        select_day.click()
+    #     select_day = driver.find_element(By.XPATH, "//span[contains(text(), '19') and contains(@class, 'sd')]")
+    #     select_day.click()
 
-        time.sleep(3)
+    #     time.sleep(3)
         
         
-        #poll time
+    #     #poll time
         
-        #duration add 1 hour
-        driver.find_element(By.XPATH, "/html/body/div/div[2]/div/form/div[3]/div/div[2]/div/div[1]/button[1]").click()
-        time.sleep(3)
+    #     #duration add 1 hour
+    #     driver.find_element(By.XPATH, "/html/body/div/div[2]/div/form/div[3]/div/div[2]/div/div[1]/button[1]").click()
+    #     time.sleep(3)
         
-        #init time add 3 hours
-        for i in range(3):
-            driver.find_element(By.XPATH, "/html/body/div/div[2]/div/form/div[3]/div/div[3]/div/div[1]/button[1]").click()
-            time.sleep(3)
+    #     #init time add 3 hours
+    #     for i in range(3):
+    #         driver.find_element(By.XPATH, "/html/body/div/div[2]/div/form/div[3]/div/div[3]/div/div[1]/button[1]").click()
+    #         time.sleep(3)
         
-        #end time  decrease 2 hours
-        for i in range(2):
-            driver.find_element(By.XPATH, "/html/body/div/div[2]/div/form/div[3]/div/div[4]/div/div[1]/button[2]").click()
-            time.sleep(3)
+    #     #end time  decrease 2 hours
+    #     for i in range(2):
+    #         driver.find_element(By.XPATH, "/html/body/div/div[2]/div/form/div[3]/div/div[4]/div/div[1]/button[2]").click()
+    #         time.sleep(3)
 
-        #interact with group button
-        element = driver.find_element(By.ID, 'react-select-2-input')
-        element.click()
-        time.sleep(3)
-        element.send_keys(Keys.ENTER)
-        time.sleep(3)
+    #     #interact with group button
+    #     element = driver.find_element(By.ID, 'react-select-2-input')
+    #     element.click()
+    #     time.sleep(3)
+    #     element.send_keys(Keys.ENTER)
+    #     time.sleep(3)
 
-        submit = driver.find_element(By.NAME,'submit')
-        submit.click()
-        time.sleep(3)
-        driver.execute_script("window.scrollTo(0, 0)")
-        time.sleep(2)
-        home=driver.find_element(By.LINK_TEXT, 'Início')
-        home.click()
-        time.sleep(3)
+    #     submit = driver.find_element(By.NAME,'submit')
+    #     submit.click()
+    #     time.sleep(3)
+    #     driver.execute_script("window.scrollTo(0, 0)")
+    #     time.sleep(2)
+    #     home=driver.find_element(By.LINK_TEXT, 'Início')
+    #     home.click()
+    #     time.sleep(3)
 
-        event = driver.find_element(By.XPATH, '//*[@id="root"]/div[2]/div/ul/button/span')
-        event.click()
-        time.sleep(3)
+    #     event = driver.find_element(By.XPATH, '//*[@id="root"]/div[2]/div/ul/button/span')
+    #     event.click()
+    #     time.sleep(3)
 
-        title = driver.find_element(By.NAME,'title')
-        time.sleep(3)
-        self.assertEqual('Evento 01', title.text)
+    #     title = driver.find_element(By.NAME,'title')
+    #     time.sleep(3)
+    #     self.assertEqual('Evento 01', title.text)
 
-        driver.close()
+    #     driver.close()
 
-    def test050_answerpoll(self):
-        options = ChromeOptions()
-        driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver', options=options)
-        driver.get('http://127.0.0.1:8000/login/')
-        driver.maximize_window()
+    # def test050_answerpoll(self):
+    #     options = ChromeOptions()
+    #     driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver', options=options)
+    #     driver.get('http://127.0.0.1:8000/login/')
+    #     driver.maximize_window()
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        #LOGAR CONTA RECEIVER
-        Receiver_email = driver.find_element(By.NAME,'email')
-        Receiver_password = driver.find_element(By.NAME,'password')
+    #     #LOGAR CONTA RECEIVER
+    #     Receiver_email = driver.find_element(By.NAME,'email')
+    #     Receiver_password = driver.find_element(By.NAME,'password')
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        submit = driver.find_element(By.NAME,'submit')
+    #     submit = driver.find_element(By.NAME,'submit')
 
-        Receiver_email.send_keys('joaosilva2@test.com')
-        Receiver_password.send_keys('Teste12345')
+    #     Receiver_email.send_keys('joaosilva2@test.com')
+    #     Receiver_password.send_keys('Teste12345')
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        submit.send_keys(Keys.RETURN)
+    #     submit.send_keys(Keys.RETURN)
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        invites=driver.find_element(By.LINK_TEXT, 'Convites')
-        invites.click()
-        time.sleep(3)
+    #     invites=driver.find_element(By.LINK_TEXT, 'Convites')
+    #     invites.click()
+    #     time.sleep(3)
 
-        receveid_event_1=driver.find_element(By.XPATH,'//*[@id="root"]/div[2]/div/div/div[2]/button')
-        receveid_event_1.click()
-        time.sleep(3)
-        submit = driver.find_element(By.NAME, 'submit')
-        submit.click()
+    #     receveid_event_1=driver.find_element(By.XPATH,'//*[@id="root"]/div[2]/div/div/div[2]/button')
+    #     receveid_event_1.click()
+    #     time.sleep(3)
+    #     submit = driver.find_element(By.NAME, 'submit')
+    #     submit.click()
     
-    def test060_giveadmin(self):
-        options = ChromeOptions()
-        driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver', options=options)
-        driver.get('http://127.0.0.1:8000/login/')
-        driver.maximize_window()
+    # def test060_giveadmin(self):
+    #     options = ChromeOptions()
+    #     driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver', options=options)
+    #     driver.get('http://127.0.0.1:8000/login/')
+    #     driver.maximize_window()
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        #LOGAR CONTA RECEIVER
-        Receiver_email = driver.find_element(By.NAME,'email')
-        Receiver_password = driver.find_element(By.NAME,'password')
+    #     #LOGAR CONTA RECEIVER
+    #     Receiver_email = driver.find_element(By.NAME,'email')
+    #     Receiver_password = driver.find_element(By.NAME,'password')
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        submit = driver.find_element(By.NAME,'submit')
+    #     submit = driver.find_element(By.NAME,'submit')
 
-        Receiver_email.send_keys('joaosilva1@test.com')
-        Receiver_password.send_keys('Teste12345')
+    #     Receiver_email.send_keys('joaosilva1@test.com')
+    #     Receiver_password.send_keys('Teste12345')
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        submit.send_keys(Keys.RETURN)
+    #     submit.send_keys(Keys.RETURN)
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        receveid_event_1=driver.find_element(By.XPATH,'//*[@id="root"]/div[2]/div/ul/button/span')
-        receveid_event_1.click()
-        time.sleep(3)
-        admin_check = driver.find_element(By.XPATH,'//*[@id="root"]/div[2]/div/div/table/tbody/tr[2]/th[3]/input')
-        admin_check.click()
+    #     receveid_event_1=driver.find_element(By.XPATH,'//*[@id="root"]/div[2]/div/ul/button/span')
+    #     receveid_event_1.click()
+    #     time.sleep(3)
+    #     admin_check = driver.find_element(By.XPATH,'//*[@id="root"]/div[2]/div/div/table/tbody/tr[2]/th[3]/input')
+    #     admin_check.click()
 
-        time.sleep(3)
-        click_profile=driver.find_element(By.LINK_TEXT, 'João Silva1')
-        click_profile.click() 
-        time.sleep(3)
-        logout=driver.find_element(By.LINK_TEXT, 'Sair')
-        logout.click()
-        time.sleep(3)
-        Receiver_email = driver.find_element(By.NAME,'email')
-        Receiver_password = driver.find_element(By.NAME,'password')
+    #     time.sleep(3)
+    #     click_profile=driver.find_element(By.LINK_TEXT, 'João Silva1')
+    #     click_profile.click() 
+    #     time.sleep(3)
+    #     logout=driver.find_element(By.LINK_TEXT, 'Sair')
+    #     logout.click()
+    #     time.sleep(3)
+    #     Receiver_email = driver.find_element(By.NAME,'email')
+    #     Receiver_password = driver.find_element(By.NAME,'password')
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        submit = driver.find_element(By.NAME,'submit')
+    #     submit = driver.find_element(By.NAME,'submit')
 
-        Receiver_email.send_keys('joaosilva2@test.com')
-        Receiver_password.send_keys('Teste12345')
+    #     Receiver_email.send_keys('joaosilva2@test.com')
+    #     Receiver_password.send_keys('Teste12345')
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        submit.send_keys(Keys.RETURN)
+    #     submit.send_keys(Keys.RETURN)
 
-        time.sleep(3)
+    #     time.sleep(3)
 
-        receveid_event_1=driver.find_element(By.XPATH,'//*[@id="root"]/div[2]/div/ul/button/span')
-        receveid_event_1.click()
-        time.sleep(3)
-        user_type = driver.find_element(By.XPATH, '//*[@id="root"]/div[2]/div/div/table/tbody/tr[2]/th[3]')
-        self.assertEqual('Administrador', user_type.text)
+    #     receveid_event_1=driver.find_element(By.XPATH,'//*[@id="root"]/div[2]/div/ul/button/span')
+    #     receveid_event_1.click()
+    #     time.sleep(3)
+    #     user_type = driver.find_element(By.XPATH, '//*[@id="root"]/div[2]/div/div/table/tbody/tr[2]/th[3]')
+    #     self.assertEqual('Administrador', user_type.text)
 
 
 

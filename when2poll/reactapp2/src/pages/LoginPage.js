@@ -44,7 +44,7 @@ const LoginPage = () => {
             <label style={styles.remember} className="form-check-label">Lembrar de mim</label>
             </div> */}
             <PrimaryButton>Entrar</PrimaryButton>
-            <Link style={styles.links} className='font-face-sfbold' to={"/register"}>Criar conta</Link>
+            <Link  style={styles.links} className='font-face-sfbold' to={"/register"}>Criar conta</Link>
         </form>
       </div>
     </div>

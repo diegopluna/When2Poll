@@ -195,6 +195,7 @@ export default function SignUpPage() {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
+                                id="submit"
                             >
                                 Sign Up
                             </Button>
