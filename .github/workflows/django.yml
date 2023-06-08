@@ -49,10 +49,13 @@ jobs:
         sudo apt install ./google-chrome-stable_current_amd64.deb
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install msedge-selenium-tools      
-    - uses: nanasess/setup-chromedriver@v2
+        pip install msedge-selenium-tools
+    
+    - name: Setup ChromeDriver
+      uses: nanasess/setup-chromedriver@v2
+    
     - run: |
-        chromedriver --url-base=/wd/hub &     
+        chromedriver --url-base=/wd/hub &
     
     - name: Run Local Server
       run: |
