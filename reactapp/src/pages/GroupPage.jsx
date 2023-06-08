@@ -67,10 +67,10 @@ const GroupPage = () => {
                     // minHeight: 'calc(100vh - 56px)', // Set a minimum height to ensure content visibility
                 }}
             >
-                <Typography variant='h3' sx={{textAlign: 'center'}} gutterBottom>
+                <Typography id="title" variant='h3' sx={{textAlign: 'center'}} gutterBottom>
                     {data?.name}
                 </Typography>
-                <Typography variant='subtitle1' sx={{textAlign: 'center'}} gutterBottom>
+                <Typography id="description" variant='subtitle1' sx={{textAlign: 'center'}} gutterBottom>
                     {data?.description}
                 </Typography>
                 <TableContainer component={Paper}>

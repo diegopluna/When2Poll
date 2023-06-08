@@ -106,14 +106,27 @@ const InvitesPage = () => {
                             subheader = "Group"
                         />
                         <CardActions disableSpacing>
-                            <IconButton sx={{marginLeft: 'auto'}} onClick={() => rejectInvite(item.id)}>
+                            <IconButton  
+                                sx={{
+                                    marginLeft: 'auto', 
+                                    ":hover": {
+                                        color: "#ff735c"
+                                    }}} 
+                                onClick={() => rejectInvite(item.id)}
+                                id={`reject${orgData[item.organization]?.name}`}
+                            >
                                 <CloseIcon />
                             </IconButton>
-                            <ThemeProvider theme={buttonTheme}>
-                                <IconButton onClick={() => acceptInvite(item.id)}>
-                                    <CheckIcon />
-                                </IconButton>
-                            </ThemeProvider>
+                            <IconButton 
+                                sx={{ 
+                                    ":hover": {
+                                        color: "#ff735c"
+                                    }}} 
+                                onClick={() => acceptInvite(item.id)}
+                                id={`accept${orgData[item.organization]?.name}`}
+                            >
+                                <CheckIcon />
+                            </IconButton>
                         </CardActions>
                     </Item>
                 ))}

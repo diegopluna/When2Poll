@@ -152,6 +152,54 @@ class TestHome(LiveServerTestCase):
         expected_names = ['Grupo 01', 'Grupo 02']
         self.assertEqual(names, expected_names)
 
+        driver.close()
+
+    def test030_answergroupinvite(self):
+        driver.get('http://127.0.0.1:8000/signin/')
+
+        time.sleep(3)
+
+        #LOGAR CONTA RECEIVER
+        Receiver_email = driver.find_element(By.NAME,'email')
+        Receiver_password = driver.find_element(By.NAME,'password')
+
+        time.sleep(3)
+
+        submit = driver.find_element(By.ID,'submit')
+
+        Receiver_email.send_keys('joaosilva2@test.com')
+        Receiver_password.send_keys('Teste12345')
+
+        time.sleep(3)
+
+        submit.send_keys(Keys.RETURN)
+
+        time.sleep(3)
+
+        invites=driver.find_element(By.LINK_TEXT, 'INVITES')
+        invites.click()
+        time.sleep(3)
+        #ACEITAR GRUPO 1
+        receveid_event_1=driver.find_element(By.ID,'acceptGrupo 01')
+        receveid_event_1.click()
+        time.sleep(3)
+
+        #RECUSAR GRUPO 2
+        receveid_event_2=driver.find_element(By.ID,'rejectGrupo 02')
+        receveid_event_2.click()
+        time.sleep(3)
+        
+        groups=driver.find_element(By.LINK_TEXT, 'GROUPS')
+        groups.click()
+        time.sleep(3)
+        receveid_event_1=driver.find_element(By.ID,'detailsGrupo 01')
+        receveid_event_1.click()
+        time.sleep(3)
+        grouptitle = driver.find_element(By.ID,"title")
+        time.sleep(3)
+        self.assertEqual('Grupo 01', grouptitle.text) 
+
+        driver.close()
 
 
     

@@ -124,7 +124,11 @@ const GroupsPage = () => {
                             </CardContent>  
                             <CardActions>
                                 <ThemeProvider theme={buttonTheme}>
-                                    <Button size="small" color="primary" onClick={() => {
+                                    <Button 
+                                        size="small" 
+                                        color="primary" 
+                                        id={`details${item.name}`}
+                                        onClick={() => {
                                         setShowSnack(false)
                                         navigate(`/group/${item.id}/`)
                                         }}>
