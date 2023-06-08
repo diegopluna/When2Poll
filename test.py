@@ -21,7 +21,7 @@ class TestHome(LiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.selenium = webdriver.Chrome()
+        cls.selenium = webdriver.Chrome(options=chrome_options)
         cls.selenium.implicitly_wait(10)
         
 
