@@ -136,3 +136,4 @@ static/
 .DS_Store
 when2poll/tests.py
 when2poll/chromedriver.exe
+chromedriver.exe
