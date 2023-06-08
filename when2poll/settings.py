@@ -183,7 +183,7 @@ USE_TZ = False
 STATIC_URL = 'assets/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'reactapp/dist/assets')
+    os.path.join(BASE_DIR, 'reactapp/dist/assets/')
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
