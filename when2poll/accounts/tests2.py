@@ -10,7 +10,11 @@ import time
 
 
 #teste selenium historia criar grupo e convidar um usuario aleatorio e ver dashboard de grupos
-
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-gpu")
+driver = webdriver.Chrome(options=chrome_options)
 
 # class HostTest(LiveServerTestCase):
     
@@ -26,11 +30,11 @@ class SystemTest(LiveServerTestCase):
     
 
     def test010_create_users(self):
-        options = ChromeOptions()
-        # driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver', options=options)
-        driver = webdriver.Chrome(options=options)
+        # options = ChromeOptions()
+        # # driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver', options=options)
+        # driver = webdriver.Chrome(options=options)
         driver.get('http://127.0.0.1:8000/signin/')
-        driver.maximize_window()
+        # driver.maximize_window()
 
         time.sleep(3)
         
