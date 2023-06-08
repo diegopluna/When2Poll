@@ -1,15 +1,10 @@
 from django.test import LiveServerTestCase
-from selenium import webdriver
-from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.webdriver import WebDriver
 
 # Documentação selenium para Python: https://selenium-python.readthedocs.io/
 # Exemplos: https://ordinarycoders.com/blog/article/testing-django-selenium
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-gpu")
-browser = webdriver.Chrome(options=chrome_options,executable_path=r'.\chromedriver.exe')
+browser = WebDriver()
 
 
 # Create your tests here.
