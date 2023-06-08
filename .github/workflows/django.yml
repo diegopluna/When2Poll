@@ -17,31 +17,11 @@ jobs:
         node-version: [18.x]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      
+    - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-        
-    - name: Set up Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-      
-    - name: Install React Dependencies
-      run: |
-        cd reactapp
-        npm i
-        
-    - name: Build React
-      run: |
-        cd reactapp
-        npm run build
-      env:
-        CI: ""
-      
     - name: Install Python Dependencies
       run: |
         set -ex
@@ -51,15 +31,22 @@ jobs:
         pip install -r requirements.txt
         pip install msedge-selenium-tools
     
-    - name: Setup ChromeDriver
-      uses: nanasess/setup-chromedriver@v2
-    
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - name: Install React Dependencies and Build React
+      run: |
+        cd reactapp
+        npm i
+        npm run build              
+        
+    - uses: nanasess/setup-chromedriver@v2
     - run: |
         chromedriver --url-base=/wd/hub &
-    
-    - name: Run Local Server
+    - name: Run local Server
       run: |
-        python manage.py migrate
         python manage.py runserver &
         sleep 5
         python manage.py test
