@@ -27,7 +27,8 @@ class SystemTest(LiveServerTestCase):
 
     def test010_create_users(self):
         options = ChromeOptions()
-        driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver', options=options)
+        # driver = webdriver.Chrome(executable_path=r'C:/Selenium/chromedriver', options=options)
+        driver = webdriver.Chrome(options=options)
         driver.get('http://127.0.0.1:8000/signin/')
         driver.maximize_window()
 
