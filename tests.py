@@ -151,8 +151,15 @@ class TestHome(LiveServerTestCase):
         names = [element.text for element in name_elements]
         expected_names = ['Grupo 01', 'Grupo 02']
         self.assertEqual(names, expected_names)
+        
+        ###LOGOUT
+        avatar = driver.find_element(By.ID,"João Silva1")
+        avatar.click()
 
-        driver.close()
+        time.sleep(1)
+
+        logout = driver.find_element(By.ID, "logout")
+        logout.click()
 
     def test030_answergroupinvite(self):
         driver.get('http://127.0.0.1:8000/signin/')

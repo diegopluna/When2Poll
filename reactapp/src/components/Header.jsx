@@ -129,7 +129,7 @@ const Header = () => {
                                     <Box sx={{ flexGrow: 0 }}>
                                         <Tooltip title="Open settings">
                                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                                <Avatar sx={{ bgcolor: "#ff735c" }} alt={user?.full_name}>
+                                                <Avatar id={user?.full_name} sx={{ bgcolor: "#ff735c" }} alt={user?.full_name}>
                                                     {user?.full_name.charAt(0)}
                                                 </Avatar>
                                             </IconButton>
@@ -166,7 +166,7 @@ const Header = () => {
                                                 </Typography>
                                             </Box>
                                             <Divider />
-                                            <MenuItem key="logout" onClick={logoutUser}>
+                                            <MenuItem id='logout' key="logout" onClick={logoutUser}>
                                                 <ListItemIcon>
                                                     <Logout fontSize='small' />
                                                 </ListItemIcon>
