@@ -220,6 +220,7 @@ class TestHome(LiveServerTestCase):
 
     def test040_createpoll(self):
         driver.get('http://127.0.0.1:8000/signin/')
+        driver.maximize_window()
 
         time.sleep(3)
 
