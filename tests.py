@@ -14,11 +14,11 @@ import datetime
 
 
 chrome_options = webdriver.ChromeOptions()
-#chrome_options.add_argument("--no-sandbox")
-#chrome_options.add_argument('window-size=1920,1080')
-#chrome_options.add_argument("--start-maximized")
-#chrome_options.add_argument("--headless")
-#chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument('window-size=1920,1080')
+chrome_options.add_argument("--start-maximized")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-gpu")
 driver = webdriver.Chrome(options=chrome_options)
 
 # Create your tests here.
@@ -266,9 +266,15 @@ class TestHome(LiveServerTestCase):
         # element.send_keys(Keys.ARROW_DOWN, Keys.ENTER)
         # time.sleep(3)
         # submit = driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/button/')
-        driver.execute_script("window.scrollTo(0, 1000)")
-        submit = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="submit"]')))
-        ActionChains(driver).move_to_element(submit).send_keys()
+        
+        #-------------------------------------------
+        #driver.execute_script("window.scrollTo(0, 1000)")
+        #submit = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="submit"]')))
+        #ActionChains(driver).move_to_element(submit).send_keys()
+        #---------------------------------------------
+        
+        submit_poll = driver.find_element(By.ID,'submit')
+        submit_poll.click()
         # time.sleep(1)
         # driver.execute_script("window.scrollTo(0, 500)")
 
