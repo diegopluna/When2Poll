@@ -268,23 +268,23 @@ class TestHome(LiveServerTestCase):
         #poll time
         
         #duration add 1 hour
-        duration = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div/input")
-        driver.execute_script('arguments[0].click()',duration)
+        duration = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div")
+        # driver.execute_script('arguments[0].click()',duration)
 
-        # duration.click()
+        duration.click()
         time.sleep(3)
         duration.send_keys("0200")
         time.sleep(3)
         
         #init time add 3 hours
-        earliest = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[5]/div/input")
+        earliest = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[5]/div/")
         earliest.click()
         time.sleep(3)
         earliest.send_keys("0630")
         time.sleep(3)
         
         #end time  decrease 2 hours
-        latest = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[6]/div/input")
+        latest = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[6]/div/")
         latest.click()
         time.sleep(2)
         latest.send_keys("1730")
