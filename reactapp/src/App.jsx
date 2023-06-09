@@ -11,6 +11,7 @@ import GroupsPage from "./pages/GroupsPage.jsx";
 import GroupPage from "./pages/GroupPage.jsx";
 import NewGroupPage from "./pages/NewGroupPage.jsx";
 import './calendar.css'
+import PollPage from "./pages/PollPage.jsx";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,13 @@ const router = createBrowserRouter([
                         element:
                         <PrivateRoute>
                             <HomePage />
+                        </PrivateRoute>
+                    },
+                    {
+                        path: "/poll/:pollId",
+                        element:
+                        <PrivateRoute>
+                            <PollPage />
                         </PrivateRoute>
                     },
                     {
