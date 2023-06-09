@@ -15,7 +15,7 @@ import datetime
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument('window-size=1920,1080')
+chrome_options.add_argument('window-size=3840,2160')
 chrome_options.add_argument("--start-maximized")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-gpu")
@@ -268,7 +268,7 @@ class TestHome(LiveServerTestCase):
         # submit = driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/button/')
         
         #teste01-------------------------------------------
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        #driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
         #driver.execute_script("window.scrollTo(0, 1000)")
         #ActionChains(driver).move_to_element(submit).click()
         
