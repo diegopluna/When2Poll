@@ -348,6 +348,7 @@ const NewPollPage = () => {
                     <Button
                         type="submit"
                         variant="contained"
+                        fullWidth
                         id='submit'
                         sx={{ mt: 10, mb: 2, width: 300}}
                     >
