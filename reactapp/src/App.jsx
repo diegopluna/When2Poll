@@ -10,6 +10,7 @@ import InvitesPage from "./pages/InvitesPage.jsx";
 import GroupsPage from "./pages/GroupsPage.jsx";
 import GroupPage from "./pages/GroupPage.jsx";
 import NewGroupPage from "./pages/NewGroupPage.jsx";
+import './calendar.css'
 
 const router = createBrowserRouter([
     {

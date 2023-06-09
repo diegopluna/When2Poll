@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time 
+import datetime
 
 # Documentação selenium para Python: https://selenium-python.readthedocs.io/
 # Exemplos: https://ordinarycoders.com/blog/article/testing-django-selenium
@@ -18,7 +19,9 @@ driver = webdriver.Chrome(options=chrome_options)
 # Create your tests here.
 
 class TestHome(LiveServerTestCase):
+
     def test010_create_users(self):
+
         driver.get('http://127.0.0.1:8000/signin/')
 
         time.sleep(3)
@@ -162,6 +165,7 @@ class TestHome(LiveServerTestCase):
         logout.click()
 
     def test030_answergroupinvite(self):
+
         driver.get('http://127.0.0.1:8000/signin/')
 
         time.sleep(3)
@@ -206,7 +210,116 @@ class TestHome(LiveServerTestCase):
         time.sleep(3)
         self.assertEqual('Grupo 01', grouptitle.text) 
 
-        driver.close()
+        avatar = driver.find_element(By.ID,"João Silva2")
+        avatar.click()
+
+        time.sleep(1)
+
+        logout = driver.find_element(By.ID, "logout")
+        logout.click()
+
+    def test040_createpoll(self):
+        driver.get('http://127.0.0.1:8000/signin/')
+
+        time.sleep(3)
+
+        #LOGAR CONTA RECEIVER
+        Receiver_email = driver.find_element(By.NAME,'email')
+        Receiver_password = driver.find_element(By.NAME,'password')
+
+        time.sleep(3)
+
+        submit = driver.find_element(By.ID,'submit')
+
+        Receiver_email.send_keys('joaosilva1@test.com')
+        Receiver_password.send_keys('Teste12345')
+
+        time.sleep(3)
+
+        submit.send_keys(Keys.RETURN)
+
+        time.sleep(3)
+        newpoll=driver.find_element(By.LINK_TEXT, 'NEW POLL')
+        newpoll.click()
+        time.sleep(3)
+
+        
+        
+        event_create_name = driver.find_element(By.NAME,'title')
+        event_create_name.send_keys('Evento 01')
+        time.sleep(3)
+        
+        event_create_description = driver.find_element(By.NAME, "description")
+        event_create_description.send_keys('Descrição do evento 01')
+        time.sleep(3)
+
+        
+
+        select_day1 = driver.find_element(By.XPATH, f"//span[contains(text(), '19') and contains(@class, 'sd')]")
+        select_day1.click()
+
+        select_day2 = driver.find_element(By.XPATH, "//span[contains(text(), '24') and contains(@class, 'sd')]")
+        select_day2.click()
+
+        time.sleep(3)
+        
+        
+        #poll time
+        
+        #duration add 1 hour
+        duration = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div/input")
+        duration.click()
+        time.sleep(3)
+        duration.send_keys(0)
+        duration.send_keys(2)
+        duration.send_keys(0)
+        duration.send_keys(0)
+        time.sleep(3)
+        
+        #init time add 3 hours
+        earliest = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[5]/div/input")
+        earliest.click()
+        time.sleep(3)
+        earliest.send_keys(0)
+        earliest.send_keys(6)
+        earliest.send_keys(3)
+        earliest.send_keys(0)
+        time.sleep(3)
+        
+        #end time  decrease 2 hours
+        latest = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[6]/div/input")
+        latest.click()
+        time.sleep(2)
+        latest.send_keys(1)
+        latest.send_keys(7)
+        latest.send_keys(3)
+        latest.send_keys(0)
+        time.sleep(3)
+
+        #interact with group button
+        element = driver.find_element(By.ID, 'inviteGroups')
+        element.click()
+        time.sleep(3)
+        element.send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+        time.sleep(3)
+
+        submit = driver.find_element(By.ID,'submit')
+        submit.click()
+        time.sleep(3)
+        # driver.execute_script("window.scrollTo(0, 0)")
+        # time.sleep(2)
+        # home=driver.find_element(By.LINK_TEXT, 'HOME')
+        # home.click()
+        # time.sleep(3)
+
+        # event = driver.find_element(By.XPATH, '//*[@id="root"]/div[2]/div/ul/button/span')
+        # event.click()
+        # time.sleep(3)
+
+        # title = driver.find_element(By.NAME,'title')
+        # time.sleep(3)
+        # self.assertEqual('Evento 01', title.text)
+
 
 
     
