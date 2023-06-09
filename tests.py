@@ -267,14 +267,16 @@ class TestHome(LiveServerTestCase):
         # time.sleep(3)
         # submit = driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/button/')
         
-        #-------------------------------------------
+        #teste01-------------------------------------------
+        submit = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID,'submit')))
+        submit.click()
         #driver.execute_script("window.scrollTo(0, 1000)")
         #submit = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="submit"]')))
         #ActionChains(driver).move_to_element(submit).send_keys()
         #---------------------------------------------
         
-        submit_poll = driver.find_element(By.ID,'submit')
-        submit_poll.click()
+        #submit_poll = driver.find_element(By.ID,'submit')
+        #submit_poll.click()
         # time.sleep(1)
         # driver.execute_script("window.scrollTo(0, 500)")
 
