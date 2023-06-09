@@ -10,9 +10,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
 import Box from '@mui/material/Box';
-import React from 'react';
+import List from '@mui/material/List';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import IconButton from '@mui/material/IconButton';
+
+import { useNavigate } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import useAxios from "../utils/useAxios";
 
 const defaultTheme = createTheme({
     palette: {
@@ -29,7 +37,28 @@ const defaultTheme = createTheme({
     },
 });
 
+
+const Item = styled(Paper)(({ theme }) => ({
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
+
 const HomePage = () => {
+    const api = useAxios();
+    const [polls, setPolls] = useState([]);
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const fetchPollData = async () => {
+        const response = await api.get('/polls/get/');
+        setPolls(response.data);
+        };
+        fetchPollData();
+    }, []);
+
     return (
         <Container 
             sx={{
@@ -69,6 +98,23 @@ const HomePage = () => {
                 <Typography variant='h5' sx={{textAlign: 'center'}} gutterBottom>
                     Undefined polls
                 </Typography>
+                <List>
+                    {polls.map(poll => (
+                        <Paper elevation={3}>
+                            <ListItem
+                                secondaryAction={
+                                    <IconButton onClick={()=>navigate(`/poll/${poll.id}/`)} edge="end" aria-label='details'>
+                                        <KeyboardArrowRightIcon />
+                                    </IconButton>
+                                }
+                            >
+                                <ListItemText 
+                                    primary={poll.name}
+                                />
+                            </ListItem>
+                        </Paper>
+                    ))}
+                </List>
             </Box>
             </ThemeProvider>
         </Container>
