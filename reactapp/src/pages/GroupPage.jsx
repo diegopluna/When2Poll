@@ -78,8 +78,8 @@ const GroupPage = () => {
                         <TableHead stickyHeader>
                             <TableRow>
                                 <TableCell>Full name</TableCell>
-                                <TableCell>Email</TableCell>
-                                <TableCell>Status</TableCell>
+                                <TableCell align="right">Email</TableCell>
+                                <TableCell align="right">Status</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -89,8 +89,8 @@ const GroupPage = () => {
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell component="th" scope="row">{row.full_name}</TableCell>
-                                    <TableCell>{row.email}</TableCell>
-                                    <TableCell>{row.type}</TableCell>
+                                    <TableCell align="right">{row.email}</TableCell>
+                                    <TableCell align="right">{row.type}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

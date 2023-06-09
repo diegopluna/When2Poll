@@ -98,23 +98,24 @@ const HomePage = () => {
                 <Typography variant='h5' sx={{textAlign: 'center'}} gutterBottom>
                     Undefined polls
                 </Typography>
-                <List>
-                    {polls.map(poll => (
-                        <Paper elevation={3}>
-                            <ListItem
-                                secondaryAction={
-                                    <IconButton onClick={()=>navigate(`/poll/${poll.id}/`)} edge="end" aria-label='details'>
-                                        <KeyboardArrowRightIcon />
-                                    </IconButton>
-                                }
-                            >
-                                <ListItemText 
-                                    primary={poll.name}
-                                />
-                            </ListItem>
-                        </Paper>
-                    ))}
-                </List>
+                <Paper elevation={3}>
+                    <List>
+                        {polls.map(poll => (
+                            
+                                <ListItem
+                                    secondaryAction={
+                                        <IconButton onClick={()=>navigate(`/poll/${poll.id}/`)} edge="end" aria-label='details'>
+                                            <KeyboardArrowRightIcon />
+                                        </IconButton>
+                                    }
+                                >
+                                    <ListItemText 
+                                        primary={poll.name}
+                                    />
+                                </ListItem>                         
+                        ))}
+                    </List>
+                </Paper>
             </Box>
             </ThemeProvider>
         </Container>
