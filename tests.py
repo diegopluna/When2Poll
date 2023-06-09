@@ -269,10 +269,11 @@ class TestHome(LiveServerTestCase):
         
         #duration add 1 hour
         duration = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div/input")
-        duration.click()
+        driver.execute_script('arguments[0].click()',duration)
+
+        # duration.click()
         time.sleep(3)
-        # duration.send_keys("0200")
-        driver.execute_script('arguments[0].send_keys("0200")',duration)
+        duration.send_keys("0200")
         time.sleep(3)
         
         #init time add 3 hours
