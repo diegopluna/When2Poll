@@ -272,10 +272,10 @@ class TestHome(LiveServerTestCase):
         #driver.execute_script("window.scrollTo(0, 1000)")
         #ActionChains(driver).move_to_element(submit).click()
         
-        submit = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID,'submit')))
-        submit.click()
-        #poll_create = driver.find_element(By.XPATH,"/html/body/div[1]/div[4]/form/button")
-        #poll_create.click()
+        #submit = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID,'submit')))
+        #submit.click()
+        poll_create = driver.find_element(By.ID,'submit')
+        poll_create.click()
         #create = driver.find_element(By.ID, 'submit')
         #create.click()
         #---------------------------------------------
