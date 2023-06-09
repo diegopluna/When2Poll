@@ -136,7 +136,26 @@ const InvitesPage = () => {
                             title = {pollData[item.poll]?.name}
                             subheader = {`Poll - Answer until ${pollData[item.poll]?.deadline}`}
                         />
-                        <CardActions disableSpacing>                         
+                        <CardActions disableSpacing>
+                            <IconButton  
+                                sx={{
+                                    marginLeft: 'auto', 
+                                    ":hover": {
+                                        color: "#ff735c"
+                                    }}} 
+                                id={`reject${pollData[item.poll]?.name}`}
+                            >
+                                <CloseIcon />
+                            </IconButton>
+                            <IconButton 
+                                sx={{ 
+                                    ":hover": {
+                                        color: "#ff735c"
+                                    }}}                                
+                                id={`accept${pollData[item.poll]?.name}`}
+                            >
+                                <CheckIcon />
+                            </IconButton>                        
                         </CardActions>
                     </Item>
                 ))}

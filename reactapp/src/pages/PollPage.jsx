@@ -57,9 +57,11 @@ const PollPage = () => {
 
     if (!poll) {
         return (
-            <CircularProgress 
-                size={40}
-            />
+            <ThemeProvider theme={buttonTheme}>
+                <CircularProgress 
+                    size={40}
+                />
+            </ThemeProvider>
         );
     }
     
