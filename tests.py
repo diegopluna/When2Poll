@@ -284,7 +284,9 @@ class TestHome(LiveServerTestCase):
             element.send_keys(Keys.ENTER) 
             
             #-------------------------------------------
-            
+            time.sleep(1)
+            element.send_keys(Keys.LEFT_ALT)
+            time.sleep(1)
             #driver.execute_script("window.scrollTo(0, 1000)")
             #ActionChains(driver).move_to_element(submit).click()
             #driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
