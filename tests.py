@@ -5,10 +5,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
-
+from pyvirtualdisplay import Display
+#from xvfbwrapper import Xvfb
 import time 
 import datetime
-
+#vdisplay = Xvfb(width=1080, height=1440, colordepth=16)
+#vdisplay.start()
 # Documentação selenium para Python: https://selenium-python.readthedocs.io/
 # Exemplos: https://ordinarycoders.com/blog/article/testing-django-selenium
 
@@ -26,22 +28,24 @@ import datetime
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--headless")
-chrome_options.add_argument("window-size=1080,1440")
-#chrome_options.add_argument("--start-maximized")
+#chrome_options.add_argument("window-size=1080,1440")
+chrome_options.add_argument("--start-maximized")
 chrome_options.add_argument("--disable-gpu")
-chrome_options.add_argument("force-device-scale-factor=0.25")
-chrome_options.add_argument('--disable-dev-shm-usage')
+#chrome_options.add_argument("force-device-scale-factor=0.25")
+#chrome_options.add_argument('--disable-dev-shm-usage')
 #chrome_options.add_argument("--disable-extensions")
 #chrome_options.add_argument("--start-fullscreen")
 
 driver = webdriver.Chrome(options=chrome_options)
+driver.set_window_size(1080, 1440)
+
 # driver = webdriver.Firefox(options=chrome_options, executable_path='/usr/bin/geckodriver')
 # Create your tests here.
 
 class TestHome(LiveServerTestCase):
     
     def test010_create_users(self):
-
+        
         driver.get('http://127.0.0.1:8000/signin/')
         
         for i in range(1,4):
@@ -235,7 +239,7 @@ class TestHome(LiveServerTestCase):
             select_day2.click()        
             
             #poll time
-            driver.execute_script("window.scrollBy(0, 500)")
+            #driver.execute_script("window.scrollBy(0, 500)")
             #driver.execute_script("window.scrollBy(0, document.body.scrollHeight)")
             #duration add 1 hour
             duration = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div/input")))
@@ -303,7 +307,7 @@ class TestHome(LiveServerTestCase):
             submit = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, 'submit')))
             submit.click()
 
-            
+#vdisplay.stop()
             
             
             # poll_create = driver.find_element(By.ID,'submit')
