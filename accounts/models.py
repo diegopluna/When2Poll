@@ -98,4 +98,24 @@ class Friendship(models.Model):
     def __str__(self):
         return f'{self.from_user} invited {self.to_user} (Accepted: {self.is_accepted})'
     
+    def accept(self):
+        self.is_accepted = True
+        self.save()
+        
+    def reject(self):
+        # Add to blocklist
+        Blocklist.objects.get_or_create(user=self.from_user, blocked_user=self.to_user)
+        self.delete()
+    
+    
+class Blocklist(models.Model):
+    user = models.ForeignKey(User, related_name='blocklist', on_delete=models.CASCADE)
+    blocked_user = models.ForeignKey(User, related_name='blocked_by', on_delete=models.CASCADE)
+    
+    class Meta:
+        unique_together = ('user', 'blocked_user')
+        
+    def __str__(self):
+        return f'{self.user} blocked {self.blocked_user}'
+    
     

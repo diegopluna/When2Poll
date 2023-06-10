@@ -181,7 +181,17 @@ class AcceptFriendshipInvite(APIView):
         if invite.is_accepted:
             return Response({'error': 'Invite is already accepted'}, status=status.HTTP_400_BAD_REQUEST)
         if invite.to_user == request.user:
-            invite.is_accepted = True
-            invite.save()
+            invite.accept()
+            return Response(status=status.HTTP_200_OK)
+        return Response({'error': 'User is not a part of the invite'}, status=status.HTTP_400_BAD_REQUEST)
+    
+class RejectFriendshipInvite(APIView):
+    permission_classes = (IsAuthenticated,)
+    def put(self, request, pk):
+        invite = Friendship.objects.get(pk=pk)
+        if invite.is_accepted:
+            return Response({'error': 'Invite is already accepted'}, status=status.HTTP_400_BAD_REQUEST)
+        if invite.to_user == request.user:
+            invite.reject()
             return Response(status=status.HTTP_200_OK)
         return Response({'error': 'User is not a part of the invite'}, status=status.HTTP_400_BAD_REQUEST)

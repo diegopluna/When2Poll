@@ -17,7 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import BlockIcon from '@mui/icons-material/Block';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-
+import { useNavigate } from 'react-router-dom';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -50,6 +50,9 @@ const FriendsPage = () => {
   const [pending, setPending] = useState([]);
 
   const api = useAxios();
+
+  const navigate = useNavigate()
+
   const fetchData = async (value) => {
     try {
         if(value != ''){
@@ -62,6 +65,15 @@ const FriendsPage = () => {
         return
     }
   };
+
+  const handleAccept = async (id) => {
+    try {
+      const response = await api.put(`/api/friends/invite/${id}/accept/`)    
+      navigate(0) 
+    } catch (error) {
+      return
+    }
+  }
 
   useEffect( () => {
 
@@ -116,7 +128,7 @@ const FriendsPage = () => {
                 )}
               />
             </ThemeProvider>
-            {pending &&
+            {pending.length > 0 &&
               <>
                 <Typography variant='h4' sx={{textAlign: 'center'}} gutterBottom>
                   Pending
@@ -131,7 +143,7 @@ const FriendsPage = () => {
                             <IconButton sx={{mr:1}} edge='end' aria-label='reject-invite'>
                               <BlockIcon />
                             </IconButton>
-                            <IconButton edge='end' aria-label='accept-invite'>
+                            <IconButton onClick={() => handleAccept(item.id)} edge='end' aria-label='accept-invite'>
                               <PersonAddAlt1Icon />
                             </IconButton>
                           </>
