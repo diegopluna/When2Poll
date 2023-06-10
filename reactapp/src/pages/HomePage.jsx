@@ -65,7 +65,7 @@ const HomePage = () => {
                 marginTop: '56px',
                 marginBottom: '56px',
                 paddingBottom: '56px', // Add additional padding at the bottom
-                // minHeight: 'calc(100vh - 56px)', // Set a minimum height to ensure content visibility
+                // minHeight:xs=8 'calc(100vh - 56px)', // Set a minimum height to ensure content visibility
             }}
         >
             <Typography variant='h3' sx={{textAlign: 'center'}} gutterBottom>

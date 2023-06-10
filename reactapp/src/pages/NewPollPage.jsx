@@ -332,7 +332,7 @@ const NewPollPage = () => {
                         renderInput={(params) => (
                             <TextField 
                                 {...params}
-                                label="Groups"
+                                label="Invite groups"
                                 InputProps={{
                                     ...params.InputProps,
                                     endAdornment: (
