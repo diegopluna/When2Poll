@@ -22,6 +22,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import AuthContext from "../context/AuthProvider.jsx";
 import Logout from '@mui/icons-material/Logout';
 import Divider from '@mui/material/Divider';
+import PeopleIcon from '@mui/icons-material/People';
 import { Outlet, useNavigate, Link } from 'react-router-dom'
 import React, {useState, useContext} from "react";
 
@@ -164,8 +165,14 @@ const Header = () => {
                                                 >
                                                     {user?.full_name}
                                                 </Typography>
-                                            </Box>
+                                            </Box>                                            
                                             <Divider />
+                                            <MenuItem id='friends' key="fiends" onClick={()=>navigate("/friends")}>
+                                                <ListItemIcon>
+                                                    <PeopleIcon fontSize='small' />
+                                                </ListItemIcon>
+                                                <Typography textAlign="center">Friends</Typography>
+                                            </MenuItem>
                                             <MenuItem id='logout' key="logout" onClick={logoutUser}>
                                                 <ListItemIcon>
                                                     <Logout fontSize='small' />
@@ -246,6 +253,12 @@ const Header = () => {
                                                         </Typography>
                                                     </Box>
                                                     <Divider />
+                                                    <MenuItem id='friends' key="fiends" onClick={()=>navigate("/friends")}>
+                                                        <ListItemIcon>
+                                                            <PeopleIcon fontSize='small' />
+                                                        </ListItemIcon>
+                                                        <Typography textAlign="center">Friends</Typography>
+                                                    </MenuItem>
                                                     <MenuItem key="logout" onClick={logoutUser}>
                                                         <ListItemIcon>
                                                             <Logout fontSize='small' />

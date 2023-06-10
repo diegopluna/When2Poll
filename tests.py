@@ -12,6 +12,16 @@ import datetime
 # Documentação selenium para Python: https://selenium-python.readthedocs.io/
 # Exemplos: https://ordinarycoders.com/blog/article/testing-django-selenium
 
+# chrome_options = webdriver.FirefoxOptions()
+# chrome_options.add_argument("--no-sandbox")
+# chrome_options.add_argument('window-size=1080,1440')
+# chrome_options.add_argument("--start-maximized")
+# chrome_options.add_argument("--headless")
+# chrome_options.add_argument("--disable-gpu")
+# chrome_options.add_argument('--disable-dev-shm-usage')
+#chrome_options.add_argument("--start-fullscreen")
+
+
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--no-sandbox")
@@ -19,10 +29,12 @@ chrome_options.add_argument('window-size=1080,1440')
 chrome_options.add_argument("--start-maximized")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument('--disable-dev-shm-usage')
+chrome_options.add_argument("--disable-extensions")
 #chrome_options.add_argument("--start-fullscreen")
 
 driver = webdriver.Chrome(options=chrome_options)
-
+# driver = webdriver.Firefox(options=chrome_options, executable_path='/usr/bin/geckodriver')
 # Create your tests here.
 
 class TestHome(LiveServerTestCase):

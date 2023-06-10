@@ -12,6 +12,7 @@ import GroupPage from "./pages/GroupPage.jsx";
 import NewGroupPage from "./pages/NewGroupPage.jsx";
 import './calendar.css'
 import PollPage from "./pages/PollPage.jsx";
+import FriendsPage from "./pages/FriendsPage.jsx";
 
 const router = createBrowserRouter([
     {
@@ -83,6 +84,13 @@ const router = createBrowserRouter([
                         element:
                         <PrivateRoute>
                             <NewGroupPage />
+                        </PrivateRoute>
+                    },
+                    {
+                        path: "/friends",
+                        element:
+                        <PrivateRoute>
+                            <FriendsPage />
                         </PrivateRoute>
                     }
                 ]
