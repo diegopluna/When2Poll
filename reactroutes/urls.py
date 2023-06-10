@@ -2,8 +2,8 @@ from django.urls import path
 from .views import LoginPage, RegisterPage, HomePage, PollPage, NewPollPage, InvitesPage, GroupsPage
 
 urlpatterns = [
-    path('login/', LoginPage.as_view()),
-    path('register/', RegisterPage.as_view()),
+    path('signin/', LoginPage.as_view()),
+    path('signup/', RegisterPage.as_view()),
     path('',HomePage.as_view()),
     path('poll/<int:pk>/', PollPage.as_view()),
     path('newpoll/',NewPollPage.as_view()),

@@ -33,9 +33,10 @@ pip install -r requirements.txt
 React:
 
 ```
-cd fds2023-1/when2poll/reactapp
+cd fds2023-1/reactapp
 npm install
 npm run build
+python manage.py collectstatic
 ```
 
 ### Uso
@@ -183,11 +184,61 @@ https://user-images.githubusercontent.com/111078608/232656893-72f30856-edf8-4d84
 
 ### Relato programação em pares
 
+https://docs.google.com/document/d/1vgzDEOPSKoXRHU4viP0DTabFN5ODX0bRgQ28WmqPey4/edit?usp=sharing
 
 ### Deploy de algumas histórias
 Link do deploy: http://when2poll-env.eba-cpqbamxu.sa-east-1.elasticbeanstalk.com/
 
 ### Instruções de uso
 
+```
+  Ao entrar no site, primeiramente clicar em Criar Conta para ir para a tela de Registro.
+  
+  Preencher os dados do usário, ao criar a conta o website o redirecionará para a tela de login.
+  
+  Ao fazer login o usuário irá se deparar com a tela inicial e a barra
+  de navegação no topo da tela onde podemos navegar pelo site.
+  
+  História 1 e 2: Indicar Indisponibilidade e justificar ausencia
+   -Clicar em Convites na barra de navegação
+   -Clicar em Responder no card do convite da reunião
+   -Marcar a caixa seletora de ausência
+   -Ao marcar a caixa, o campo de justificativa irá surgir e deve-se preenche-lo.
+   -Clicar em responder
+   
+   Agora o convite foi respondido, e está salvo no banco de dados a respotas do usuário com sua justificativa de ausência
+   
+  História 3 e 4: Visão Geral das reuniões e alterar status de administrador de usuários membros das reuniões
+  -Ir para a tela de início
+  
+  Nesta tela o usuário pode ver o calendário com suas reuniões marcadas, e uma lista com reuniões que ainda não foram definidas.
+  Ao clicar em uma dessas reuniões em que o usuário seja o dono, ele pode marcar uma caixa seletora que aparece na tabela de membros para dar
+  poder administrativo das reuniões aos usuários.
 
-https://drive.google.com/file/d/1c4ZuAQWU639xayvKjl4VmUY5SRMBWBTc/view?usp=sharing
+```
+
+###Screencast Figma
+
+https://github.com/diegopluna/fds2023-1/assets/111078608/ddf9bb48-97b3-4d7c-9d2e-4403de7374c9
+
+
+### Screencast Selenium
+
+https://github.com/diegopluna/fds2023-1/assets/111078608/6878dd2a-c04f-4891-bd28-61281b2d175d
+
+
+### Screencast Deploy 
+
+https://github.com/diegopluna/fds2023-1/assets/111078608/9389f805-2dff-4e36-a6f7-1423bc48f9ac
+
+
+### Quadro JIRA
+
+![SCREENSHOTKANBAM](https://github.com/diegopluna/fds2023-1/assets/111078608/ab94a8bb-fd89-499a-bcbc-2b15a898d296)
+
+
+## Issues
+![image](https://github.com/diegopluna/fds2023-1/assets/111078608/2b249d9b-1605-4c5b-897d-3cf87ed18e25)
+![image](https://github.com/diegopluna/fds2023-1/assets/111078608/d65dc11a-ba81-48ee-8513-0927e71a9602)
+
+

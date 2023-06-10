@@ -118,7 +118,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'reactapp/build')
+            os.path.join(BASE_DIR, 'reactapp/dist')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -190,7 +190,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> tempmain
 MEDIA_URL = 'media/'
 
 MEDIA_ROOT = BASE_DIR / "media"

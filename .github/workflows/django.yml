@@ -13,13 +13,11 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.10.10]
+        python-version: [3.11]
         node-version: [18.x]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      
+    - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
@@ -29,19 +27,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-      
-    - name: Install React Dependencies
-      run: |
-        cd when2poll/reactapp
-        npm i
         
-    - name: Build React
-      run: |
-        cd when2poll/reactapp
-        npm run build
-      env:
-        CI: ""
-      
     - name: Install Python Dependencies
       run: |
         set -ex
@@ -49,15 +35,18 @@ jobs:
         sudo apt install ./google-chrome-stable_current_amd64.deb
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install msedge-selenium-tools      
+        
+    - name: Build React
+      run: |
+        cd reactapp
+        npm i
+        npm run build
     - uses: nanasess/setup-chromedriver@v2
     - run: |
-        chromedriver --url-base=/wd/hub &     
-    
-    - name: Run Local Server
+        chromedriver --url-base=/wd/hub &
+    - name: Run local Server
       run: |
-        cd when2poll
-        python manage.py migrate
+        python manage.py collectstatic
         python manage.py runserver &
         sleep 5
         python manage.py test
