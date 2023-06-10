@@ -237,8 +237,10 @@ class TestHome(LiveServerTestCase):
             
             #duration add 1 hour
             duration = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div/input")))
-            ActionChains(driver).move_to_element(duration).click().perform()
-            ActionChains(driver).move_to_element(duration).send_keys("0200").perform()
+            duration.click()
+            duration.send_keys("0200")
+            #ActionChains(driver).move_to_element(duration).click().perform()
+            #ActionChains(driver).move_to_element(duration).send_keys("0200").perform()
             # duration = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div/input")
             # driver.execute_script('arguments[0].click()',duration)
             # duration.click()
@@ -248,12 +250,17 @@ class TestHome(LiveServerTestCase):
             # duration.send_keys(Keys.ARROW_UP,Keys.ARROW_UP)
             
             earliest = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[5]/div/input")))
-            ActionChains(driver).move_to_element(earliest).click().perform()
-            ActionChains(driver).move_to_element(earliest).send_keys("0630").perform()
+            earliest.click()
+            earliest.send_keys("0630")
+            #ActionChains(driver).move_to_element(earliest).click().perform()
+            #ActionChains(driver).move_to_element(earliest).send_keys("0630").perform()
             
             latest = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[6]/div/input")))
-            ActionChains(driver).move_to_element(latest).click().perform()
-            ActionChains(driver).move_to_element(latest).send_keys("1730").perform()        
+            latest.click()
+            latest.send_keys("1730")
+            
+            #ActionChains(driver).move_to_element(latest).click().perform()
+            #ActionChains(driver).move_to_element(latest).send_keys("1730").perform()        
             #init time add 3 hours
             # earliest = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[5]/div/input")
             # earliest.click()
