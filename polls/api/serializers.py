@@ -100,9 +100,10 @@ class AvailabilityPollSerializer(serializers.ModelSerializer):
             end_time = range_data['end_time']
             matrix = []
             while cursor < end_time:
-                matrix.append({"start_time": cursor.isoformat(), "availability": 0})
+                #matrix.append({"start_time": cursor.isoformat(), "availability": 0})
+                matrix.append("0")
                 cursor += timedelta(minutes=15)
-            range_data['matrix'] = matrix
+            range_data['matrix'] = ''.join(matrix)
 
             DateTimeRange.objects.create(**range_data)
 

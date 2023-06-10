@@ -68,7 +68,8 @@ class DateTimeRange(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
-    matrix = models.JSONField()
+    matrix = models.CharField(max_length=255)
+    #matrix = models.JSONField()
 
 class PollInvite(models.Model):
     #sender = models.ForeignKey(User, on_delete=models.CASCADE)
