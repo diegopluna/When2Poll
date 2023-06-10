@@ -25,12 +25,12 @@ import datetime
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument('window-size=1080,1440')
-chrome_options.add_argument("--start-maximized")
+#chrome_options.add_argument('window-size=1080,1440')
+#chrome_options.add_argument("--start-maximized")
 chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-gpu")
-chrome_options.add_argument('--disable-dev-shm-usage')
-chrome_options.add_argument("--disable-extensions")
+#chrome_options.add_argument("--disable-gpu")
+#chrome_options.add_argument('--disable-dev-shm-usage')
+#chrome_options.add_argument("--disable-extensions")
 #chrome_options.add_argument("--start-fullscreen")
 
 driver = webdriver.Chrome(options=chrome_options)
@@ -234,7 +234,7 @@ class TestHome(LiveServerTestCase):
             select_day2.click()        
             
             #poll time
-            
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
             #duration add 1 hour
             duration = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div/input")))
             duration.click()
