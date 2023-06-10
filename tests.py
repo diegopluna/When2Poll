@@ -5,9 +5,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
-from pyvirtualdisplay import Display
-display = Display(visible=0, size=(1080, 1440))
-display.start()
+#from pyvirtualdisplay import Display
+#display = Display(visible=0, size=(1080, 1440))
+#display.start()
 import time 
 import datetime
 
@@ -26,15 +26,16 @@ import datetime
 
 
 chrome_options = webdriver.ChromeOptions()
-#chrome_options.add_argument("--no-sandbox")
-#chrome_options.add_argument("--headless")
-#chrome_options.add_argument("window-size=1080,1440")
+chrome_options.add_argument("--disable-browser-side-navigation")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("window-size=1080,1440")
 #chrome_options.add_argument("--start-maximized")
-#chrome_options.add_argument("--disable-gpu")
-#chrome_options.add_argument("force-device-scale-factor=0.25")
-#chrome_options.add_argument('--disable-dev-shm-usage')
-#chrome_options.add_argument("--disable-extensions")
-#chrome_options.add_argument("--start-fullscreen")
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("force-device-scale-factor=0.5")
+chrome_options.add_argument('--disable-dev-shm-usage')
+chrome_options.add_argument("--disable-extensions")
+chrome_options.add_argument("--start-fullscreen")
 
 driver = webdriver.Chrome(options=chrome_options)
 # driver.set_window_size(1080, 1440)
@@ -238,9 +239,10 @@ class TestHome(LiveServerTestCase):
             select_day2 = driver.find_element(By.XPATH, "//span[contains(text(), '24') and contains(@class, 'sd')]")
             select_day2.click()        
             
-            #poll time
             #driver.execute_script("window.scrollBy(0, 500)")
             #driver.execute_script("window.scrollBy(0, document.body.scrollHeight)")
+            
+            #poll time
             #duration add 1 hour
             duration = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div/input")))
             duration.click()
@@ -338,4 +340,4 @@ class TestHome(LiveServerTestCase):
             # title = driver.find_element(By.NAME,'title')
             # time.sleep(3)
             # self.assertEqual('Evento 01', title.text)
-display.stop()
+
