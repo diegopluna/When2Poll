@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -16,7 +17,7 @@ from .serializers import UserRegisterSerializer, EmailVerificationSerializer, Us
 from .utils import Util
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from accounts.models import Friendship
+from accounts.models import Friendship, Blocklist
 
 User = get_user_model()
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -157,6 +158,12 @@ class SendFriendInvite(APIView):
         except User.DoesNotExist:
             return Response({'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
         
+        if Blocklist.objects.filter(blocked_user=request.user, user = to_user).exists():
+            return Response({'error': 'Blocked by user'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if Blocklist.objects.filter(blocked_user=to_user, user = request.user).exists():
+            return Response({'error': 'User is blocked'}, status=status.HTTP_400_BAD_REQUEST)
+
         if Friendship.objects.filter(from_user=request.user, to_user=to_user).exists() or Friendship.objects.filter(from_user=to_user, to_user=request.user).exists():
             return Response({'error': 'Invitation already sent or friendship exists'}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -195,3 +202,12 @@ class RejectFriendshipInvite(APIView):
             invite.reject()
             return Response(status=status.HTTP_200_OK)
         return Response({'error': 'User is not a part of the invite'}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class GetFriendships(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        friendships= Friendship.objects.filter(Q(to_user=request.user, is_accepted = True) | Q(from_user=request.user, is_accepted = True))
+        serializer = FriendshipSerializer(friendships, many=True)
+        return Response(serializer.data)
