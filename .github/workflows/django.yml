@@ -57,7 +57,7 @@ jobs:
       uses: einaregilsson/beanstalk-deploy@v21
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_KEY_ACCESS_KEY }}
         application_name: when2poll 
         environment_name: when2poll-env
         version_label: ${{ github.sha }}
