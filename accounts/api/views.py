@@ -173,3 +173,15 @@ class GetPendingInvites(APIView):
         pending_invites = Friendship.objects.filter(to_user=request.user, is_accepted=False)
         serializer = FriendshipSerializer(pending_invites, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class AcceptFriendshipInvite(APIView):
+    permission_classes = (IsAuthenticated,)
+    def put(self, request, pk):
+        invite = Friendship.objects.get(pk=pk)
+        if invite.is_accepted:
+            return Response({'error': 'Invite is already accepted'}, status=status.HTTP_400_BAD_REQUEST)
+        if invite.to_user == request.user:
+            invite.is_accepted = True
+            invite.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response({'error': 'User is not a part of the invite'}, status=status.HTTP_400_BAD_REQUEST)

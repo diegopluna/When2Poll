@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import MyTokenObtainPairView, UsersAPIView, VerifyEmail, LogoutView, GetUserByEmailView, GetUsersView, GetUserByPK, GetCurrentUser, SendFriendInvite, GetPendingInvites
+from .views import MyTokenObtainPairView, UsersAPIView, VerifyEmail, LogoutView, GetUserByEmailView, GetUsersView, GetUserByPK, GetCurrentUser, SendFriendInvite, GetPendingInvites, AcceptFriendshipInvite
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
@@ -19,5 +19,6 @@ urlpatterns = [
     path('user/<str:email>/', GetUserByEmailView.as_view(), name='get-user-by-email'),
     path('user/me/', GetCurrentUser.as_view(), name='get-current-user'),
     path('friends/invite/<str:email>/', SendFriendInvite.as_view(), name='send-friend-invite'),
-    path('friends/invites/pending/', GetPendingInvites.as_view(), name='get-pending-invites')
+    path('friends/invites/pending/', GetPendingInvites.as_view(), name='get-pending-invites'),
+    path('friends/invite/<int:pk>/accept/', AcceptFriendshipInvite.as_view(), name='accept-friendship-invite')
 ]
