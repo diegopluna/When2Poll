@@ -12,10 +12,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 import jwt
 from django.conf import settings
-from .serializers import UserRegisterSerializer, EmailVerificationSerializer, UserSerializer
+from .serializers import UserRegisterSerializer, EmailVerificationSerializer, UserSerializer, FriendshipSerializer
 from .utils import Util
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from accounts.models import Friendship
 
 User = get_user_model()
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -145,3 +146,30 @@ class GetCurrentUser(APIView):
             return Response(serialized_user)
         except:
             return Response({"message":"Could not find user"}, status=status.HTTP_404_NOT_FOUND)
+        
+        
+class SendFriendInvite(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request, email):
+        try:
+            to_user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        
+        if Friendship.objects.filter(from_user=request.user, to_user=to_user).exists() or Friendship.objects.filter(from_user=to_user, to_user=request.user).exists():
+            return Response({'error': 'Invitation already sent or friendship exists'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        friendship = Friendship(from_user=request.user, to_user=to_user)
+        friendship.save()
+        serializer = FriendshipSerializer(friendship) 
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    
+class GetPendingInvites(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def get(self, request):
+        pending_invites = Friendship.objects.filter(to_user=request.user, is_accepted=False)
+        serializer = FriendshipSerializer(pending_invites, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

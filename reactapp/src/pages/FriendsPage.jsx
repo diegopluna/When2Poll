@@ -15,8 +15,8 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-
-
+import BlockIcon from '@mui/icons-material/Block';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -46,9 +46,9 @@ const FriendsPage = () => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [users, setUsers] = useState([]);
   const [friends, setFriends] = useState([]);
+  const [pending, setPending] = useState([]);
 
   const api = useAxios();
-
   const fetchData = async (value) => {
 
     try {
@@ -66,6 +66,18 @@ const FriendsPage = () => {
   useEffect(() => {    
     fetchData(inputValue);
   }, [inputValue]);
+
+  useEffect( () => {
+
+
+    const getPendingList = async () => {
+      const response = await api.get('/api/friends/invites/pending/');
+      setPending(response.data)
+    }
+
+    getPendingList()
+
+  },[])
 
   return (
     <Box
@@ -102,6 +114,39 @@ const FriendsPage = () => {
                 )}
               />
             </ThemeProvider>
+            {pending &&
+              <>
+                <Typography variant='h4' sx={{textAlign: 'center'}} gutterBottom>
+                  Pending
+                </Typography>
+                <List>
+                  {pending.map(item => {
+                    <ListItem 
+                      secondaryAction = {
+                        <>
+                          <IconButton edge='end' aria-label='reject-invite'>
+                            <BlockIcon />
+                          </IconButton>
+                          <IconButton edge='end' aria-label='accept-invite'>
+                            <PersonAddAlt1Icon />
+                          </IconButton>
+                        </>
+                      }
+                    >
+                      <ListItemAvatar>
+                        <Avatar sx={{ bgcolor: "#ff735c" }} alt={item.from_user.full_name}>
+                          {item.from_user.full_name.charAt(0)}
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText 
+                        primary={item.from_user.full_name}
+                        secondary={item.from_user.email}
+                      />
+                    </ListItem>
+                  })}
+                </List>
+              </>
+            }
         </Grid>
         <Grid item xs={12} md={8}>
           <Typography variant='h4' sx={{textAlign: 'center'}} gutterBottom>

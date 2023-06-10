@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from accounts.models import Friendship
 
 User = get_user_model()
 
@@ -28,3 +29,16 @@ class EmailVerificationSerializer(serializers.ModelSerializer):
     class Meta:
         user = User
         fields = ['token']
+
+
+class UserFriendshipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'full_name', 'email']
+        
+class FriendshipSerializer(serializers.ModelSerializer):
+    from_user = UserFriendshipSerializer(read_only = True)
+    to_user = UserFriendshipSerializer(read_only = True)
+    class Meta:
+        model = Friendship
+        fields = '__all__'
