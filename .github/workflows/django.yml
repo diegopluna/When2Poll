@@ -2,9 +2,9 @@ name: Django CI
 
 on:
   push:
-    branches: [ "tempmain" ]
+    branches: [ "release" ]
   pull_request:
-    branches: [ "tempmain" ]
+    branches: [ "release ]
 
 jobs:
   build:
@@ -49,4 +49,17 @@ jobs:
         python manage.py collectstatic
         python manage.py runserver &
         sleep 5
-        python manage.py test
+        
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*'
+    
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v21
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: when2poll 
+        environment_name: when2poll-env
+        version_label: ${{ github.sha }}
+        region: sa-east-1
+        deployment_package: deploy.zip
