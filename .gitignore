@@ -22,3 +22,5 @@ static/
 Dockerfile
 db.sqlite3
 geckodriver.log
+
+*.png

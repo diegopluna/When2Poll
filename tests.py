@@ -5,9 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
-from pyvirtualdisplay import Display
-#display = Display(visible=0, size=(1080, 1440))
-#display.start()
+
 import time 
 import datetime
 
@@ -23,20 +21,19 @@ import datetime
 # chrome_options.add_argument('--disable-dev-shm-usage')
 #chrome_options.add_argument("--start-fullscreen")
 
-display = Display(visible=False,size=(1920,1080))
-display.start()
+
 
 chrome_options = webdriver.ChromeOptions()
-# chrome_options.add_argument("--disable-browser-side-navigation")
-# chrome_options.add_argument("--no-sandbox")
-# chrome_options.add_argument("--headless")
-# chrome_options.add_argument("window-size=1080,1440")
+chrome_options.add_argument("--disable-browser-side-navigation")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("window-size=1080,1440")
 #chrome_options.add_argument("--start-maximized")
-# chrome_options.add_argument("--disable-gpu")
-# chrome_options.add_argument("force-device-scale-factor=0.5")
-# chrome_options.add_argument('--disable-dev-shm-usage')
-# chrome_options.add_argument("--disable-extensions")
-chrome_options.add_argument("--start-fullscreen")
+#chrome_options.add_argument("--disable-gpu")
+#chrome_options.add_argument("force-device-scale-factor=0.5")
+chrome_options.add_argument('--disable-dev-shm-usage')
+chrome_options.add_argument("--disable-extensions")
+#chrome_options.add_argument("--start-fullscreen")
 
 driver = webdriver.Chrome(options=chrome_options)
 # driver.set_window_size(1080, 1440)
@@ -224,22 +221,27 @@ class TestHome(LiveServerTestCase):
             newpoll=driver.find_element(By.PARTIAL_LINK_TEXT, 'NEW POLL')
             newpoll.click()
             time.sleep(1)
-
-            
+            #zoom out 
+            #actions = ActionChains(driver)
+            #zoom = driver.find_element(By.NAME,'title')
+            #zoom.click()
+            #zoom.(Keys.CONTROL + '-')
+            # ActionChains(driver)\
+            #     .key_down(Keys.CONTROL)\
+            #     .key_down(Keys.SUBTRACT)\
+            #     .perform()
+            # time.sleep(2)
             
             event_create_name = driver.find_element(By.NAME,'title')
             event_create_name.send_keys('Evento 01')
-            
             event_create_description = driver.find_element(By.NAME, "description")
             event_create_description.send_keys('Descrição do evento 01')
-            
-
-            select_day1 = driver.find_element(By.XPATH, f"//span[contains(text(), '19') and contains(@class, 'sd')]")
+            #WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,f"//span[contains(text(), '19') and contains(@class, 'sd')]")))
+            select_day1 = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,f"//span[contains(text(), '19') and contains(@class, 'sd')]")))
             select_day1.click()
-
-            select_day2 = driver.find_element(By.XPATH, "//span[contains(text(), '24') and contains(@class, 'sd')]")
+            #WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(), '24') and contains(@class, 'sd')]")))
+            select_day2 = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(), '24') and contains(@class, 'sd')]")))
             select_day2.click()        
-            
             #driver.execute_script("window.scrollBy(0, 500)")
             #driver.execute_script("window.scrollBy(0, document.body.scrollHeight)")
             
@@ -267,7 +269,6 @@ class TestHome(LiveServerTestCase):
             latest = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[6]/div/input")))
             ActionChains(driver).move_to_element(latest).click().perform()
             ActionChains(driver).move_to_element(latest).send_keys("1730").perform()
-            
             #ActionChains(driver).move_to_element(latest).click().perform()
             #ActionChains(driver).move_to_element(latest).send_keys("1730").perform()        
             #init time add 3 hours
@@ -285,69 +286,32 @@ class TestHome(LiveServerTestCase):
             # time.sleep(3)
 
             #invite groups to the poll
-            element = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID,"inviteGroups")))
-            ActionChains(driver).move_to_element(element).click().perform()
-            time.sleep(1)
-            ActionChains(driver).move_to_element(element).send_keys(Keys.ARROW_DOWN, Keys.ENTER).perform() 
-            time.sleep(1) 
+            element = driver.find_element(By.ID, 'inviteGroups')
+            element.click()
+            time.sleep(3)
             
             #invite 2 groups
-            # element.send_keys(Keys.DOWN)
-            # time.sleep(1)
-            # element.send_keys(Keys.ENTER)
-            # time.sleep(1)
-            # element.send_keys(Keys.DOWN)
-            # time.sleep(1)
-            # element.send_keys(Keys.DOWN)
-            # element.send_keys(Keys.ENTER) 
-            
+            element.send_keys(Keys.DOWN)
+            time.sleep(1)
+            element.send_keys(Keys.ENTER)
+            time.sleep(1)
+            element.send_keys(Keys.DOWN)
+            time.sleep(1)
+            element.send_keys(Keys.DOWN)
+            element.send_keys(Keys.ENTER) 
             #-------------------------------------------
-            # time.sleep(1)
-            # element.send_keys(Keys.LEFT_ALT)
-            # time.sleep(1)
+            time.sleep(1)
+            element.send_keys(Keys.LEFT_ALT)
+            time.sleep(1)
             #driver.execute_script("window.scrollTo(0, 1000)")
             #ActionChains(driver).move_to_element(submit).click()
             #driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-            driver.execute_script("window.scrollTo(0, 500)")
-            poll_create = driver.find_element(By.ID,'submit')
-            poll_create.click()
-        
-            
-            # submit=WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, 'submit')))
-            # ActionChains(driver).move_to_element(submit).perform()
-            # submit = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'submit')))
-            # ActionChains(driver).move_to_element(submit).click().perform()
-            # submit.click()
 
-            display.stop()
+            submit = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, 'submit')))
+            submit.click()
+            
             
             # poll_create = driver.find_element(By.ID,'submit')
             # poll_create.click()
             
-            #create = driver.find_element(By.ID, 'submit')
-            #create.click()
-            #---------------------------------------------
-            
-            #submit_poll = driver.find_element(By.ID,'submit')
-            #submit_poll.click()
-            
-            # time.sleep(1)
-            # driver.execute_script("window.scrollTo(0, 500)")
-
-            # submit = driver.find_element(By.ID,"submit")
-            # submit.click()
-            # time.sleep(1)
-            # driver.execute_script("window.scrollTo(0, 0)")
-            # time.sleep(2)
-            # home=driver.find_element(By.LINK_TEXT, 'HOME')
-            # home.click()
-            # time.sleep(3)
-
-            # event = driver.find_element(By.XPATH, '//*[@id="root"]/div[2]/div/ul/button/span')
-            # event.click()
-            # time.sleep(3)
-
-            # title = driver.find_element(By.NAME,'title')
-            # time.sleep(3)
-            # self.assertEqual('Evento 01', title.text)
-
+            #create = driver.find_element(By.ID, …
