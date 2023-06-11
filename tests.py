@@ -47,7 +47,7 @@ class TestHome(LiveServerTestCase):
         
         driver.get('http://127.0.0.1:8000/signin/')
         
-        for i in range(1,4):
+        for i in range(1,6):
             time.sleep(1)
             register = driver.find_element(By.ID,'signup')
             register.click()
@@ -288,7 +288,7 @@ class TestHome(LiveServerTestCase):
             #invite groups to the poll
             element = driver.find_element(By.ID, 'inviteGroups')
             element.click()
-            time.sleep(3)
+            time.sleep(1)
             
             #invite 2 groups
             element.send_keys(Keys.DOWN)
@@ -309,9 +309,39 @@ class TestHome(LiveServerTestCase):
 
             submit = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, 'submit')))
             submit.click()
-            
-            
             # poll_create = driver.find_element(By.ID,'submit')
             # poll_create.click()
             
-            #create = driver.find_element(By.ID, …
+            #create = driver.find_element(By.ID, …        
+            
+    
+    def teste050_addFriends(self):
+            
+            time.sleep(5)
+            driver.get("http://127.0.0.1:8000/friends")
+            #avatar = driver.find_element(By.ID,"João Silva1")
+            #avatar.click()
+
+            #driver.get("http://127.0.0.1:8000/friends")
+            
+            #time.sleep(3)
+            
+            search_user = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, 'inviteUsers')))
+            search_user.click()
+            
+            #avatar.click()
+            #pedidos de amizade
+            #search_user = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID,'inviteUser')))
+            #search_user.click()
+            #search_user.click()
+            for i in range(4,6):
+                time.sleep(3)
+                ActionChains(driver).move_to_element(search_user).send_keys(f"joaosilva{i}@test.com").perform()
+                time.sleep(3)
+                search_user.send_keys(Keys.ARROW_DOWN, Keys.ENTER) 
+                time.sleep(2)
+                submit = driver.find_element(By.ID,'submit')
+                submit.click()
+                time.sleep(2)
+                search_user = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, 'inviteUsers')))
+                search_user.click()
