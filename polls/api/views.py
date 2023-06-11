@@ -1,4 +1,5 @@
 #from django.shortcuts import render
+from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -12,7 +13,6 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from polls.models import AvailabilityPoll, PollInvite, PollAnswer
 from django.db.models import Q
-from django.http import JsonResponse
 # Create your views here.
 
 User = get_user_model()
@@ -102,11 +102,27 @@ class PollAnswerView(APIView):
         data = request.data
         data['user'] = request.user.pk
         data['poll'] = poll_id
-        serializer = PollAnswerSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save(user=request.user, poll=poll)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer = self.serializer_class(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def put(self, request, pk):
+        #poll_answer = self.get_object(pk)
+        try:
+            poll_answer = PollAnswer.objects.get(pk=pk)
+        except PollAnswer.DoesNotExist:
+            raise Http404
+        serializer = self.serializer_class(poll_answer, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    # def get_object(self, pk):
+    #     try:
+    #         return PollAnswer.objects.get(pk=pk)
+    #     except PollAnswer.DoesNotExist:
+    #         raise Http404
         
 class AnswerPollView(APIView):
     permission_classes = (IsAuthenticated, )

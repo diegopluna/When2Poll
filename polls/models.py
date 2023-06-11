@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.forms import ValidationError
 # import json
 # from django.core.serializers.json import DjangoJSONEncoder
 from django.utils import timezone
@@ -91,6 +92,27 @@ class PollAnswer(models.Model):
     available = models.BooleanField(default=True)
     matrix = models.JSONField(blank=True, null=True)
     justification = models.TextField(max_length=1000, blank=True)
+
+    def clean(self):
+        super().clean()
+        if self.matrix:
+            datetime_range_ids = set(entry["datetime_range_id"] for entry in self.matrix)
+            poll_datetime_range_ids = set(self.poll.datetime_ranges.values_list("id", flat=True))
+
+            if datetime_range_ids != poll_datetime_range_ids:
+                raise ValidationError("The availability matrix of the answer must match the datetime ranges of the poll.")
+
+            for matrix_entry in self.matrix:
+                datetime_range_id = matrix_entry["datetime_range_id"]
+                availability = matrix_entry["availability"]
+
+                datetime_range = self.poll.datetime_ranges.get(id=datetime_range_id)
+
+                if len(availability) != len(datetime_range.matrix):
+                    raise ValidationError(
+                        f"The availability matrix for DateTimeRange {datetime_range_id} "
+                        f"must have {datetime_range.time_slots_count} time slots."
+                    )
     
     # def serialize(self):
     #     data = {

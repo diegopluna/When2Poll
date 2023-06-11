@@ -56,14 +56,10 @@ class PollAnswerSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        # available = validated_data['available']
-        # if available:
-        #     if 'justification' in validated_data:
-        #         raise serializers.ValidationError({'justification': 'Must not be entered when user is available.'})
-        # else:
-        #     if 'matrix' in validated_data:
-        #         raise serializers.ValidationError({'matrix': 'Must not be entered when user is not available.'})
-        return super().create(validated_data)
+        self.instance = self.Meta.model(**validated_data)
+        self.instance.clean()  # Call the clean method for validation
+        self.instance.save()
+        return self.instance
 
 
 class AvailabilityPollSerializer(serializers.ModelSerializer):
