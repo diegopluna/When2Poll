@@ -58,8 +58,6 @@ const NewGroupPage = () => {
 
     const api = useAxios();
 
-    console.log(selectedFriends)
-
     useEffect(()=> {
         let active = true
 

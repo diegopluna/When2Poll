@@ -98,7 +98,9 @@ const InvitesPage = () => {
                 // minHeight: 'calc(100vh - 56px)', // Set a minimum height to ensure content visibility
             }}
         >
-            <Stack spacing={2}>
+            {(groupInvites.length > 0 || pollInvites.length > 0) ?
+
+                <Stack spacing={2}>
                 {groupInvites.map(item=> (
                     <Item elevation={8}>
                         <CardHeader 
@@ -159,7 +161,13 @@ const InvitesPage = () => {
                         </CardActions>
                     </Item>
                 ))}
-            </Stack>
+                </Stack>
+                :
+                <Typography variant='h6' sx={{textAlign: 'center'}} color="#ff735c" gutterBottom>
+                    No invites found!
+                </Typography>
+            }
+            
         </Container>
     )
 }

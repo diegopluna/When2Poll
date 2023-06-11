@@ -294,7 +294,8 @@ const NewPollPage = () => {
                                 value={durationRaw}
                                 onChange={(newValue) => handleDurationChange(newValue)} 
                                 sx={{
-                                    mb:3
+                                    mb:3,
+                                    width:1
                                 }} 
                             />
                             :
@@ -305,7 +306,8 @@ const NewPollPage = () => {
                                 value={durationRaw}
                                 onChange={(newValue) => handleDurationChange(newValue)} 
                                 sx={{
-                                    mb:3
+                                    mb:3,
+                                    width:1
                                 }} 
                             />
 
@@ -319,7 +321,8 @@ const NewPollPage = () => {
                                 value={earliestRaw}
                                 onChange={(newValue) => handleEarliestChange(newValue)} 
                                 sx={{
-                                    mb:3
+                                    mb:3,
+                                    width:1
                                 }} 
                             />
                             :
@@ -330,7 +333,8 @@ const NewPollPage = () => {
                                 value={earliestRaw}
                                 onChange={(newValue) => handleEarliestChange(newValue)} 
                                 sx={{
-                                    mb:3
+                                    mb:3,
+                                    width:1
                                 }} 
                             />
 
@@ -344,7 +348,8 @@ const NewPollPage = () => {
                                 value={latestRaw}
                                 onChange={(newValue) => handleLatestChange(newValue)}
                                 sx={{
-                                    mb:3
+                                    mb:3,
+                                    width:1
                                 }} 
                             />
                             :
@@ -355,7 +360,8 @@ const NewPollPage = () => {
                                 value={latestRaw}
                                 onChange={(newValue) => handleLatestChange(newValue)}
                                 sx={{
-                                    mb:3
+                                    mb:3,
+                                    width:'100%'
                                 }} 
                             />
 
@@ -369,7 +375,7 @@ const NewPollPage = () => {
                     </Typography>
                     <Autocomplete 
                         id='inviteGroups' 
-                        sx={{ width: 300 }}
+                        sx={{ width: 1 }}
                         value={selectedGroups}
                         multiple
                         onChange={(e, value) => setSelectedGroups(value)}
@@ -401,7 +407,7 @@ const NewPollPage = () => {
                         variant="contained"
                         fullWidth
                         id='submit'
-                        sx={{ mt: 10, mb: 2, width: 300}}
+                        sx={{ mt: 10, mb: 2, width: 1}}
                     >
                         Create poll
                     </Button>  
