@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from accounts.models import Friendship
+from accounts.models import Friendship, Blocklist
 
 User = get_user_model()
 
@@ -41,4 +41,12 @@ class FriendshipSerializer(serializers.ModelSerializer):
     to_user = UserFriendshipSerializer(read_only = True)
     class Meta:
         model = Friendship
+        fields = '__all__'
+        
+class BlocklistSerializer(serializers.ModelSerializer):
+    user = UserFriendshipSerializer(read_only=True)
+    blocked_user = UserFriendshipSerializer(read_only=True)
+
+    class Meta:
+        model = Blocklist
         fields = '__all__'

@@ -104,8 +104,8 @@ class Friendship(models.Model):
         
     def reject(self):
         # Add to blocklist
-        Blocklist.objects.get_or_create(user=self.from_user, blocked_user=self.to_user)
-        self.delete()
+        Blocklist.objects.get_or_create(user=self.to_user, blocked_user=self.from_user)
+        self.delete()     
     
     
 class Blocklist(models.Model):
@@ -117,5 +117,8 @@ class Blocklist(models.Model):
         
     def __str__(self):
         return f'{self.user} blocked {self.blocked_user}'
+    
+    def unblock(self):
+        self.delete()
     
     

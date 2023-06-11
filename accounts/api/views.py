@@ -13,7 +13,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 import jwt
 from django.conf import settings
-from .serializers import UserRegisterSerializer, EmailVerificationSerializer, UserSerializer, FriendshipSerializer
+from .serializers import UserRegisterSerializer, EmailVerificationSerializer, UserSerializer, FriendshipSerializer, BlocklistSerializer
 from .utils import Util
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -192,7 +192,7 @@ class AcceptFriendshipInvite(APIView):
             return Response(status=status.HTTP_200_OK)
         return Response({'error': 'User is not a part of the invite'}, status=status.HTTP_400_BAD_REQUEST)
     
-class RejectFriendshipInvite(APIView):
+class BlockFriendshipInvite(APIView):
     permission_classes = (IsAuthenticated,)
     def put(self, request, pk):
         invite = Friendship.objects.get(pk=pk)
@@ -211,3 +211,53 @@ class GetFriendships(APIView):
         friendships= Friendship.objects.filter(Q(to_user=request.user, is_accepted = True) | Q(from_user=request.user, is_accepted = True))
         serializer = FriendshipSerializer(friendships, many=True)
         return Response(serializer.data)
+    
+class GetBlocked(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def get(self, request):
+        blocked = Blocklist.objects.filter(user = request.user)
+        serializer = BlocklistSerializer(blocked, many = True)
+        return Response(serializer.data)
+
+class UnblockUser(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def delete(self, request, pk):
+        
+        block = Blocklist.objects.get(pk=pk)
+        
+        if request.user == block.user:
+            block.unblock()
+            return Response(status=status.HTTP_200_OK)
+        
+        return Response({'error': 'User cannot unblock itself'}, status=status.HTTP_400_BAD_REQUEST)
+    
+class BlockFriend(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request, pk):
+        
+        blocked = User.objects.get(pk=pk)
+        if Blocklist.objects.filter(Q(blocked_user=blocked, user = request.user) | Q(blocked_user=request.user, user=blocked)).exists():
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        if Friendship.objects.filter(to_user=request.user, from_user=blocked).exists():
+            invite = Friendship.objects.get(to_user=request.user, from_user=blocked)
+            invite.delete()
+            block = Blocklist.objects.get_or_create(user = request.user, blocked_user=blocked)
+            serializer = BlocklistSerializer(block)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        if Friendship.objects.filter(to_user=blocked, from_user=request.user).exists():
+            invite = Friendship.objects.get(to_user=blocked, from_user=request.user)
+            invite.delete()
+            block = Blocklist.objects.get_or_create(user = request.user, blocked_user=blocked)
+            serializer = BlocklistSerializer(block)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        
+        
+        
