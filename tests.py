@@ -415,7 +415,7 @@ class TestHome(LiveServerTestCase):
             time.sleep(1)
             
             #Logando na SENDER para conferir a amizade
-            time.sleep(1)
+            driver.get("http://127.0.0.1:8000/signin")
             user_email = driver.find_element(By.NAME,'email')
             user_password = driver.find_element(By.NAME,'password')
 
