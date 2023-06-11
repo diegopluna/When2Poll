@@ -1,4 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, Fragment} from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Typography from '@mui/material/Typography';
@@ -40,11 +41,13 @@ const defaultTheme = createTheme({
 
 const NewGroupPage = () => {
     
-    let {setShowSnack, setSnackSeverity, setSnackText} = useContext(AuthContext)
+    let {user, setShowSnack, setSnackSeverity, setSnackText} = useContext(AuthContext)
 
-    const [selectedUsers, setSelectedUsers] = useState([]);
-    const [users, setUsers] = useState([]);
-    const [inputValue, setInputValue] = useState('');
+    const [friends, setFriends] = useState([])
+    const [open, setOpen] = useState(false);
+    const [selectedFriends, setSelectedFriends] = useState([])
+    const loading = open && friends.length === 0;
+
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
@@ -55,18 +58,33 @@ const NewGroupPage = () => {
 
     const api = useAxios();
 
-    const fetchData = async (value) => {
-        try {
-            if(value != ''){
-                const response = await api.get(`/api/user/${value}`);                
-                setUsers([response.data]);
-            } else {
-                setUsers([]);
-            }   
-        } catch (error) {
-            return
+    console.log(selectedFriends)
+
+    useEffect(()=> {
+        let active = true
+
+        if (!loading) {
+            return undefined
         }
-    };
+
+        (async ()=> {
+            const response = await api.get('/api/friends/');
+
+            if (active) {
+                setFriends(response.data)
+            }
+        })();
+
+        return () => {
+            active = false
+        };
+    }, [loading]);
+
+    useEffect(() => {
+        if (!open) {
+            setFriends([]);
+        }
+    }, [open])
 
     const handleSubmit = async (e ) => {
 
@@ -78,25 +96,20 @@ const NewGroupPage = () => {
           });
         const data = response.data
 
-        for (let index = 0; index < selectedUsers.length; index++) {
-            const user = selectedUsers[index];
+        for (let index = 0; index < selectedFriends.length; index++) {
+            const userid = selectedFriends[index].from_user.id === user.user_id ? selectedFriends[index].to_user.id : selectedFriends[index].from_user.id;
             const inviteResponse = await api.post('/orgs/organizations/'+data.id+'/invite/',{
-                user: user.id
+                user: userid
             });        
         }
         setDescription('')
         setTitle('')
-        setSelectedUsers([])
-        setInputValue('')
+        setSelectedFriends([])
         setShowSnack(true)
         setSnackSeverity('success')
         setSnackText('Group created')
         navigate('/groups/');
     }
-
-    useEffect(() => {    
-        fetchData(inputValue);
-    }, [inputValue]);
 
     return (
     <>
@@ -147,23 +160,33 @@ const NewGroupPage = () => {
                     <Typography variant='h4' sx={{textAlign: 'center'}} gutterBottom>
                         Invite 
                     </Typography>
-                    <Autocomplete
+                    <Autocomplete 
+                        id='inviteFriends' 
                         fullWidth
-                        value={selectedUsers}
-                        onChange={(e, value)=>setSelectedUsers(value)}
+                        value={selectedFriends}
                         multiple
-                        id='inviteUsers'
-                        options={users}
-                        getOptionLabel={(user) => user.full_name}
-                        filterOptions={(options, state)=> options}
-                        onInputChange={(event, value) => setInputValue(value)}         
-                        disableCloseOnSelect
+                        onChange={(e, value) => setSelectedFriends(value)}
+                        open={open}
+                        onOpen={() => setOpen(true)}
+                        onClose={() => setOpen(false)}
+                        isOptionEqualToValue={(option, value) => (option.from_user.id === user.user_id) ? option.to_user.id === value.id : option.from_user.id === value.id}
+                        getOptionLabel={(option) => (option.from_user.id === user.user_id)?option.to_user.full_name:option.from_user.full_name}
+                        options={friends}
+                        loading={loading}                    
                         renderInput={(params) => (
-                            <TextField
-                            {...params}
-                            variant="outlined"
-                            label="Search for users"
-                            />            
+                            <TextField 
+                                {...params}
+                                label="Invite friends"
+                                InputProps={{
+                                    ...params.InputProps,
+                                    endAdornment: (
+                                        <Fragment>
+                                             {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                             {params.InputProps.endAdornment}
+                                        </Fragment>
+                                    ),
+                                }}
+                            />
                         )}
                     />
                     <Button
