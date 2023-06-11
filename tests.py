@@ -317,12 +317,11 @@ class TestHome(LiveServerTestCase):
     
     def teste050_addFriends(self):
             
-            time.sleep(5)
+            
+            
+            #comeca aqui
+            time.sleep(2)
             driver.get("http://127.0.0.1:8000/friends")
-            #avatar = driver.find_element(By.ID,"João Silva1")
-            #avatar.click()
-
-            #driver.get("http://127.0.0.1:8000/friends")
             
             #time.sleep(3)
             
@@ -334,6 +333,8 @@ class TestHome(LiveServerTestCase):
             #search_user = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID,'inviteUser')))
             #search_user.click()
             #search_user.click()
+            
+            #convida joaosilva4 e joaosilva5
             for i in range(4,6):
                 time.sleep(3)
                 ActionChains(driver).move_to_element(search_user).send_keys(f"joaosilva{i}@test.com").perform()
@@ -345,3 +346,88 @@ class TestHome(LiveServerTestCase):
                 time.sleep(2)
                 search_user = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, 'inviteUsers')))
                 search_user.click()
+                
+            #LOGOUT SENDER
+            avatar = driver.find_element(By.ID,"João Silva1")
+            avatar.click()
+
+            logout = driver.find_element(By.ID, "logout")
+            logout.click()   
+
+            #LOGIN RECEIVER 1
+            driver.get('http://127.0.0.1:8000/signin/')
+
+            Receiver_email = driver.find_element(By.NAME,'email')
+            Receiver_password = driver.find_element(By.NAME,'password')
+
+            submit = driver.find_element(By.ID,'submit')
+
+            Receiver_email.send_keys('joaosilva4@test.com')
+            Receiver_password.send_keys('Teste12345')
+
+            submit.send_keys(Keys.RETURN)
+            
+            #vai para friends
+            time.sleep(2)
+            driver.get("http://127.0.0.1:8000/friends")
+            
+            #aceita amizade
+            accept = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "[aria-label='accept-invite']")))
+            accept.click()
+            time.sleep(5)
+
+            #LOGOUT RECEIVER 1
+            avatar = driver.find_element(By.ID,"João Silva4")
+            avatar.click()
+
+            logout = driver.find_element(By.ID, "logout")
+            logout.click() 
+            time.sleep(1)
+            
+            #LOGIN RECEIVER 2
+            driver.get('http://127.0.0.1:8000/signin/')
+
+            Receiver_email = driver.find_element(By.NAME,'email')
+            Receiver_password = driver.find_element(By.NAME,'password')
+
+            submit = driver.find_element(By.ID,'submit')
+
+            Receiver_email.send_keys('joaosilva5@test.com')
+            Receiver_password.send_keys('Teste12345')
+
+            submit.send_keys(Keys.RETURN)
+            
+            #vai para friends
+            time.sleep(2)
+            driver.get("http://127.0.0.1:8000/friends")
+            
+            #block
+            reject = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "[aria-label='reject-invite']")))
+            reject.click()
+            time.sleep(5)
+
+            #LOGOUT RECEIVER 2
+            avatar = driver.find_element(By.ID,"João Silva5")
+            avatar.click()
+
+            logout = driver.find_element(By.ID, "logout")
+            logout.click() 
+            time.sleep(1)
+            
+            #Logando na SENDER para conferir a amizade
+            time.sleep(1)
+            user_email = driver.find_element(By.NAME,'email')
+            user_password = driver.find_element(By.NAME,'password')
+
+            submit = driver.find_element(By.ID,'submit')
+
+            user_email.send_keys('joaosilva1@test.com')
+            user_password.send_keys('Teste12345')
+            submit.send_keys(Keys.RETURN)
+            
+            time.sleep(2)
+            driver.get("http://127.0.0.1:8000/friends")
+            #friend = driver.find_element(By.CSS_SELECTOR, 'p.MuiListItemText-secondary.css-mbfek').text
+            #self.assertEqual(friend, 'joaosilva4@test.com')
+            friend = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'p.MuiListItemText-secondary.css-mbfek'))).text
+            self.assertEqual(friend, 'joaosilva4@test.com')
