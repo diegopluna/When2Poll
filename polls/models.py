@@ -15,11 +15,8 @@ class AvailabilityPoll(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     duration = models.TimeField()
-    # datetime_ranges = models.ManyToManyField(DateTimeRange, related_name='datetime_ranges')
     deadline = models.DateTimeField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE) #review the on_delete behaviour
-    # admins = models.ManyToManyField(User, related_name='admins')
-    # participants = models.ManyToManyField(User, related_name='participants')
     defined = models.BooleanField(default=False)
 
     @property
@@ -80,13 +77,6 @@ class AvailabilityPoll(models.Model):
             datetime_range.matrix = ','.join(avail_str)
             datetime_range.save()
     
-    # def invited_admin(self, participants):
-    #     #invite a participant to become an admin
-    #     if self.owner == participants or participants in self.admins.all():
-    #         #user is already an admin or the owner of the poll
-    #         return
-    #     self.admins.add(participants)
-    #    # add participants to admins field
 
 class DateTimeRange(models.Model):
     start_time = models.DateTimeField()
@@ -115,12 +105,6 @@ class PollInvite(models.Model):
         self.answered = True
         self.accepted = False
         self.save()
-
-# class PollAdminInvite(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)
-#     answered = models.BooleanField(default=False)
-#     accepted = models.BooleanField(default=False)
 
 class PollAnswer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
