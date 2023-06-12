@@ -293,6 +293,7 @@ class TestHome(LiveServerTestCase):
         logout.click()
     
     def test060_createpoll(self):
+            
             driver.get('http://127.0.0.1:8000/signin/')
             
 
@@ -322,88 +323,91 @@ class TestHome(LiveServerTestCase):
             #     .perform()
             # time.sleep(2)
             
-            event_create_name = driver.find_element(By.NAME,'title')
-            event_create_name.send_keys('Evento 01')
-            event_create_description = driver.find_element(By.NAME, "description")
-            event_create_description.send_keys('Descrição do evento 01')
-            #WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,f"//span[contains(text(), '19') and contains(@class, 'sd')]")))
-            select_day1 = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,f"//span[contains(text(), '19') and contains(@class, 'sd')]")))
-            select_day1.click()
-            #WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(), '24') and contains(@class, 'sd')]")))
-            select_day2 = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(), '24') and contains(@class, 'sd')]")))
-            select_day2.click()        
-            #driver.execute_script("window.scrollBy(0, 500)")
-            #driver.execute_script("window.scrollBy(0, document.body.scrollHeight)")
-            
-            #poll time
-            #duration add 1 hour
-            duration = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div/input")))
-            ActionChains(driver).move_to_element(duration).click().perform()
-            ActionChains(driver).move_to_element(duration).send_keys("0200").perform()
-            #ActionChains(driver).move_to_element(duration).click().perform()
-            #ActionChains(driver).move_to_element(duration).send_keys("0200").perform()
-            # duration = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div/input")
-            # driver.execute_script('arguments[0].click()',duration)
-            # duration.click()
-            # driver.implicitly_wait(1)
-            # # time.sleep(3)
-            # duration.send_keys("0200")
-            # duration.send_keys(Keys.ARROW_UP,Keys.ARROW_UP)
-            
-            earliest = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[5]/div/input")))
-            ActionChains(driver).move_to_element(earliest).click().perform()
-            ActionChains(driver).move_to_element(earliest).send_keys("0630").perform()
-            #ActionChains(driver).move_to_element(earliest).click().perform()
-            #ActionChains(driver).move_to_element(earliest).send_keys("0630").perform()
-            
-            latest = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[6]/div/input")))
-            ActionChains(driver).move_to_element(latest).click().perform()
-            ActionChains(driver).move_to_element(latest).send_keys("1730").perform()
-            #ActionChains(driver).move_to_element(latest).click().perform()
-            #ActionChains(driver).move_to_element(latest).send_keys("1730").perform()        
-            #init time add 3 hours
-            # earliest = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[5]/div/input")
-            # earliest.click()
-            # time.sleep(3)
-            # earliest.send_keys("0630")
-            # time.sleep(3)
-            
-            #end time  decrease 2 hours
-            # latest = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[6]/div/input")
-            # latest.click()
-            # time.sleep(2)
-            # latest.send_keys("1730")
-            # time.sleep(3)
+            #criar 2 polls
+            for i in range(1,3):
+                time.sleep(1)
+                event_create_name = driver.find_element(By.NAME,'title')
+                event_create_name.send_keys(f'Evento 0{i}')
+                event_create_description = driver.find_element(By.NAME, "description")
+                event_create_description.send_keys(f'Descrição do evento 0{i}')
+                #WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,f"//span[contains(text(), '19') and contains(@class, 'sd')]")))
+                select_day1 = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,f"//span[contains(text(), '19') and contains(@class, 'sd')]")))
+                select_day1.click()
+                #WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(), '24') and contains(@class, 'sd')]")))
+                select_day2 = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(), '24') and contains(@class, 'sd')]")))
+                select_day2.click()        
+                #driver.execute_script("window.scrollBy(0, 500)")
+                #driver.execute_script("window.scrollBy(0, document.body.scrollHeight)")
+                
+                #poll time
+                #duration add 1 hour
+                duration = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div/input")))
+                ActionChains(driver).move_to_element(duration).click().perform()
+                ActionChains(driver).move_to_element(duration).send_keys("0200").perform()
+                #ActionChains(driver).move_to_element(duration).click().perform()
+                #ActionChains(driver).move_to_element(duration).send_keys("0200").perform()
+                # duration = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[4]/div/input")
+                # driver.execute_script('arguments[0].click()',duration)
+                # duration.click()
+                # driver.implicitly_wait(1)
+                # # time.sleep(3)
+                # duration.send_keys("0200")
+                # duration.send_keys(Keys.ARROW_UP,Keys.ARROW_UP)
+                
+                earliest = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[5]/div/input")))
+                ActionChains(driver).move_to_element(earliest).click().perform()
+                ActionChains(driver).move_to_element(earliest).send_keys("0630").perform()
+                #ActionChains(driver).move_to_element(earliest).click().perform()
+                #ActionChains(driver).move_to_element(earliest).send_keys("0630").perform()
+                
+                latest = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[3]/form/div[6]/div/input")))
+                ActionChains(driver).move_to_element(latest).click().perform()
+                ActionChains(driver).move_to_element(latest).send_keys("1730").perform()
+                #ActionChains(driver).move_to_element(latest).click().perform()
+                #ActionChains(driver).move_to_element(latest).send_keys("1730").perform()        
+                #init time add 3 hours
+                # earliest = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[5]/div/input")
+                # earliest.click()
+                # time.sleep(3)
+                # earliest.send_keys("0630")
+                # time.sleep(3)
+                
+                #end time  decrease 2 hours
+                # latest = driver.find_element(By.XPATH,"/html/body/div[1]/div[3]/form/div[6]/div/input")
+                # latest.click()
+                # time.sleep(2)
+                # latest.send_keys("1730")
+                # time.sleep(3)
 
-            #invite groups to the poll
-            element = driver.find_element(By.ID, 'inviteGroups')
-            element.click()
-            time.sleep(1)
-            
-            #invite 2 groups
-            element.send_keys(Keys.DOWN)
-            time.sleep(1)
-            element.send_keys(Keys.ENTER)
-            time.sleep(1)
-            element.send_keys(Keys.DOWN)
-            time.sleep(1)
-            element.send_keys(Keys.DOWN)
-            element.send_keys(Keys.ENTER) 
-            #-------------------------------------------
-            time.sleep(1)
-            element.send_keys(Keys.LEFT_ALT)
-            time.sleep(1)
-            #driver.execute_script("window.scrollTo(0, 1000)")
-            #ActionChains(driver).move_to_element(submit).click()
-            #driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+                #invite groups to the poll
+                element = driver.find_element(By.ID, 'inviteGroups')
+                element.click()
+                time.sleep(1)
+                
+                #invite 2 groups
+                element.send_keys(Keys.DOWN)
+                time.sleep(1)
+                element.send_keys(Keys.ENTER)
+                time.sleep(1)
+                element.send_keys(Keys.DOWN)
+                time.sleep(1)
+                element.send_keys(Keys.DOWN)
+                element.send_keys(Keys.ENTER) 
+                #-------------------------------------------
+                time.sleep(1)
+                element.send_keys(Keys.LEFT_ALT)
+                time.sleep(1)
+                #driver.execute_script("window.scrollTo(0, 1000)")
+                #ActionChains(driver).move_to_element(submit).click()
+                #driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
 
-            submit = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, 'submit')))
-            submit.click()
-            # poll_create = driver.find_element(By.ID,'submit')
-            # poll_create.click()
-            
-            #create = driver.find_element(By.ID, …        
-            
+                submit = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, 'submit')))
+                submit.click()
+                # poll_create = driver.find_element(By.ID,'submit')
+                # poll_create.click()
+                
+                #create = driver.find_element(By.ID, …        
+                
     
     def test070_addFriends(self):
             
