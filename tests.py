@@ -25,8 +25,8 @@ import datetime
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--disable-browser-side-navigation")
-#chrome_options.add_argument("--no-sandbox")
-#chrome_options.add_argument("--headless")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--headless")
 chrome_options.add_argument("window-size=1080,1440")
 #chrome_options.add_argument("--start-maximized")
 #chrome_options.add_argument("--disable-gpu")
@@ -159,17 +159,17 @@ class TestHome(LiveServerTestCase):
         time.sleep(1)
 
         #Indo para a pagina de grupos
-        groups=driver.find_element(By.LINK_TEXT, 'GROUPS')
-        groups.click()
+        # groups=driver.find_element(By.LINK_TEXT, 'GROUPS')
+        # groups.click()
         driver.get("http://127.0.0.1:8000/groups/")
-        time.sleep(1)
+        time.sleep(2)
 
-        #Indo para a pagina de novos grupos
+        #botao criar
         new_group=driver.find_element(By.ID, "addButton")
         new_group.click()
 
         #Criando grupo 1
-        time.sleep(1)
+        
 
         group_name = driver.find_element(By.NAME,'title')
         group_description = driver.find_element(By.NAME, "description")
@@ -177,24 +177,36 @@ class TestHome(LiveServerTestCase):
         
         group_name.send_keys('Grupo 01')
         group_description.send_keys('Descrição do grupo')
-        element = driver.find_element(By.ID, 'inviteUsers')
+        element = driver.find_element(By.ID, 'inviteFriends')
         element.click()
-
-        element.send_keys('joaosilva2@test.com')
         time.sleep(1)
-        element.send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+        #aqui eu adiciono os amigos
         
-        element.send_keys('joaosilva3@test.com')
+        
+        #convidou user 1
+        element.send_keys(Keys.ARROW_DOWN)
         time.sleep(1)
-        element.send_keys(Keys.ARROW_DOWN, Keys.ENTER) 
+        element.send_keys(Keys.ENTER)
+        time.sleep(1)
+        
+        #convidou user 2
+        element.send_keys(Keys.ARROW_DOWN)
+        time.sleep(1)
+        element.send_keys(Keys.ARROW_DOWN)
+        time.sleep(1)
+        element.send_keys(Keys.ARROW_DOWN)
+        time.sleep(1)
+        element.send_keys(Keys.ENTER) 
+        
+        #criou o grupo 1
         create = driver.find_element(By.ID, 'submit')
         create.click()
-        time.sleep(1)
+        time.sleep(2)
 
-        new_group=driver.find_element(By.ID, "addButton")
-        new_group.click()
         
         #Criando Grupo 2
+        new_group=driver.find_element(By.ID, "addButton")
+        new_group.click()
         time.sleep(1)
         group_name = driver.find_element(By.NAME,'title')
         group_description = driver.find_element(By.NAME, "description")
@@ -202,27 +214,36 @@ class TestHome(LiveServerTestCase):
         group_name.send_keys('Grupo 02')
         group_description.send_keys('Descrição do grupo 2')
         
-        element = driver.find_element(By.ID, 'inviteUsers')
+        element = driver.find_element(By.ID, 'inviteFriends')
         element.click()
-        element.send_keys('joaosilva2@test.com') 
         time.sleep(1)
-        element.send_keys(Keys.ARROW_DOWN, Keys.ENTER)
-        element.send_keys('joaosilva3@test.com')
+        #convidou user 1
+        element.send_keys(Keys.ARROW_DOWN)
         time.sleep(1)
-        element.send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+        element.send_keys(Keys.ENTER)
+        time.sleep(1)
+        
+        #convidou user 2
+        element.send_keys(Keys.ARROW_DOWN)
+        time.sleep(1)
+        element.send_keys(Keys.ARROW_DOWN)
+        time.sleep(1)
+        element.send_keys(Keys.ARROW_DOWN)
+        time.sleep(1)
+        element.send_keys(Keys.ENTER)
         create = driver.find_element(By.ID, 'submit')
         create.click()
-        time.sleep(1)
-
+        
+        time.sleep(3)
         name_elements = driver.find_elements(By.ID,"groupName")
         names = [element.text for element in name_elements]
         expected_names = ['Grupo 01', 'Grupo 02']
         self.assertEqual(names, expected_names)
-        
+        time.sleep(3)
         ###LOGOUT
         avatar = driver.find_element(By.ID,"João Silva1")
         avatar.click()
-
+        time.sleep(1)
         logout = driver.find_element(By.ID, "logout")
         logout.click()
 
@@ -270,7 +291,7 @@ class TestHome(LiveServerTestCase):
 
         logout = driver.find_element(By.ID, "logout")
         logout.click()
-
+    
     def test060_createpoll(self):
             driver.get('http://127.0.0.1:8000/signin/')
             
