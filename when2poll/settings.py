@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$blsifwuajbmhqzy2b-bl4+1-(^s@=qhk)96(*&fp#*9$&*sdo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["when2poll-env.eba-cpqbamxu.sa-east-1.elasticbeanstalk.com"]
 
 
 # Application definition
