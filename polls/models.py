@@ -151,6 +151,13 @@ class PollAnswer(models.Model):
                         f"The availability matrix for DateTimeRange {datetime_range_id} "
                         f"must have {len(elements)} time slots."
                     )
+                
+                for boolean in availability:
+                    if boolean is not '0' and boolean is not '1':
+                        raise ValidationError(
+                        f"The availability matrix must be composed of only 0s and 1s"
+                        )
+                        break
     
     # def serialize(self):
     #     data = {
