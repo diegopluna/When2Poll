@@ -292,6 +292,7 @@ const NewPollPage = () => {
                                 className='duration'
                                 label="Poll duration"
                                 value={durationRaw}
+                                minutesStep={15}
                                 onChange={(newValue) => handleDurationChange(newValue)} 
                                 sx={{
                                     mb:3,
@@ -303,6 +304,7 @@ const NewPollPage = () => {
                                 ampm={false} 
                                 className='duration'
                                 label="Poll duration"
+                                minutesStep={15}
                                 value={durationRaw}
                                 onChange={(newValue) => handleDurationChange(newValue)} 
                                 sx={{
@@ -318,6 +320,7 @@ const NewPollPage = () => {
                                 ampm={false} 
                                 className='earliest'
                                 label="Earliest time to start the poll"
+                                minutesStep={15}
                                 value={earliestRaw}
                                 onChange={(newValue) => handleEarliestChange(newValue)} 
                                 sx={{
@@ -330,6 +333,7 @@ const NewPollPage = () => {
                                 ampm={false} 
                                 className='earliest'
                                 label="Earliest time to start the poll"
+                                minutesStep={15}
                                 value={earliestRaw}
                                 onChange={(newValue) => handleEarliestChange(newValue)} 
                                 sx={{
@@ -345,6 +349,7 @@ const NewPollPage = () => {
                                 ampm={false} 
                                 className='latest'
                                 label="Latest time to end the poll"
+                                minutesStep={15}
                                 value={latestRaw}
                                 onChange={(newValue) => handleLatestChange(newValue)}
                                 sx={{
@@ -357,6 +362,7 @@ const NewPollPage = () => {
                                 ampm={false} 
                                 className='latest'
                                 label="Latest time to end the poll"
+                                minutesStep={15}
                                 value={latestRaw}
                                 onChange={(newValue) => handleLatestChange(newValue)}
                                 sx={{

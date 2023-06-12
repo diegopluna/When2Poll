@@ -44,7 +44,6 @@ const InvitesPage = () => {
     }
 
     async function acceptPollInvite(pollInviteId) {
-        await api.get(`/polls/invites/${pollInviteId}/accept/`)
         navigate(`/answerpoll/${pollInviteId}`)
     }
 
