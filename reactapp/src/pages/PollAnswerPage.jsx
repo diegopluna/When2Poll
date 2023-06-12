@@ -230,7 +230,7 @@ const PollAnswerPage = () => {
             <Box component="form" noValidate sx={{ mt: 1, justifyContent: 'center', alignItems: 'center', display:"flex", flexDirection: 'column'}} >
             <FormControlLabel
                 value={available}
-                control={<Switch onChange={() => setAvailable(!available)} defaultChecked color="primary" />}
+                control={<Switch id='availabilitySwitch' onChange={() => setAvailable(!available)} defaultChecked color="primary" />}
                 label="Available"
                 labelPlacement="start"
             />      
