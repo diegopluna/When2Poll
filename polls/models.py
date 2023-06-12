@@ -103,6 +103,19 @@ class PollInvite(models.Model):
     admin = models.BooleanField(default=False)
     accepted = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f'{self.receiver} invited to {self.poll}'
+    
+    def accept(self):
+        self.answered = True
+        self.accepted = True
+        self.save()
+
+    def reject(self):
+        self.answered = True
+        self.accepted = False
+        self.save()
+
 # class PollAdminInvite(models.Model):
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)
 #     poll = models.ForeignKey(AvailabilityPoll, on_delete=models.CASCADE)

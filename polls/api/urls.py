@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AvailabilityPollView, PollAnswerView, SetPollAdmin, UserInvites, GetPollView, AnswerPollView
+from .views import AvailabilityPollView, PollAnswerView, SetPollAdmin, UserInvites, GetPollView, AnswerPollView,AcceptPollInvite,RejectPollInvite,GetPollDataByInvitePk
 
 urlpatterns = [
     path('post/', AvailabilityPollView.as_view(),name="post-poll"),
@@ -9,7 +9,10 @@ urlpatterns = [
     path('answer/<int:pk>/', PollAnswerView.as_view(), name="answer-poll"),
     path('invites/', UserInvites.as_view(), name="poll-invites"),
     path('<int:pk>/', GetPollView.as_view(), name="get-poll"),
-    path('<int:pollId>/admin/set/<int:userId>/', SetPollAdmin.as_view(), name="set-poll-admin")
+    path('<int:pollId>/admin/set/<int:userId>/', SetPollAdmin.as_view(), name="set-poll-admin"),
+    path('invites/<int:pk>/accept/', AcceptPollInvite.as_view(), name="accept-poll-invite"),
+    path('invites/<int:pk>/reject/', RejectPollInvite.as_view(), name="accept-poll-invite"),
+    path('invites/<int:pk>/poll/', GetPollDataByInvitePk.as_view(), name="get-poll-by-invite-pk"),
     # ,
     # path('justifications/', JustificationListView.as_view()),
     # path('justifications/<int:pk>/', JustificationDetailView.as_view()),

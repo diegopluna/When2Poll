@@ -191,3 +191,29 @@ class GetPollView(APIView):
         poll = AvailabilityPoll.objects.get(pk=pk)
         serializer = AvailabilityPollSerializer(poll)
         return Response(serializer.data)
+    
+class AcceptPollInvite(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, pk):
+        invite = PollInvite.objects.get(pk=pk)
+        invite.accept()
+        return Response(status=status.HTTP_200_OK)
+    
+class RejectPollInvite(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, pk):
+        invite = PollInvite.objects.get(pk=pk)
+        invite.reject()
+        return Response(status=status.HTTP_200_OK)
+    
+
+class GetPollDataByInvitePk(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, pk):
+        invite = PollInvite.objects.get(pk=pk)
+        poll = AvailabilityPoll.objects.get(pk = invite.poll.id)
+        serializer = AvailabilityPollSerializer(poll)
+        return Response(serializer.data)
