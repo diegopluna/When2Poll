@@ -103,7 +103,8 @@ class PollAnswerView(APIView):
         data = request.data
         data['user'] = request.user.pk
         data['poll'] = poll_id
-
+        invite = PollInvite.objects.get(receiver=request.user, poll=poll)
+        invite.accept()
         serializer = self.serializer_class(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -147,7 +148,10 @@ class JustifyPoll(APIView):
         data['user'] = request.user.pk
         data['poll'] = pk
         data['available'] = False
-
+        invite = PollInvite.objects.get(receiver = request.user, poll = poll)
+        invite.answered = True
+        invite.accepted = False
+        invite.save()
         serializer = PollAnswerSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
