@@ -1,9 +1,5 @@
 from django.urls import path
-<<<<<<< Updated upstream
-from .views import AvailabilityPollView, PollAnswerView, SetPollAdmin, UserInvites, GetPollView, AnswerPollView,AcceptPollInvite,RejectPollInvite,GetPollDataByInvitePk
-=======
-from .views import AvailabilityPollView, PollAnswerView, SetPollAdmin, UserInvites, GetPollView
->>>>>>> Stashed changes
+from .views import AvailabilityPollView, PollAnswerView, SetPollAdmin, UserInvites, GetPollView, AcceptPollInvite,RejectPollInvite,GetPollDataByInvitePk
 
 urlpatterns = [
     path('post/', AvailabilityPollView.as_view(),name="post-poll"),
