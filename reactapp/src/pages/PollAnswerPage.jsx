@@ -47,19 +47,40 @@ const PollAnswerPage = () => {
 
     const [pollData, setPollData] = useState(null)
     const [dateTimeRanges, setDateTimeRanges] = useState([])
+    const [pollSlots, setPollSlots] = useState(null)
 
     const [availability, setAvailability] = useState([]);
 
 
     const api = useAxios()
 
-    console.log(pollData)
+    console.log(pollSlots)
+
+    const createSlots = (start, end) => {
+        const timeDiff = (end.getTime() - start.getTime())/1000/60
+        const timeSlots = Math.floor(timeDiff/15)
+        const result = []
+        const currentTime = start
+        while (currentTime <= end) {
+            result.push(currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
+            currentTime.setMinutes(currentTime.getMinutes() + 15)
+        }
+        const timeDictionary = result.reduce((acc, time) => {
+            acc.push({ [time]: 0 });
+            return acc;
+        }, [])
+
+        return timeDictionary
+    }
 
     useEffect(()=>{
         const fetchPollData = async () => {
             const response = await api.get(`/polls/invites/${pollInviteId}/poll/`)
             setPollData(response.data)
             setDateTimeRanges(response.data.datetime_ranges)
+            let start = new Date(response.data.datetime_ranges[0]?.start_time)
+            let end = new Date(response.data.datetime_ranges[0]?.end_time)
+            setPollSlots(createSlots(start,end))
         }
         fetchPollData()
     },[])
