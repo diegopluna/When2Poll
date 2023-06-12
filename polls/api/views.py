@@ -1,5 +1,6 @@
 #from django.shortcuts import render
 from django.http import Http404
+from utils.db import transaction
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -11,7 +12,7 @@ from django.contrib.auth import get_user_model
 from polls.api.serializers import AvailabilityPollSerializer, PollInviteSerializer, PollAnswerSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from polls.models import AvailabilityPoll, PollInvite, PollAnswer
+from polls.models import AvailabilityPoll, PollInvite, PollAnswer, DateTimeRange
 from django.db.models import Q
 # Create your views here.
 
@@ -102,10 +103,16 @@ class PollAnswerView(APIView):
         data = request.data
         data['user'] = request.user.pk
         data['poll'] = poll_id
+
         serializer = self.serializer_class(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+
+        poll.update_datetime_ranges()
+        
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    
     
     def put(self, request, pk):
         #poll_answer = self.get_object(pk)

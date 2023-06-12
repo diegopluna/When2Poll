@@ -57,6 +57,29 @@ class AvailabilityPoll(models.Model):
     def is_expired(self):
         return self.deadline <= timezone.now()
     
+    def update_datetime_ranges(self):
+        datetime_ranges = self.datetime_ranges.all()
+
+        for datetime_range in datetime_ranges:
+            answers = PollAnswer.objects.filter(poll=self)
+            time_slots_count = len(datetime_range.matrix.split(','))
+
+            availability_count = [0] * time_slots_count
+
+            for answer in answers:
+                matrix_entries = answer.matrix
+                for entry in matrix_entries:
+                    if entry["datetime_range_id"] == datetime_range.id:
+                        availability = entry["availability"]
+                        for i, slot in enumerate(availability):
+                            if slot == "1":
+                                availability_count[i] += 1
+            
+            avail_str = [str(avail) for avail in availability_count]
+
+            datetime_range.matrix = ','.join(avail_str)
+            datetime_range.save()
+    
     # def invited_admin(self, participants):
     #     #invite a participant to become an admin
     #     if self.owner == participants or participants in self.admins.all():
@@ -108,10 +131,12 @@ class PollAnswer(models.Model):
 
                 datetime_range = self.poll.datetime_ranges.get(id=datetime_range_id)
 
-                if len(availability) != len(datetime_range.matrix):
+                elements = datetime_range.matrix.split(",")
+
+                if len(availability) != len(elements):
                     raise ValidationError(
                         f"The availability matrix for DateTimeRange {datetime_range_id} "
-                        f"must have {datetime_range.time_slots_count} time slots."
+                        f"must have {len(elements)} time slots."
                     )
     
     # def serialize(self):
