@@ -9,9 +9,14 @@ import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
+import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
+import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import useAxios from '../utils/useAxios';
-
+import Paper from '@mui/material/Paper';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -54,9 +59,17 @@ const PollAnswerPage = () => {
 
     const api = useAxios()
 
+    const theme = useTheme();
+    const isMobileOrTablet = useMediaQuery(theme.breakpoints.down('md')); // Set breakpoint as per your needs
+
+
+    const navigate = useNavigate()
+    console.log(pollData)
+
     console.log(pollSlots)
 
     const createSlots = (start, end) => {
+        end.setMinutes(end.getMinutes() - 15);
         const timeDiff = (end.getTime() - start.getTime())/1000/60
         const timeSlots = Math.floor(timeDiff/15)
         const result = []
@@ -99,11 +112,13 @@ const PollAnswerPage = () => {
         const slots = [];
         const start = new Date(startTime);
         const end = new Date(endTime);
+
+        end.setMinutes(end.getMinutes() - 15);
     
         // Iterate over 15-minute intervals
         while (start <= end) {
-          const time = start.getTime();
-          slots.push({ time, available: isSlotAvailable(day, time) });
+          const time = start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          slots.push({ time, available: isSlotAvailable(day, start.getTime()) });
           start.setMinutes(start.getMinutes() + 15);
         }
     
@@ -112,12 +127,15 @@ const PollAnswerPage = () => {
 
     const isSlotAvailable = (day, time) => {
         const daySlots = availability.find(item => item.day === day)?.slots;
-        if (!daySlots) return false;
-        return daySlots.some(slot => slot.time === time);
+        if (!daySlots) return true;
+        console.log(time)
+        console.log(daySlots)
+        return !daySlots.some(slot => slot.time === time);
     };
 
     const handleTimeChange = (day, field, event) => {
-        const { value } = event.target;
+        const value = new Date(event);
+        console.log(value.getTime())
     
         // Update time slot in availability array
         setAvailability(prevAvailability =>
@@ -145,10 +163,48 @@ const PollAnswerPage = () => {
         );
       };
 
+    function convertAvailabilityToString(availability) {
+    let result = "";
+    for (let slot of availability) {
+        if (slot.available) {
+        result += "1";
+        } else {
+        result += "0";
+        }
+    }
+    return result;
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         // Log user responses
-        console.log(availability)     
+        if (available) {
+            const matrix = []
+
+            for (let i = 0; i < availability.length; i++) {
+                matrix.push({"datetime_range_id": availability[i].day, "availability": convertAvailabilityToString(availability[i].slots)})
+            }
+
+            const data = {
+                "available": available,
+                "matrix": matrix
+            }
+            console.log(availability)  
+            const response = await api.post(`/polls/answer/${pollData.id}/`, data)
+            console.log(response.status)
+            navigate('/invites/')
+        }
+        else {
+            const data = {
+                'justification': justification
+            }
+            const response = await api.post(`/polls/answer/${pollData.id}/justify/`, data)
+            console.log(response.status)
+            navigate('/invites/')
+        }
+
+        
+
     };
     
     return (
@@ -201,41 +257,85 @@ const PollAnswerPage = () => {
                     const timeSlots = Math.floor(timeDiff/15)
                     const daySlotsArray = new Array(timeSlots).fill(0);
 
-
+                    
                     
                     return (
-                        <>
-                            <h1>Date: {formattedDate}</h1>
-                            <p>Choose your availability for this day:</p>
-                            <label>
-                                <input
-                                type="checkbox"
-                                onChange={event =>
-                                    handleAvailabilityChange(item.id, item.start_time, item.end_time, event)
+                        <Paper elevation={3} sx={{width:1, mb: 2}}>
+                            <Typography variant='h5' sx={{textAlign: 'center'}} gutterBottom>
+                                {formattedDate}
+                            </Typography>
+                            <Typography variant='subtitle1' sx={{textAlign: 'center'}} gutterBottom>
+                                Choose your availability for this day:
+                            </Typography>
+                            <FormControlLabel
+                                control={
+                                    <Switch 
+                                    onChange={event => handleAvailabilityChange(item.id, item.start_time, item.end_time, event)}  
+                                    color="primary" />
                                 }
-                                />
-                                Available
-                            </label>
+                                label="Available"
+                                labelPlacement="start"
+                            />                           
                             {availability.some(avail => avail.day === item.id) && (
-                                <div>
-                                <label>
-                                    Start Time:
-                                    <input
-                                    type="time"
-                                    onChange={event => handleTimeChange(item.id, 'startTime', event)}
-                                    />
-                                </label>
-                                <label>
-                                    End Time:
-                                    <input
-                                    type="time"
-                                    onChange={event => handleTimeChange(item.id, 'endTime', event)}
-                                    />
-                                </label>
-                                </div>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    {
+                                        isMobileOrTablet ? 
+                                        <MobileTimePicker 
+                                            ampm={false} 
+                                            className='startTime'
+                                            label="Start time"
+                                            minutesStep={15}
+                                            onChange={(event) => handleTimeChange(item.id, 'startTime', event)} 
+                                            sx={{
+                                                mb:3,
+                                                width:1
+                                            }} 
+                                        />
+                                        :
+                                        <DesktopTimePicker 
+                                            ampm={false} 
+                                            className='startTime'
+                                            label="Start time"
+                                            minutesStep={15}
+                                            onChange={(event) => handleTimeChange(item.id, 'startTime', event)} 
+                                            sx={{
+                                                mb:3,
+                                                width:1
+                                            }} 
+                                        />
+
+                                    }
+                                    {
+                                        isMobileOrTablet ? 
+                                        <MobileTimePicker 
+                                            ampm={false} 
+                                            className='endTime'
+                                            label="End time"
+                                            minutesStep={15}
+                                            onChange={(event) => handleTimeChange(item.id, 'endTime', event)} 
+                                            sx={{
+                                                mb:3,
+                                                width:1
+                                            }} 
+                                        />
+                                        :
+                                        <DesktopTimePicker 
+                                            ampm={false} 
+                                            className='endTime'
+                                            label="End time"
+                                            minutesStep={15}
+                                            onChange={(event) => handleTimeChange(item.id, 'endTime', event)} 
+                                            sx={{
+                                                mb:3,
+                                                width:1
+                                            }} 
+                                        />
+
+                                    }
+                                </LocalizationProvider>
                             )}
                            
-                        </>
+                        </Paper>
                     )
                 })
                 

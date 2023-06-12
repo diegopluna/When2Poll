@@ -132,6 +132,32 @@ class PollAnswerView(APIView):
         poll.update_datetime_ranges()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+class JustifyPoll(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def post(self, request, pk):
+        if pk is None:
+            return Response({'detail': 'You must indicate which poll this answer refers to.'}, status=status.HTTP_400_BAD_REQUEST)
+        poll = AvailabilityPoll.objects.get(pk=pk)
+        if PollAnswer.objects.filter(user=request.user, poll=poll).exists():
+            return Response({'detail': 'You have already submitted an answer for this poll.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        data = request.data
+        data['user'] = request.user.pk
+        data['poll'] = pk
+        data['available'] = False
+
+        serializer = PollAnswerSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response (serializer.data)
+
+
+
+
+
         
 # class AnswerPollView(APIView):
 #     permission_classes = (IsAuthenticated, )
