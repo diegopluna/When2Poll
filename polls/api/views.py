@@ -112,46 +112,48 @@ class PollAnswerView(APIView):
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    
-    
     def put(self, request, pk):
-        #poll_answer = self.get_object(pk)
-        try:
-            poll_answer = PollAnswer.objects.get(pk=pk)
-        except PollAnswer.DoesNotExist:
-            raise Http404
+        poll_id = pk
+
+        poll = AvailabilityPoll.objects.get(pk=poll_id)
+
+        poll_answer = PollAnswer.objects.filter(poll_id=poll_id, user=request.user.pk).first()
+        
+        if not poll_answer:
+            return Response({'detail': 'Poll answer not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        request.data['user'] = request.user.pk
+        request.data['poll'] = poll_id
+
         serializer = self.serializer_class(poll_answer, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
 
-    # def get_object(self, pk):
-    #     try:
-    #         return PollAnswer.objects.get(pk=pk)
-    #     except PollAnswer.DoesNotExist:
-    #         raise Http404
+        poll.update_datetime_ranges()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-class AnswerPollView(APIView):
-    permission_classes = (IsAuthenticated, )
+# class AnswerPollView(APIView):
+#     permission_classes = (IsAuthenticated, )
 
-    def post(self, request, pk):
-        recdata = request.data
-        poll = AvailabilityPoll.objects.get(pk=pk)
-        invite = PollInvite.objects.get(receiver = request.user, poll = poll)
-        if PollAnswer.objects.filter(user = request.user, poll = poll).exists():
-            return Response({'detail': 'You have already submitted an answer for this poll.'}, status=status.HTTP_400_BAD_REQUEST)
-        data = {}
-        data['user'] = request.user.pk
-        data['poll'] = pk
-        data['justification'] = recdata['justification']
-        serializer = PollAnswerSerializer(data = data)
-        if serializer.is_valid():
-            serializer.save(user=request.user, poll=poll)
-            invite.accepted = recdata['available']
-            invite.answered = True
-            invite.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def post(self, request, pk):
+#         recdata = request.data
+#         poll = AvailabilityPoll.objects.get(pk=pk)
+#         invite = PollInvite.objects.get(receiver = request.user, poll = poll)
+#         if PollAnswer.objects.filter(user = request.user, poll = poll).exists():
+#             return Response({'detail': 'You have already submitted an answer for this poll.'}, status=status.HTTP_400_BAD_REQUEST)
+#         data = {}
+#         data['user'] = request.user.pk
+#         data['poll'] = pk
+#         data['justification'] = recdata['justification']
+#         serializer = PollAnswerSerializer(data = data)
+#         if serializer.is_valid():
+#             serializer.save(user=request.user, poll=poll)
+#             invite.accepted = recdata['available']
+#             invite.answered = True
+#             invite.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 # class RejectAnswerPollView(APIView):
