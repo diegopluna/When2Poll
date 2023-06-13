@@ -25,9 +25,9 @@ import datetime
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--disable-browser-side-navigation")
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("window-size=1080,1440")
+#chrome_options.add_argument("--no-sandbox")
+#chrome_options.add_argument("--headless")
+chrome_options.add_argument("window-size=1920,1080")
 #chrome_options.add_argument("--start-maximized")
 #chrome_options.add_argument("--disable-gpu")
 #chrome_options.add_argument("force-device-scale-factor=0.5")
@@ -130,9 +130,10 @@ class TestHome(LiveServerTestCase):
             #aceitar amizade
             time.sleep(2)
             driver.get("http://127.0.0.1:8000/friends")
+            time.sleep(3)
             accept = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "[aria-label='accept-invite']")))
             accept.click()
-            time.sleep(5)
+            time.sleep(2)
             #logout
             avatar = driver.find_element(By.ID,f"João Silva{i}")
             avatar.click()
@@ -268,27 +269,29 @@ class TestHome(LiveServerTestCase):
         invites.click()
         time.sleep(1)
         #ACEITAR GRUPO 1
+        time.sleep(2)
         receveid_event_1=driver.find_element(By.ID,'acceptGrupo 01')
         receveid_event_1.click()
         time.sleep(1)
 
         #RECUSAR GRUPO 2
+        time.sleep(2)
         receveid_event_2=driver.find_element(By.ID,'rejectGrupo 02')
         receveid_event_2.click()
         time.sleep(1)
         
         groups=driver.find_element(By.LINK_TEXT, 'GROUPS')
         groups.click()
-        time.sleep(1)
+        time.sleep(2)
         receveid_event_1=driver.find_element(By.ID,'detailsGrupo 01')
         receveid_event_1.click()
-        time.sleep(1)
+        time.sleep(2)
         grouptitle = driver.find_element(By.ID,"title")
         self.assertEqual('Grupo 01', grouptitle.text) 
 
         avatar = driver.find_element(By.ID,"João Silva2")
         avatar.click()
-
+        time.sleep(1)
         logout = driver.find_element(By.ID, "logout")
         logout.click()
     
@@ -333,11 +336,12 @@ class TestHome(LiveServerTestCase):
                 #WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,f"//span[contains(text(), '19') and contains(@class, 'sd')]")))
                 select_day1 = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,f"//span[contains(text(), '19') and contains(@class, 'sd')]")))
                 select_day1.click()
+                time.sleep(1)
                 #WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(), '24') and contains(@class, 'sd')]")))
-                select_day2 = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(), '24') and contains(@class, 'sd')]")))
-                select_day2.click()        
+                # select_day2 = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(), '24') and contains(@class, 'sd')]")))
+                # select_day2.click()        
                 #driver.execute_script("window.scrollBy(0, 500)")
-                #driver.execute_script("window.scrollBy(0, document.body.scrollHeight)")
+                driver.execute_script("window.scrollBy(0, document.body.scrollHeight)")
                 
                 #poll time
                 #duration add 1 hour
@@ -403,18 +407,114 @@ class TestHome(LiveServerTestCase):
 
                 submit = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, 'submit')))
                 submit.click()
+                time.sleep(1)
+                driver.execute_script("window.scrollTo(0, 0)")
                 # poll_create = driver.find_element(By.ID,'submit')
                 # poll_create.click()
-                
-                #create = driver.find_element(By.ID, …        
-                
-    
-    def test070_addFriends(self):
-            
-            
-            
-            #comeca aqui
+            #logout
             time.sleep(2)
+            avatar = driver.find_element(By.ID,"João Silva1")
+            avatar.click()
+            time.sleep(1)
+            logout = driver.find_element(By.ID, "logout")
+            logout.click()       
+                
+    def test070_answerpoll(self):
+        time.sleep(1)
+        
+        #driver.get("http://127.0.0.1:8000/signin/")
+        time.sleep(2)
+        user_email = driver.find_element(By.NAME,'email')
+        time.sleep(1)
+        user_email.send_keys('joaosilva2@test.com')
+        user_password = driver.find_element(By.NAME,'password')
+        time.sleep(1)
+        user_password.send_keys('Teste12345')
+        time.sleep(1)
+        submit = driver.find_element(By.ID,'submit')
+        submit.click()
+        #responder poll
+        time.sleep(2)
+        driver.get("http://127.0.0.1:8000/invites/")
+        time.sleep(3)
+        answer_poll_1 = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, "acceptEvento 01")))
+        answer_poll_1.click()
+        time.sleep(2)
+        #accept poll 1
+        accept_poll = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, "submit")))
+        accept_poll.click()
+        
+        #reject poll 2
+        time.sleep(2)
+        answer_poll_2 = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, "acceptEvento 02")))
+        answer_poll_2.click()
+        time.sleep(2)
+        available = driver.find_element(By.ID,'availabilitySwitch')
+        time.sleep(2)
+        available.click()
+        
+        #justifica ausencia
+        justify = driver.find_element(By.ID,"answerJustification")
+        justify.click
+        justify.send_keys("Nesse dia eu tenho uma consulta medica :(")
+        time.sleep(5)
+        submit = driver.find_element(By.ID,'submit')
+        submit.click()
+        
+        #logout
+        avatar = driver.find_element(By.ID,"João Silva2")
+        avatar.click()
+        time.sleep(1)
+        logout = driver.find_element(By.ID, "logout")
+        time.sleep(1)
+        logout.click()
+    def test080_checkingEvents(self):
+         #Logando
+            driver.get("http://127.0.0.1:8000/signin/")
+            time.sleep(2)
+            user_email = driver.find_element(By.NAME,'email')
+            user_email.send_keys('joaosilva1@test.com')
+            time.sleep(1)
+            user_password = driver.find_element(By.NAME,'password')
+            user_password.send_keys('Teste12345')
+            submit = driver.find_element(By.ID,'submit')
+            submit.click()
+            time.sleep(5)
+
+            #checando evento 1
+            evento1 = driver.find_element(By.ID,"Evento 01")
+            evento1.click()
+            time.sleep(10)
+
+            #giveadm
+            adm = driver.find_element(By.ID,'João Silva2')
+            adm.click()
+            time.sleep(3)
+
+            driver.get("http://127.0.0.1:8000/")
+
+            #checando evento 2
+            evento1 = driver.find_element(By.ID,"Evento 02")
+            evento1.click()
+            time.sleep(8)
+    
+    
+    def test090_blockfriendsinvites(self):
+            # #Logando
+            # driver.get("http://127.0.0.1:8000/signin/")
+            # time.sleep(2)
+            # user_email = driver.find_element(By.NAME,'email')
+            # user_email.send_keys('joaosilva1@test.com')
+            # time.sleep(1)
+            # user_password = driver.find_element(By.NAME,'password')
+            # user_password.send_keys('Teste12345')
+            # submit = driver.find_element(By.ID,'submit')
+            # submit.click()
+            
+            
+            
+            #pedidos de amizade
+            time.sleep(1)
             driver.get("http://127.0.0.1:8000/friends")
             
             #time.sleep(3)
@@ -444,7 +544,7 @@ class TestHome(LiveServerTestCase):
             #LOGOUT SENDER
             avatar = driver.find_element(By.ID,"João Silva1")
             avatar.click()
-
+            time.sleep(1)
             logout = driver.find_element(By.ID, "logout")
             logout.click()   
 
@@ -457,6 +557,7 @@ class TestHome(LiveServerTestCase):
             submit = driver.find_element(By.ID,'submit')
 
             Receiver_email.send_keys('joaosilva4@test.com')
+            time.sleep(1)
             Receiver_password.send_keys('Teste12345')
 
             submit.send_keys(Keys.RETURN)
@@ -465,15 +566,15 @@ class TestHome(LiveServerTestCase):
             time.sleep(2)
             driver.get("http://127.0.0.1:8000/friends")
             
-            #aceita amizade
-            accept = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "[aria-label='accept-invite']")))
-            accept.click()
-            time.sleep(5)
-
+            #block amizade
+            time.sleep(3)
+            reject = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "[aria-label='reject-invite']")))
+            reject.click()
+            time.sleep(2)
             #LOGOUT RECEIVER 1
             avatar = driver.find_element(By.ID,"João Silva4")
             avatar.click()
-
+            time.sleep(1)
             logout = driver.find_element(By.ID, "logout")
             logout.click() 
             time.sleep(1)
@@ -487,6 +588,7 @@ class TestHome(LiveServerTestCase):
             submit = driver.find_element(By.ID,'submit')
 
             Receiver_email.send_keys('joaosilva5@test.com')
+            time.sleep(1)
             Receiver_password.send_keys('Teste12345')
 
             submit.send_keys(Keys.RETURN)
@@ -496,9 +598,10 @@ class TestHome(LiveServerTestCase):
             driver.get("http://127.0.0.1:8000/friends")
             
             #block
+            time.sleep(3)
             reject = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "[aria-label='reject-invite']")))
             reject.click()
-            time.sleep(5)
+            time.sleep(2)
 
             #LOGOUT RECEIVER 2
             avatar = driver.find_element(By.ID,"João Silva5")
@@ -516,6 +619,7 @@ class TestHome(LiveServerTestCase):
             submit = driver.find_element(By.ID,'submit')
 
             user_email.send_keys('joaosilva1@test.com')
+            time.sleep(1)
             user_password.send_keys('Teste12345')
             submit.send_keys(Keys.RETURN)
             
@@ -523,6 +627,6 @@ class TestHome(LiveServerTestCase):
             driver.get("http://127.0.0.1:8000/friends")
             #friend = driver.find_element(By.CSS_SELECTOR, 'p.MuiListItemText-secondary.css-mbfek').text
             #self.assertEqual(friend, 'joaosilva4@test.com')
-            friend = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'p.MuiListItemText-secondary.css-mbfek'))).text
+            #friend = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'p.MuiListItemText-secondary.css-mbfek'))).text
             #self.assertEqual(friend, 'joaosilva4@test.com')
             time.sleep(3)
