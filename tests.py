@@ -341,7 +341,7 @@ class TestHome(LiveServerTestCase):
                 # select_day2 = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(), '24') and contains(@class, 'sd')]")))
                 # select_day2.click()        
                 #driver.execute_script("window.scrollBy(0, 500)")
-                driver.execute_script("window.scrollBy(0, document.body.scrollHeight)")
+                #driver.execute_script("window.scrollBy(0, document.body.scrollHeight)")
                 
                 #poll time
                 #duration add 1 hour
@@ -408,7 +408,7 @@ class TestHome(LiveServerTestCase):
                 submit = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, 'submit')))
                 submit.click()
                 time.sleep(1)
-                driver.execute_script("window.scrollTo(0, 0)")
+                #driver.execute_script("window.scrollTo(0, 0)")
                 # poll_create = driver.find_element(By.ID,'submit')
                 # poll_create.click()
             #logout
