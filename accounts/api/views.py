@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -12,10 +13,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 import jwt
 from django.conf import settings
-from .serializers import UserRegisterSerializer, EmailVerificationSerializer, UserSerializer
+from .serializers import UserRegisterSerializer, EmailVerificationSerializer, UserSerializer, FriendshipSerializer, BlocklistSerializer
 from .utils import Util
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from accounts.models import Friendship, Blocklist
 
 User = get_user_model()
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -145,3 +147,117 @@ class GetCurrentUser(APIView):
             return Response(serialized_user)
         except:
             return Response({"message":"Could not find user"}, status=status.HTTP_404_NOT_FOUND)
+        
+        
+class SendFriendInvite(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request, email):
+        try:
+            to_user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        
+        if Blocklist.objects.filter(blocked_user=request.user, user = to_user).exists():
+            return Response({'error': 'Blocked by user'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if Blocklist.objects.filter(blocked_user=to_user, user = request.user).exists():
+            return Response({'error': 'User is blocked'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if Friendship.objects.filter(from_user=request.user, to_user=to_user).exists() or Friendship.objects.filter(from_user=to_user, to_user=request.user).exists():
+            return Response({'error': 'Invitation already sent or friendship exists'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        friendship = Friendship(from_user=request.user, to_user=to_user)
+        friendship.save()
+        serializer = FriendshipSerializer(friendship) 
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    
+class GetPendingInvites(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def get(self, request):
+        pending_invites = Friendship.objects.filter(to_user=request.user, is_accepted=False)
+        serializer = FriendshipSerializer(pending_invites, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class AcceptFriendshipInvite(APIView):
+    permission_classes = (IsAuthenticated,)
+    def put(self, request, pk):
+        invite = Friendship.objects.get(pk=pk)
+        if invite.is_accepted:
+            return Response({'error': 'Invite is already accepted'}, status=status.HTTP_400_BAD_REQUEST)
+        if invite.to_user == request.user:
+            invite.accept()
+            return Response(status=status.HTTP_200_OK)
+        return Response({'error': 'User is not a part of the invite'}, status=status.HTTP_400_BAD_REQUEST)
+    
+class BlockFriendshipInvite(APIView):
+    permission_classes = (IsAuthenticated,)
+    def put(self, request, pk):
+        invite = Friendship.objects.get(pk=pk)
+        if invite.is_accepted:
+            return Response({'error': 'Invite is already accepted'}, status=status.HTTP_400_BAD_REQUEST)
+        if invite.to_user == request.user:
+            invite.reject()
+            return Response(status=status.HTTP_200_OK)
+        return Response({'error': 'User is not a part of the invite'}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class GetFriendships(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        friendships= Friendship.objects.filter(Q(to_user=request.user, is_accepted = True) | Q(from_user=request.user, is_accepted = True))
+        serializer = FriendshipSerializer(friendships, many=True)
+        return Response(serializer.data)
+    
+class GetBlocked(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def get(self, request):
+        blocked = Blocklist.objects.filter(user = request.user)
+        serializer = BlocklistSerializer(blocked, many = True)
+        return Response(serializer.data)
+
+class UnblockUser(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def delete(self, request, pk):
+        
+        block = Blocklist.objects.get(pk=pk)
+        
+        if request.user == block.user:
+            block.unblock()
+            return Response(status=status.HTTP_200_OK)
+        
+        return Response({'error': 'User cannot unblock itself'}, status=status.HTTP_400_BAD_REQUEST)
+    
+class BlockFriend(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request, pk):
+        
+        blocked = User.objects.get(pk=pk)
+        if Blocklist.objects.filter(Q(blocked_user=blocked, user = request.user) | Q(blocked_user=request.user, user=blocked)).exists():
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        if Friendship.objects.filter(to_user=request.user, from_user=blocked).exists():
+            invite = Friendship.objects.get(to_user=request.user, from_user=blocked)
+            invite.delete()
+            block = Blocklist.objects.get_or_create(user = request.user, blocked_user=blocked)
+            serializer = BlocklistSerializer(block)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        if Friendship.objects.filter(to_user=blocked, from_user=request.user).exists():
+            invite = Friendship.objects.get(to_user=blocked, from_user=request.user)
+            invite.delete()
+            block = Blocklist.objects.get_or_create(user = request.user, blocked_user=blocked)
+            serializer = BlocklistSerializer(block)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        
+        
+        

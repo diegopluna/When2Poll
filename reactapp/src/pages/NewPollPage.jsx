@@ -7,7 +7,10 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import DatePicker, { DateObject, Calendar } from "react-multi-date-picker";
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
+import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import Autocomplete from '@mui/material/Autocomplete';
 import "react-multi-date-picker/styles/layouts/mobile.css"
@@ -54,6 +57,9 @@ const NewPollPage = () => {
 
     const loading = open && options.length === 0;
     const api = useAxios()
+
+    const theme = useTheme();
+    const isMobileOrTablet = useMediaQuery(theme.breakpoints.down('md')); // Set breakpoint as per your needs
 
     useEffect(() => {
         let active = true;
@@ -279,36 +285,93 @@ const NewPollPage = () => {
                         style={{marginBottom:20}}
                     />
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <TimePicker 
-                            ampm={false} 
-                            className='duration'
-                            label="Poll duration"
-                            value={durationRaw}
-                            onChange={(newValue) => handleDurationChange(newValue)} 
-                            sx={{
-                                mb:3
-                            }} 
-                        />
-                        <TimePicker 
-                            ampm={false} 
-                            className='earliest'
-                            label="Earliest time to start the poll"
-                            value={earliestRaw}
-                            onChange={(newValue) => handleEarliestChange(newValue)} 
-                            sx={{
-                                mb:3
-                            }} 
-                        />
-                        <TimePicker 
-                            ampm={false} 
-                            className='latest'
-                            label="Latest time to end the poll"
-                            value={latestRaw}
-                            onChange={(newValue) => handleLatestChange(newValue)}
-                            sx={{
-                                mb:3
-                            }} 
-                        />
+                        {
+                            isMobileOrTablet ? 
+                            <MobileTimePicker 
+                                ampm={false} 
+                                className='duration'
+                                label="Poll duration"
+                                value={durationRaw}
+                                minutesStep={15}
+                                onChange={(newValue) => handleDurationChange(newValue)} 
+                                sx={{
+                                    mb:3,
+                                    width:1
+                                }} 
+                            />
+                            :
+                            <DesktopTimePicker 
+                                ampm={false} 
+                                className='duration'
+                                label="Poll duration"
+                                minutesStep={15}
+                                value={durationRaw}
+                                onChange={(newValue) => handleDurationChange(newValue)} 
+                                sx={{
+                                    mb:3,
+                                    width:1
+                                }} 
+                            />
+
+                        }
+                        {
+                            isMobileOrTablet ? 
+                            <MobileTimePicker 
+                                ampm={false} 
+                                className='earliest'
+                                label="Earliest time to start the poll"
+                                minutesStep={15}
+                                value={earliestRaw}
+                                onChange={(newValue) => handleEarliestChange(newValue)} 
+                                sx={{
+                                    mb:3,
+                                    width:1
+                                }} 
+                            />
+                            :
+                            <DesktopTimePicker 
+                                ampm={false} 
+                                className='earliest'
+                                label="Earliest time to start the poll"
+                                minutesStep={15}
+                                value={earliestRaw}
+                                onChange={(newValue) => handleEarliestChange(newValue)} 
+                                sx={{
+                                    mb:3,
+                                    width:1
+                                }} 
+                            />
+
+                        }
+                        {
+                            isMobileOrTablet ? 
+                            <MobileTimePicker 
+                                ampm={false} 
+                                className='latest'
+                                label="Latest time to end the poll"
+                                minutesStep={15}
+                                value={latestRaw}
+                                onChange={(newValue) => handleLatestChange(newValue)}
+                                sx={{
+                                    mb:3,
+                                    width:1
+                                }} 
+                            />
+                            :
+                            <DesktopTimePicker 
+                                ampm={false} 
+                                className='latest'
+                                label="Latest time to end the poll"
+                                minutesStep={15}
+                                value={latestRaw}
+                                onChange={(newValue) => handleLatestChange(newValue)}
+                                sx={{
+                                    mb:3,
+                                    width:'100%'
+                                }} 
+                            />
+
+                        }
                     </LocalizationProvider>
                     <Typography variant='subtitle' sx={{textAlign: 'center', color: 'red'}} gutterBottom>
                         {timeError}
@@ -318,7 +381,7 @@ const NewPollPage = () => {
                     </Typography>
                     <Autocomplete 
                         id='inviteGroups' 
-                        sx={{ width: 300 }}
+                        sx={{ width: 1 }}
                         value={selectedGroups}
                         multiple
                         onChange={(e, value) => setSelectedGroups(value)}
@@ -332,7 +395,7 @@ const NewPollPage = () => {
                         renderInput={(params) => (
                             <TextField 
                                 {...params}
-                                label="Groups"
+                                label="Invite groups"
                                 InputProps={{
                                     ...params.InputProps,
                                     endAdornment: (
@@ -350,7 +413,7 @@ const NewPollPage = () => {
                         variant="contained"
                         fullWidth
                         id='submit'
-                        sx={{ mt: 10, mb: 2, width: 300}}
+                        sx={{ mt: 10, mb: 2, width: 1}}
                     >
                         Create poll
                     </Button>  

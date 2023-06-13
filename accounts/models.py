@@ -85,3 +85,40 @@ class User(AbstractBaseUser):
     def is_active(self):
         return self.active
     
+
+class Friendship(models.Model):
+    from_user = models.ForeignKey(User, related_name='sent_invitations', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(User, related_name='received_invitations', on_delete=models.CASCADE)
+    is_accepted = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('from_user', 'to_user')
+
+    def __str__(self):
+        return f'{self.from_user} invited {self.to_user} (Accepted: {self.is_accepted})'
+    
+    def accept(self):
+        self.is_accepted = True
+        self.save()
+        
+    def reject(self):
+        # Add to blocklist
+        Blocklist.objects.get_or_create(user=self.to_user, blocked_user=self.from_user)
+        self.delete()     
+    
+    
+class Blocklist(models.Model):
+    user = models.ForeignKey(User, related_name='blocklist', on_delete=models.CASCADE)
+    blocked_user = models.ForeignKey(User, related_name='blocked_by', on_delete=models.CASCADE)
+    
+    class Meta:
+        unique_together = ('user', 'blocked_user')
+        
+    def __str__(self):
+        return f'{self.user} blocked {self.blocked_user}'
+    
+    def unblock(self):
+        self.delete()
+    
+    

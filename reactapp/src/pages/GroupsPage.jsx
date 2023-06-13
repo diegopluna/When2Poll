@@ -111,7 +111,9 @@ const GroupsPage = () => {
                 <Snackbar open={showSnack} autoHideDuration={6000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity={snackSeverity}>{snackText}</Alert>
                 </Snackbar>
-                <Stack spacing={2}>
+                {data.length > 0 ? 
+
+                    <Stack spacing={2}>
                     {data.map(item => (
                         <Item elevation={8}>                           
                             <CardContent>  
@@ -138,7 +140,14 @@ const GroupsPage = () => {
                             </CardActions>                                
                         </Item>
                     ))}
-                </Stack>
+                    </Stack>
+                    :
+                    <Typography variant='h6' sx={{textAlign: 'center'}} color="#ff735c" gutterBottom>
+                        No groups found!
+                    </Typography>
+
+                }
+                
                 { !isMobileOrTablet &&
                 <ThemeProvider theme={buttonTheme}>
                     <Fab

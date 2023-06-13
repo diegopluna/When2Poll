@@ -38,6 +38,15 @@ const InvitesPage = () => {
 
     const navigate = useNavigate()
 
+    async function rejectPollInvite(pollInviteId) {
+        await api.get(`/polls/invites/${pollInviteId}/reject/`)
+        navigate(0)
+    }
+
+    async function acceptPollInvite(pollInviteId) {
+        navigate(`/answerpoll/${pollInviteId}`)
+    }
+
     async function acceptInvite(inviteId) {
         await api.get(`/orgs/invitation/${inviteId}/accept/`)
         navigate(0)
@@ -98,7 +107,9 @@ const InvitesPage = () => {
                 // minHeight: 'calc(100vh - 56px)', // Set a minimum height to ensure content visibility
             }}
         >
-            <Stack spacing={2}>
+            {(groupInvites.length > 0 || pollInvites.length > 0) ?
+
+                <Stack spacing={2}>
                 {groupInvites.map(item=> (
                     <Item elevation={8}>
                         <CardHeader 
@@ -144,6 +155,7 @@ const InvitesPage = () => {
                                         color: "#ff735c"
                                     }}} 
                                 id={`reject${pollData[item.poll]?.name}`}
+                                onClick={()=> rejectPollInvite(item.id)}
                             >
                                 <CloseIcon />
                             </IconButton>
@@ -153,13 +165,20 @@ const InvitesPage = () => {
                                         color: "#ff735c"
                                     }}}                                
                                 id={`accept${pollData[item.poll]?.name}`}
+                                onClick={()=> acceptPollInvite(item.id)}
                             >
                                 <CheckIcon />
                             </IconButton>                        
                         </CardActions>
                     </Item>
                 ))}
-            </Stack>
+                </Stack>
+                :
+                <Typography variant='h6' sx={{textAlign: 'center'}} color="#ff735c" gutterBottom>
+                    No invites found!
+                </Typography>
+            }
+            
         </Container>
     )
 }

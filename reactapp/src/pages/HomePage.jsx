@@ -47,16 +47,17 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const HomePage = () => {
     const api = useAxios();
+    const [undefinedPolls, setUndefinedPolls] = useState([]);
     const [polls, setPolls] = useState([]);
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        const fetchPollData = async () => {
+        const fetchUndefinedPollData = async () => {
         const response = await api.get('/polls/get/');
-        setPolls(response.data);
+        setUndefinedPolls(response.data);
         };
-        fetchPollData();
+        fetchUndefinedPollData();
     }, []);
 
     return (
@@ -65,7 +66,7 @@ const HomePage = () => {
                 marginTop: '56px',
                 marginBottom: '56px',
                 paddingBottom: '56px', // Add additional padding at the bottom
-                // minHeight: 'calc(100vh - 56px)', // Set a minimum height to ensure content visibility
+                // minHeight:xs=8 'calc(100vh - 56px)', // Set a minimum height to ensure content visibility
             }}
         >
             <Typography variant='h3' sx={{textAlign: 'center'}} gutterBottom>
@@ -80,42 +81,56 @@ const HomePage = () => {
                     readOnly
                     style={{marginBottom:20}}
                 />
-                <TableContainer component={Paper}>
-                    <Table aria-label="simple table">
-                        <TableHead stickyHeader>
-                            <TableRow>
-                                <TableCell>Poll</TableCell>
-                                <TableCell align="right">Date</TableCell>
-                                <TableCell align="right">Start time</TableCell>
-                                <TableCell align="right">Duration</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                {polls.length > 0 ?
+                    <TableContainer component={Paper}>
+                        <Table aria-label="simple table">
+                            <TableHead stickyHeader>
+                                <TableRow>
+                                    <TableCell>Poll</TableCell>
+                                    <TableCell align="right">Date</TableCell>
+                                    <TableCell align="right">Start time</TableCell>
+                                    <TableCell align="right">Duration</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    :
+                    <Typography variant='h6' sx={{textAlign: 'center'}} color="#ff735c" gutterBottom>
+                        There are no defined polls!
+                    </Typography>
+                }
+                
                 <Typography variant='h5' sx={{textAlign: 'center'}} gutterBottom>
                     Undefined polls
                 </Typography>
-                <Paper elevation={3}>
-                    <List>
-                        {polls.map(poll => (
-                            
-                                <ListItem
-                                    secondaryAction={
-                                        <IconButton onClick={()=>navigate(`/poll/${poll.id}/`)} edge="end" aria-label='details'>
-                                            <KeyboardArrowRightIcon />
-                                        </IconButton>
-                                    }
-                                >
-                                    <ListItemText 
-                                        primary={poll.name}
-                                    />
-                                </ListItem>                         
-                        ))}
-                    </List>
-                </Paper>
+                {undefinedPolls.length > 0 ? 
+                    <Paper elevation={3}>
+                        <List>
+                            {undefinedPolls.map(poll => (
+                                
+                                    <ListItem
+                                        secondaryAction={
+                                            <IconButton id={poll.name} onClick={()=>navigate(`/poll/${poll.id}/`)} edge="end" aria-label='details'>
+                                                <KeyboardArrowRightIcon />
+                                            </IconButton>
+                                        }
+                                    >
+                                        <ListItemText 
+                                            primary={poll.name}
+                                        />
+                                    </ListItem>                         
+                            ))}
+                        </List>
+                    </Paper>
+                    :
+                    <Typography variant='h6' sx={{textAlign: 'center'}} color="#ff735c" gutterBottom>
+                        There are no undefined polls!
+                    </Typography>
+                }
+                
             </Box>
             </ThemeProvider>
         </Container>

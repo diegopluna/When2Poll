@@ -1,4 +1,6 @@
 #from django.shortcuts import render
+from django.http import Http404
+from utils.db import transaction
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -10,9 +12,8 @@ from django.contrib.auth import get_user_model
 from polls.api.serializers import AvailabilityPollSerializer, PollInviteSerializer, PollAnswerSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from polls.models import AvailabilityPoll, PollInvite, PollAnswer
+from polls.models import AvailabilityPoll, PollInvite, PollAnswer, DateTimeRange
 from django.db.models import Q
-from django.http import JsonResponse
 # Create your views here.
 
 User = get_user_model()
@@ -102,33 +103,87 @@ class PollAnswerView(APIView):
         data = request.data
         data['user'] = request.user.pk
         data['poll'] = poll_id
-        serializer = PollAnswerSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save(user=request.user, poll=poll)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        invite = PollInvite.objects.get(receiver=request.user, poll=poll)
+        invite.accept()
+        serializer = self.serializer_class(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        poll.update_datetime_ranges()
         
-class AnswerPollView(APIView):
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def put(self, request, pk):
+        poll_id = pk
+
+        poll = AvailabilityPoll.objects.get(pk=poll_id)
+
+        poll_answer = PollAnswer.objects.filter(poll_id=poll_id, user=request.user.pk).first()
+        
+        if not poll_answer:
+            return Response({'detail': 'Poll answer not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        request.data['user'] = request.user.pk
+        request.data['poll'] = poll_id
+
+        serializer = self.serializer_class(poll_answer, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        poll.update_datetime_ranges()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+class JustifyPoll(APIView):
     permission_classes = (IsAuthenticated, )
 
     def post(self, request, pk):
-        recdata = request.data
+        if pk is None:
+            return Response({'detail': 'You must indicate which poll this answer refers to.'}, status=status.HTTP_400_BAD_REQUEST)
         poll = AvailabilityPoll.objects.get(pk=pk)
-        invite = PollInvite.objects.get(receiver = request.user, poll = poll)
-        if PollAnswer.objects.filter(user = request.user, poll = poll).exists():
+        if PollAnswer.objects.filter(user=request.user, poll=poll).exists():
             return Response({'detail': 'You have already submitted an answer for this poll.'}, status=status.HTTP_400_BAD_REQUEST)
-        data = {}
+        
+        data = request.data
         data['user'] = request.user.pk
         data['poll'] = pk
-        data['justification'] = recdata['justification']
-        serializer = PollAnswerSerializer(data = data)
-        if serializer.is_valid():
-            serializer.save(user=request.user, poll=poll)
-            invite.accepted = recdata['available']
-            invite.answered = True
-            invite.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        data['available'] = False
+        invite = PollInvite.objects.get(receiver = request.user, poll = poll)
+        invite.answered = True
+        invite.accepted = False
+        invite.save()
+        serializer = PollAnswerSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response (serializer.data)
+
+
+
+
+
+        
+# class AnswerPollView(APIView):
+#     permission_classes = (IsAuthenticated, )
+
+#     def post(self, request, pk):
+#         recdata = request.data
+#         poll = AvailabilityPoll.objects.get(pk=pk)
+#         invite = PollInvite.objects.get(receiver = request.user, poll = poll)
+#         if PollAnswer.objects.filter(user = request.user, poll = poll).exists():
+#             return Response({'detail': 'You have already submitted an answer for this poll.'}, status=status.HTTP_400_BAD_REQUEST)
+#         data = {}
+#         data['user'] = request.user.pk
+#         data['poll'] = pk
+#         data['justification'] = recdata['justification']
+#         serializer = PollAnswerSerializer(data = data)
+#         if serializer.is_valid():
+#             serializer.save(user=request.user, poll=poll)
+#             invite.accepted = recdata['available']
+#             invite.answered = True
+#             invite.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 # class RejectAnswerPollView(APIView):
@@ -166,5 +221,31 @@ class GetPollView(APIView):
     permission_classes = (IsAuthenticated, )
     def get(self, request, pk):
         poll = AvailabilityPoll.objects.get(pk=pk)
+        serializer = AvailabilityPollSerializer(poll)
+        return Response(serializer.data)
+    
+class AcceptPollInvite(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, pk):
+        invite = PollInvite.objects.get(pk=pk)
+        invite.accept()
+        return Response(status=status.HTTP_200_OK)
+    
+class RejectPollInvite(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, pk):
+        invite = PollInvite.objects.get(pk=pk)
+        invite.reject()
+        return Response(status=status.HTTP_200_OK)
+    
+
+class GetPollDataByInvitePk(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, pk):
+        invite = PollInvite.objects.get(pk=pk)
+        poll = AvailabilityPoll.objects.get(pk = invite.poll.id)
         serializer = AvailabilityPollSerializer(poll)
         return Response(serializer.data)

@@ -56,14 +56,10 @@ class PollAnswerSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        # available = validated_data['available']
-        # if available:
-        #     if 'justification' in validated_data:
-        #         raise serializers.ValidationError({'justification': 'Must not be entered when user is available.'})
-        # else:
-        #     if 'matrix' in validated_data:
-        #         raise serializers.ValidationError({'matrix': 'Must not be entered when user is not available.'})
-        return super().create(validated_data)
+        self.instance = self.Meta.model(**validated_data)
+        self.instance.clean()  # Call the clean method for validation
+        self.instance.save()
+        return self.instance
 
 
 class AvailabilityPollSerializer(serializers.ModelSerializer):
@@ -100,9 +96,10 @@ class AvailabilityPollSerializer(serializers.ModelSerializer):
             end_time = range_data['end_time']
             matrix = []
             while cursor < end_time:
-                matrix.append({"start_time": cursor.isoformat(), "availability": 0})
+                #matrix.append({"start_time": cursor.isoformat(), "availability": 0})
+                matrix.append("0")
                 cursor += timedelta(minutes=15)
-            range_data['matrix'] = matrix
+            range_data['matrix'] = ','.join(matrix)
 
             DateTimeRange.objects.create(**range_data)
 
