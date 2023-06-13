@@ -113,7 +113,7 @@ const HomePage = () => {
                                 
                                     <ListItem
                                         secondaryAction={
-                                            <IconButton onClick={()=>navigate(`/poll/${poll.id}/`)} edge="end" aria-label='details'>
+                                            <IconButton id={poll.name} onClick={()=>navigate(`/poll/${poll.id}/`)} edge="end" aria-label='details'>
                                                 <KeyboardArrowRightIcon />
                                             </IconButton>
                                         }

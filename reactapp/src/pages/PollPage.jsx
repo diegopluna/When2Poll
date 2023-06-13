@@ -134,6 +134,7 @@ const PollPage = () => {
                                         <TableCell align="right" padding="checkbox">
                                             <ThemeProvider theme={buttonTheme}>
                                                 <Checkbox
+                                                    id={participant.name}
                                                     color="primary"
                                                     onChange={()=> setAdmin(!participant.admin,participant.pk)} 
                                                     checked={participant.admin}
