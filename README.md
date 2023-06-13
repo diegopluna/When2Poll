@@ -61,9 +61,3 @@ O servidor de desenvolvimento estará disponível, por padrão, em http://localh
   - Enquetes restritas a usuários convidados
 
 Link para o protótipo no figma: https://www.figma.com/proto/dOBYkqG9fAgQhbsRznP8sD/Mobile-Wireframe-UI-Kit-(Community)?page-id=427%3A5822&node-id=427-5848&viewport=-121%2C-206%2C0.29&scaling=scale-down&starting-point-node-id=427%3A5848
-
-
-
-https://github.com/diegopluna/fds2023-1/assets/116274892/a6fcd2e9-d2d0-4cc4-84b8-d52c57e20a22
-
-
