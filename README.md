@@ -248,4 +248,10 @@ https://github.com/diegopluna/fds2023-1/assets/111078608/9389f805-2dff-4e36-a6f7
 
 https://github.com/diegopluna/fds2023-1/assets/111139509/3cc39d6b-16ab-44e0-83b9-bfb92699bcce
 
+###ScreenCast testes E2E
+
+
+
+
+https://github.com/diegopluna/fds2023-1/assets/116274892/8925edf9-2b75-459a-b1ab-35b62937609c
 
