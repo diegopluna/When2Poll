@@ -50,7 +50,7 @@ jobs:
         python manage.py runserver &
         sleep 5
         python manage.py test
-        
+     
     - name: Generate deployment package
       run: zip -r deploy.zip . -x '*.git*'
       
