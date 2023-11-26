@@ -9,7 +9,6 @@ from selenium.webdriver.support import expected_conditions as EC
 import time 
 import datetime
 
-# Documentação selenium para Python: https://selenium-python.readthedocs.io/
 # Exemplos: https://ordinarycoders.com/blog/article/testing-django-selenium
 
 # chrome_options = webdriver.FirefoxOptions()
